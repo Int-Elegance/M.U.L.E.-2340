@@ -30,8 +30,14 @@ public class Person1 {
 	 * @return the modified string
 	 */
 	private String calc(String input) {
-	  //Person 1 put your implementation here
-	  return null;
+	  //break the string up into two substrings
+	  String sub1 = input.Substring(2, input.length);
+	  String sub2 = input.Substring(0,2);
+	  //combine these two substrings into one new string
+	  String toReturn = sub1 + sub2;
+
+	  return toReturn;
+
 	}
 	
 	/**
