@@ -31,8 +31,8 @@ public class Person1 {
 	 */
 	private String calc(String input) {
 	  //break the string up into two substrings
-	  String sub1 = input.Substring(2, input.length);
-	  String sub2 = input.Substring(0,2);
+	  String sub1 = input.substring(2, input.length());
+	  String sub2 = input.substring(0,2);
 	  //combine these two substrings into one new string
 	  String toReturn = sub1 + sub2;
 
