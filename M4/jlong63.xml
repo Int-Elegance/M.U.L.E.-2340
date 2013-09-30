@@ -10,13 +10,13 @@
     <property name="library.dir" value="lib"/>
   </target>
 
-  <target name="prepare">
+  <target name="prepare" depends="init">
     <mkdir dir="${build.dir}"/>
     <mkdir dir="${javadoc.dir}"/>
   </target>
   
   
-  <target name="compile">
+  <target name="compile" depends="init">
     <javac destdir="${build.dir}">
       <src path="${src.dir}"/>
       <classpath>
@@ -27,7 +27,7 @@
   </target>
  
 
-  <target name="javadoc">
+  <target name="javadoc" depends="init">
     <javadoc sourcepath="${src.dir}" destdir="${javadoc.dir}">
       <classpath>
 	<pathelement path="${build.dir}"/>
@@ -36,7 +36,7 @@
     </javadoc>
   </target>
 
-  <target name="jar">
+  <target name="jar" depends="init">
     <jar destfile="AntLabRun.jar" basedir="${build.dir}">
       <manifest>
 	<attribute name="Main-Class" value="edu.gatech.oad.antlab.pkg1.AntLabMain"/>
