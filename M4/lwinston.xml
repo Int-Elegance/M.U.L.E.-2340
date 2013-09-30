@@ -2,13 +2,6 @@
 <!-- lwinston.xml -->
 
 <project name="/M4" basedir="." default="all">
-	<!--
-	<property name="src.dir" value="src"/>
-	<property name="build.dir" value="build"/>
-	<property name="classes.dir" value="${build.dir}/classes"/>
-	<property name="jar.dir" value="${build.dir}/jar"/>
-	-->
-
 	<target name="init">
 		<property name="src.dir" value="src"/>
 		<property name="build.dir" value="build"/>
@@ -46,6 +39,7 @@ packagenames="edu.gatech.oad.antdemo">
 	<target name="clean" depends="init">
 		<delete dir="${build.dir}"/>
 		<delete dir = "${apidoc.dir}"/>
+		<delete file="AntLabRun.jar"/>
 	</target> 
 
 	<target name="compile" depends="init">
@@ -57,15 +51,16 @@ packagenames="edu.gatech.oad.antdemo">
 	</target>
 
 	<target name="jar" depends="compile, init">
-		<jar destfile="${jar.dir}/AntLabRun.jar" basedir="${build.dir}">
+		<jar destfile="AntLabRun.jar" basedir="${build.dir}">
 		<manifest>
 			<attribute name="Main-Class" value="${Main-Class}"/>
+			<attribute name="Class-Path" value="${lib.dir}/resources.jar"/>
 		</manifest>
 		</jar>
 	</target>
 	
 	<target name="run" depends="jar,compile,init">
-		<java jar="build/jar/AntLabRun.jar" fork="true">
+		<java jar="AntLabRun.jar" fork="true">
 			<classpath>
 				<pathelement path="${lib.dir}/resources.jar"/>
 			</classpath>
