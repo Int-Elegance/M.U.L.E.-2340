@@ -1,5 +1,4 @@
 <!-- jzimmerman31.xml -->
-<?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="M4" basedir="." default="all">
 
     <target name ="init">
@@ -42,7 +41,7 @@
 
     <target name="jar" depends="compile">
         <!-- Packages all of our classes into a single .jar file for deployment; also references resources.jar -->
-        <jar destfile="AntLabRun.jar" basedir="${build.dir}">
+        <jar destfile="AntLabRun.jar" basedir="${build}">
             <manifest>
                 <attribute name="Main-Class" value="edu.gatech.oad.antlab.pkg1.AntLabMain"/>
                 <attribute name="Class-Path" value="${library}/resources.jar"/>
@@ -59,7 +58,7 @@
   </target>
   
   <!-- Since "all" does not depend on "clean", it will perform all tasks except for "clean" -->
-  <target name="all" depends="init,prepare,compile,apidoc,jar,run"/>
+  <target name="all" depends="init,prepare,compile,javadoc,jar,run"/>
 
   <target name="clean" depends="jar">
     <!-- Delete the directories created by this program -->
