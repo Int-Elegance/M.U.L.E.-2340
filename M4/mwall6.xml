@@ -1,6 +1,6 @@
 <!-- Ant hello world -->
 <!-- build.xml -->
-<project name="AntLabRun" basedir="." default="all">
+<project name="AntLabRun" basedir="." default="clean">
 
 	<target name="init">
 		<property name="src.dir" value="src" />
@@ -62,10 +62,11 @@
 	</target>
 
 
-	<target name="clean">
+	<target name="clean" depends ="init">
 		<delete dir="${build.dir}" />
 		<delete dir="${javadoc.dir}" />
 		<delete file="AntLabRun.jar" />
+		<delete dir="bin"/>
 	</target>
 
 </project>
