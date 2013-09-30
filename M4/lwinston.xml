@@ -1,21 +1,75 @@
 <!-- Ant build -->
 <!-- lwinston.xml -->
 
-<project name="/M4" basedir="." default="main">
-
+<project name="/M4" basedir="." default="all">
+	<!--
 	<property name="src.dir" value="src"/>
-	
 	<property name="build.dir" value="build"/>
 	<property name="classes.dir" value="${build.dir}/classes"/>
 	<property name="jar.dir" value="${build.dir}/jar"/>
-	<property name="main-class" value="oata.HelloWorld"/>
+	-->
 
-	<target name="clean">
-		<delete dir="${build.dir}"/>
+	<target name="init">
+		<property name="src.dir" value="src"/>
+		<property name="build.dir" value="build"/>
+		<property name="jar.dir" value="${build.dir}/jar"/>
+		<property name="apidoc.dir" value = "apidoc"/>
+		<property name="Main-Class" value = "edu.gatech.oad.antlab.pkg1.AntLabMain"/>
+		<property name="lib.dir" value="lib"/>
 	</target>
 
-	<target name="compile">
-	<mkdir dir="${classes.dir}"/>
-	<javac srcdir="${src.dir}" destdir="${classes.dir}"/>
+	<target name="prepare">
+		<mkdir dir = "src"/>
+		<mkdir dir = "build"/>
+		<mkdir dir = "apidoc"/>
+		<mkdir dir = "build/jar"/>
+	</target>
+
+	<target name="javadoc" depends="init">
+		<javadoc sourcepath="${src.dir}" access="public" destdir="${apidoc.dir}"
+packagenames="edu.gatech.oad.antdemo">
+			<classpath>
+				<pathelement path="${lib.dir}/resources.jar"/>
+			</classpath>
+			<excludepackage name="edu.gt.cs2340.lab2.test.*"/>
+			<fileset dir="${src.dir}">
+				<include name="**/*.java"/>
+			</fileset>
+			<bottom>
+				<![CDATA[<i>Copyright 2013 Team 7 CS2340. All Rights Reserved.</i>]]>
+			</bottom>
+		</javadoc>
+		
+	</target>
+	<target name="all" depends="init,prepare,compile,javadoc,jar,run"/>
+	
+	<target name="clean" depends="init">
+		<delete dir="${build.dir}"/>
+		<delete dir = "${apidoc.dir}"/>
+	</target> 
+
+	<target name="compile" depends="init">
+		<javac srcdir="${src.dir}" destdir="${build.dir}">
+			<classpath>
+				<pathelement path="${lib.dir}/resources.jar"/>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile, init">
+		<jar destfile="${jar.dir}/AntLabRun.jar" basedir="${build.dir}">
+		<manifest>
+			<attribute name="Main-Class" value="${Main-Class}"/>
+		</manifest>
+		</jar>
 	</target>
 	
+	<target name="run" depends="jar,compile,init">
+		<java jar="build/jar/AntLabRun.jar" fork="true">
+			<classpath>
+				<pathelement path="${lib.dir}/resources.jar"/>
+			</classpath>
+		</java>
+	</target>
+	
+</project>
