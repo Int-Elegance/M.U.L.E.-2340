@@ -1,6 +1,6 @@
 <!-- Ant hello world -->
 <!-- build.xml -->
-<project name="AntLabRun" basedir="." default="clean">
+<project name="AntLabRun" basedir="." default="all">
 
 	<target name="init">
 		<property name="src.dir" value="src" />
