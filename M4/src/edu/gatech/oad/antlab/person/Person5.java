@@ -30,8 +30,9 @@ public class Person5 {
 	 * @return the modified string
 	 */
 	private String calc(String input) {
-	  //Person 5 put your implementation here
-	  return null;
+	    String sub1 = input.substring(0,3);
+	    String sub2 = input.subString(3);
+	    return sub2 + sub1;
 	}
 	
 	/**
