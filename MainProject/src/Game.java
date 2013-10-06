@@ -1,7 +1,5 @@
 import java.util.List;
 
-
-
 public class Game {
 
 	List<String> rounds; //TODO: change type to Round
