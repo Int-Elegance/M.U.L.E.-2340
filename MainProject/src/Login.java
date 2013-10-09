@@ -23,9 +23,6 @@ public class Login {
 	private int numPlayers;
 
 	private JFrame Login;
-	private JTextField nameField;
-	private ArrayList<String> colors = new ArrayList<>();
-	private ArrayList<String> races = new ArrayList<>();
 	
 	private Game game;
 
@@ -55,22 +52,19 @@ public class Login {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Creates a main login JFrame container that uses CardLayout to display the different Panels that
+	 * will be used throughout the method
+	 * 
+	 * There is then a panel created for the initial login screen and one for each player in the game
+	 * Each panel the necessary information and a button that will store the data and proceed to the
+	 * next screen
+	 * 
+	 * These panels are added to the JFrame's CardLayout
+	 * 
+	 * When there are no more panels on the CardLayout, it will move on to the main game screen
+	 * 
 	 */
 	private void initialize() {
-		
-		colors.add("Red");
-		colors.add("Green");
-		colors.add("Blue");
-		colors.add("Yellow");
-		colors.add("Orange");
-		colors.add("Purple");
-		
-		races.add("Human");
-		races.add("Flapper");
-		races.add("Bonzoid");
-		races.add("Ugaite");
-		races.add("Buzzite");
 		
 		Login = new JFrame();
 		Login.setTitle("Login\r\n");
@@ -117,10 +111,11 @@ public class Login {
 		JButton btnEnter = new JButton("Enter");
 		btnEnter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO add to respective cl
+				//TODO add to respective class
 				difficulty = (String)difficultyBox.getSelectedItem();
 				mapType = (String) mapBox.getSelectedItem();
 				numPlayers = (int) numPlayerBox.getValue();
+				// Create an input panel for each player
 				for (int i = 0; i < numPlayers; i++) {
 					Player newPlayer = new Player(null, null, 0, null, null);
 					game.addPlayer(newPlayer);
@@ -137,6 +132,15 @@ public class Login {
 		login.add(lblPleaseEnterYour);
 	}
 	
+	/**
+	 * Creates a panel that prompts for input information for each player
+	 * 
+	 * Stores the inputed information into the player parameter
+	 * 
+	 * @param p player to store the information to
+	 * @param num number associated with player
+	 * @param cl CardLayout to get the next panel from
+	 */
 	private void generatePlayerPanel(final Player p, final int num, final CardLayout cl){
 		JPanel playerPanel = new JPanel();
 		playerPanel.setLayout(null);
@@ -155,7 +159,7 @@ public class Login {
 		playerPanel.add(raceLabel);
 		
 		final JComboBox raceBox = new JComboBox();
-		raceBox.setModel(new DefaultComboBoxModel(races.toArray()));
+		raceBox.setModel(new DefaultComboBoxModel(Game.RACES.toArray()));
 		raceBox.setBounds(226, 102, 69, 20);
 		playerPanel.add(raceBox);
 		
@@ -169,14 +173,14 @@ public class Login {
 		nameField.setColumns(10);
 		
 		final JComboBox colorBox = new JComboBox();
-		colorBox.setModel(new DefaultComboBoxModel(colors.toArray()));
+		colorBox.setModel(new DefaultComboBoxModel(Game.COLORS.toArray()));
 		colorBox.setBounds(226, 128, 69, 20);
 		playerPanel.add(colorBox);
 		
 		JButton button = new JButton("Enter");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				p.setRace(races.indexOf((String)raceBox.getSelectedItem()));
+				p.setRace(Game.RACES.indexOf((String)raceBox.getSelectedItem()));
 				p.setName(nameField.getText());
 				p.setColor((String) colorBox.getSelectedItem());
 				if (num == numPlayers - 1) {
