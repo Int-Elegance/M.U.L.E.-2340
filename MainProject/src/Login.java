@@ -1,5 +1,9 @@
-import java.awt.EventQueue;
+/**
+ * @author Team 7
+ * Handles the initialization of the game on the login screen
+ */
 
+import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -15,7 +19,6 @@ import javax.swing.JTextField;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Login {
 	
 	//TODO add actual map and difficulty to different classes
@@ -23,16 +26,14 @@ public class Login {
 	private String mapType;
 	private int numPlayers;
 	private boolean complete;
-
 	private Game game;
-
 	private JFrame Login;
-	
 	private List<Actor> players;
 
 
 	/**
 	 * Create the application.
+	 * @param game The game associated with this initialization
 	 */
 	public Login(Game game) {
 		complete=false;
@@ -42,26 +43,40 @@ public class Login {
 		this.Login.pack();
 		this.Login.setSize(450, 250);
 		this.Login.setVisible(true);
-				
 	}
 	
-	
+	/**
+	 * @return The difficulty level of the game
+	 */
 	public String getDifficulty() {
 		return difficulty;
 	}
 
+	/**
+	 * @return The map associated with the game associated with this login
+	 */
 	public String getMapType() {
 		return mapType;
 	}
 
+	/**
+	 * @return The number of players
+	 */
 	public int getNumPlayers() {
 		return numPlayers;
 	}
 
+	/**
+	 *TODO: Evaluate if this is needed?
+	 * @return This instance
+	 */
 	public JFrame getLogin() {
 		return Login;
 	}
 
+	/**
+	 * @return the list of players playing the game
+	 */
 	public List<Actor> getPlayers() {
 		return players;
 	}
@@ -80,7 +95,6 @@ public class Login {
 	 * 
 	 */
 	private void initialize() {
-		
 		Login = new JFrame();
 		Login.setTitle("M.U.L.E.\r\n");
 		final CardLayout cl = new CardLayout();
@@ -127,7 +141,7 @@ public class Login {
 				//TODO add to respective class
 				difficulty = (String)difficultyBox.getSelectedItem();
 				mapType = (String) mapBox.getSelectedItem();
-				numPlayers = (int) numPlayerBox.getValue();
+				numPlayers = (Integer) (numPlayerBox.getValue());
 				// Create an input panel for each player
 				for (int i = 0; i < numPlayers; i++) {
 					Player newPlayer = new Player();
@@ -207,6 +221,5 @@ public class Login {
 		});
 		button.setBounds(106, 154, 89, 23);
 		playerPanel.add(button);
-		
 	}
 }
