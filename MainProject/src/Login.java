@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.CardLayout;
 import javax.swing.JTextField;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Login {
@@ -21,34 +22,48 @@ public class Login {
 	private String difficulty;
 	private String mapType;
 	private int numPlayers;
+	private boolean complete;
+
+	private Game game;
 
 	private JFrame Login;
 	
-	private Game game;
+	private List<Actor> players;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login window = new Login();
-					window.Login.pack();
-					window.Login.setSize(450, 250);
-					window.Login.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
 	 */
-	public Login() {
+	public Login(Game game) {
+		complete=false;
+		players = new ArrayList<Actor>();
+		this.game = game;
 		initialize();
+		this.Login.pack();
+		this.Login.setSize(450, 250);
+		this.Login.setVisible(true);
+				
+	}
+	
+	
+	public String getDifficulty() {
+		return difficulty;
+	}
+
+	public String getMapType() {
+		return mapType;
+	}
+
+	public int getNumPlayers() {
+		return numPlayers;
+	}
+
+	public JFrame getLogin() {
+		return Login;
+	}
+
+	public List<Actor> getPlayers() {
+		return players;
 	}
 
 	/**
@@ -67,12 +82,10 @@ public class Login {
 	private void initialize() {
 		
 		Login = new JFrame();
-		Login.setTitle("Login\r\n");
+		Login.setTitle("M.U.L.E.\r\n");
 		final CardLayout cl = new CardLayout();
 		Login.getContentPane().setLayout(cl);
-		
-		game = new Game();
-		
+				
 		JPanel login = new JPanel();
 		Login.getContentPane().add(login, "login");
 		login.setLayout(null);
@@ -117,8 +130,8 @@ public class Login {
 				numPlayers = (int) numPlayerBox.getValue();
 				// Create an input panel for each player
 				for (int i = 0; i < numPlayers; i++) {
-					Player newPlayer = new Player(null, null, 0, null, null);
-					game.addPlayer(newPlayer);
+					Player newPlayer = new Player();
+					players.add(newPlayer);
 					generatePlayerPanel(newPlayer, i, cl);
 				}
 				cl.next(Login.getContentPane());
@@ -184,7 +197,9 @@ public class Login {
 				p.setName(nameField.getText());
 				p.setColor((String) colorBox.getSelectedItem());
 				if (num == numPlayers - 1) {
-					//TODO show main game screen
+					Login.getContentPane().removeAll();
+					game.loginComplete(Login);
+					return;
 				} else {
 					cl.next(Login.getContentPane());
 				}
