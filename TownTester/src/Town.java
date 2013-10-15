@@ -29,6 +29,9 @@ public class Town {
 	 * 
 	 */
 	public Town(){
+		//Sets the widths and heights for the player and the town. If the player is set to the correct width odd things happen. 
+		//If the player is set to 28x42 it works normally except near the edges.
+				
 		ImageIcon playerIcon = new ImageIcon("player.jpg");
 		playerImage = new JLabel(playerIcon);
 		playerWidth=28;//playerIcon.getIconWidth();
@@ -48,18 +51,24 @@ public class Town {
 	public void displayTownSquare(JFrame frame){
 		this.frame=frame;
 		
+		//creates layeredPane
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setOpaque(false);
 		layeredPane.setPreferredSize(new Dimension(townWidth, townHeight));
 		
+		//sets bounds on images so they can be drawn
 		townImage.setBounds(0,0,townWidth, townHeight);
 		playerImage.setBounds(playerX,playerY,playerX+playerWidth,playerY+playerHeight);
 		
+		//adds images to the layeredPane
 		layeredPane.add(townImage,JLayeredPane.DEFAULT_LAYER);
 		layeredPane.add(playerImage,JLayeredPane.POPUP_LAYER);
 		
+		//creates a new JPanel, and adds the layered pane to it
 		panel = new JPanel();
 		panel.add(layeredPane);
+		
+		//adds the pane to the frame, the JFrame has a grid layout but changing the layout does not seem to help the size problem
 		frame.setSize(new Dimension(townWidth, townHeight));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel.setLayout(new GridLayout(1,1));
@@ -77,26 +86,30 @@ public class Town {
 		checkInnerBoundaries();
 		
 		playerImage.setBounds(playerX,playerY,playerX+playerWidth,playerY+playerHeight);
+		System.out.println("x "+playerX+" y "+playerY);
 	}
 	
 	/* checks if player is within outer bounds */
 	private void checkOuterBoundaries(){
-		if(playerX+playerWidth>townWidth){
-			playerX=townWidth-playerWidth;
+		//if the code is running correctly then the 404 should be replaced by townHeight and the 534 should be replaced by townWidth
+		//the 10s should be replaced with 0
+		if(playerX+playerWidth>528){
+			playerX=528-playerWidth;
 		}
-		if(playerX<0){
-			playerX=0;
+		if(playerX<10){
+			playerX=10;
 		}
-		if(playerY+playerHeight>townHeight){
-			playerY=townHeight-playerHeight;
+		if(playerY+playerHeight>404){
+			playerY=404-playerHeight;
 		}
-		if(playerY<0){
-			playerY=0;
+		if(playerY<10){
+			playerY=10;
 		}
 	}
 
 	/* checks if player is inside a shop */
 	private void checkInnerBoundaries(){
+		//hard codes values for the shops
 		int pubX=22;
 		int pubY=18;
 		int pubWidth=156;
@@ -113,10 +126,12 @@ public class Town {
 		int otherY=256;
 		int otherWidth=170;
 		int otherHeight=142;
-		checkForSpecificLocations(pubX, pubY, pubWidth, pubHeight);
-		checkForSpecificLocations(storeX, storeY, storeWidth, storeHeight);
-		checkForSpecificLocations(landOfficeX, landOfficeY, landOfficeWidth, landOfficeHeight);
-		checkForSpecificLocations(otherX, otherY, otherWidth, otherHeight);
+		
+		//checks if the player is in one of the locations
+		checkForSpecificLocation(pubX, pubY, pubWidth, pubHeight);
+		checkForSpecificLocation(storeX, storeY, storeWidth, storeHeight);
+		checkForSpecificLocation(landOfficeX, landOfficeY, landOfficeWidth, landOfficeHeight);
+		checkForSpecificLocation(otherX, otherY, otherWidth, otherHeight);
 	}
 	
 	/**
@@ -126,7 +141,10 @@ public class Town {
 	 * @param locWidth
 	 * @param locHeight
 	 */
-	private void checkForSpecificLocations(int locX,int locY,int locWidth, int locHeight){
+	private void checkForSpecificLocation(int locX,int locY,int locWidth, int locHeight){
+		//This is a very painful read through, basically it checks if the corner of the player overlaps with the corner of the location
+		//or if the player is hitting one of the sides of the location
+		//I believe this code to be correct
 		
 		/*checking if corners are overlapping */
 		if(playerX+playerWidth>locX&&playerX<locX){
@@ -193,11 +211,14 @@ public class Town {
 	 * moves player around the screen
 	 */
 	private void animate() {
+		//sets a KeyListener to listen for directions
 		KeyStroke stork = new KeyStroke();
 		if(frame==null)
 			return;
 		frame.addKeyListener(stork);
 		
+		//animates the player moving across the screen at a certain fps
+		//also has an unused timer feature that could be used later on in the project.
 		final int animationTime = 1000;
         int fps = 30;
         int delay = 1000 / fps;
@@ -233,6 +254,11 @@ public class Town {
 		
 		public void keyTyped(KeyEvent e){}
 		public void keyPressed(KeyEvent e){
+			//Listens for key storkes.
+			//Updates the player location.
+			//Monitors which direction the player is going in, currently this is being used to decide information about 
+			//the movement of the player around the corners of locations in the checkForSpecificLocation() method.
+			//Given time a better method of moving around corners should be devised.
 			 if(KeyEvent.VK_UP==e.getKeyCode()||KeyEvent.VK_W==e.getKeyCode()){
 				 playerY-=2;
 				 verticalDirection=-1;
