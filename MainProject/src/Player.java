@@ -6,7 +6,7 @@
  */
 public class Player extends Actor {
 	
-	private int race; //TODO: change type of race to enum
+	private Race race;
 	private String color;
 	private String name;
 	
@@ -29,14 +29,14 @@ public class Player extends Actor {
 	/**
 	 * @return the player's race
 	 */
-	public int getRace() {
+	public Race getRace() {
 		return race;
 	}
 	
 	/**
 	 * @param race The player's race
 	 */
-	public void setRace(int race) {
+	public void setRace(Race race) {
 		this.race = race;
 	}
 	

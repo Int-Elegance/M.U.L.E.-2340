@@ -186,7 +186,7 @@ public class Login {
 		playerPanel.add(raceLabel);
 		
 		final JComboBox raceBox = new JComboBox();
-		raceBox.setModel(new DefaultComboBoxModel(Game.RACES.toArray()));
+		raceBox.setModel(new DefaultComboBoxModel(Game.RACES));
 		raceBox.setBounds(226, 102, 69, 20);
 		playerPanel.add(raceBox);
 		
@@ -207,7 +207,7 @@ public class Login {
 		JButton button = new JButton("Enter");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				p.setRace(Game.RACES.indexOf((String)raceBox.getSelectedItem()));
+				p.setRace((Race)raceBox.getSelectedItem());
 				p.setName(nameField.getText());
 				p.setColor((String) colorBox.getSelectedItem());
 				if (num == numPlayers - 1) {
