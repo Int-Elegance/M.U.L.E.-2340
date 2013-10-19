@@ -9,8 +9,42 @@ public class Player extends Actor {
 	private Race race;
 	private String color;
 	private String name;
+	private int score;
+	private int money;
 	
 	public Player() {}
+	
+	/**
+	 * @return the player's score
+	 */
+	public int getScore()
+	{
+		return score;
+	}
+	
+	/**
+	 * @param score The player's score to be changed to
+	 */
+	public void setScore(int score)
+	{
+		this.score = score;
+	}
+	
+	/**
+	 * @return the player's money
+	 */
+	public int getMoney()
+	{
+		return money;
+	}
+	
+	/**
+	 * @param score The player's money to be changed to
+	 */
+	public void setMoney(int money)
+	{
+		this.money = money;
+	}
 	
 	/**
 	 * @return the name of the player
