@@ -4,13 +4,56 @@
  * Represent a player in the MULE game
  *
  */
-public class Player extends Actor {
+public class Player extends Actor implements Comparable {
 	
 	private Race race;
 	private String color;
 	private String name;
+	private int score;
+	private int money;
+	private int food;
 	
 	public Player() {}
+	
+	/**
+	 * @return the player's score
+	 */
+	public int getScore()
+	{
+		return score;
+	}
+	
+	public int getFood() {
+	    return food;
+	}
+	
+	public void setFood(int food) {
+	    this.food = food;
+	}
+	
+	/**
+	 * @param score The player's score to be changed to
+	 */
+	public void setScore(int score)
+	{
+		this.score = score;
+	}
+	
+	/**
+	 * @return the player's money
+	 */
+	public int getMoney()
+	{
+		return money;
+	}
+	
+	/**
+	 * @param score The player's money to be changed to
+	 */
+	public void setMoney(int money)
+	{
+		this.money = money;
+	}
 	
 	/**
 	 * @return the name of the player
@@ -53,4 +96,9 @@ public class Player extends Actor {
 	public void setColor(String color) {
 		this.color = color;
 	}
+	
+	public int compareTo(Object o) {
+	    return this.getScore() - ((Player)o).getScore();
+	}
+	
 }

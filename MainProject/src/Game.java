@@ -12,7 +12,7 @@ public class Game {
 	
 	public static final List<String> COLORS = Arrays.asList("Red", "Greed", "Blue", "Yellow", "Orange", "Purple");
 	public static final Race[] RACES = Race.values();
-	private List<String> rounds; //TODO: change type to Round
+	private List<Round> rounds; 
 	private GamePanel map;
 	private List<Actor> players;
 	private String difficulty;
@@ -102,6 +102,7 @@ public class Game {
 	                parsedMap[i][j] = new Mountain(Mountain.TYPE_3);
 	            else if (map[i][j] == 'T')
 	                parsedMap[i][j] = new Town();
+
 	        }
 	    }
 	    return parsedMap;
