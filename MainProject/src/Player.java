@@ -11,8 +11,9 @@ public class Player extends Actor implements Comparable {
 	private String name;
 	private int score;
 	private int money;
+
 	private int food;
-	
+
 	public Player() {}
 	
 	/**
@@ -23,6 +24,7 @@ public class Player extends Actor implements Comparable {
 		return score;
 	}
 	
+
 	public int getFood() {
 	    return food;
 	}
@@ -31,6 +33,7 @@ public class Player extends Actor implements Comparable {
 	    this.food = food;
 	}
 	
+
 	/**
 	 * @param score The player's score to be changed to
 	 */

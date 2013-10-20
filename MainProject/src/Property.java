@@ -1,3 +1,8 @@
+/**
+ * Property is a Tile that can be owned by a Player
+ * @author Team 7
+ *
+ */
 public abstract class Property extends Tile {
     private Player owner;
     private Mule mule;
@@ -10,5 +15,4 @@ public abstract class Property extends Tile {
         this.energy = energy;
         this.ore = ore;
     }
-    
 }

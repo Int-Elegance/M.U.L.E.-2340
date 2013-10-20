@@ -14,6 +14,7 @@ public class Game {
 	public static final Race[] RACES = Race.values();
 	private List<Round> rounds; 
 	private GamePanel map;
+	private GamePanel gamePanel;
 	private List<Actor> players;
 	private String difficulty;
 	private String mapType;
@@ -28,6 +29,7 @@ public class Game {
 	
 	public Game() {
 		players = new ArrayList<Actor>();
+		gamePanel = new GamePanel(mapParser(STANDARD_MAP), this);
 	}
 	
 	/**
@@ -53,7 +55,7 @@ public class Game {
 		difficulty = window.getDifficulty();
 		mapType = window.getMapType();
 		players = window.getPlayers();
-		map.beginDisplay(frame);
+		gamePanel.beginDisplay(frame);
 		play();
 	}
 	
@@ -82,7 +84,6 @@ public class Game {
 	 */
 	public static void main(String[] args) {
 		Game game = new Game();
-		game.map = new GamePanel(mapParser(STANDARD_MAP));
 		game.loginBegin();
 	}
 	

@@ -10,11 +10,13 @@ public class GamePanel {
 	
 	private Tile[][] map;
 	private JFrame frame;
+	private Game game;
 	
 	public GamePanel() {}
 
-	public GamePanel(Tile[][] map) {
+	public GamePanel(Tile[][] map, Game game) {
 		this.map = map;
+		this.game = game;
 	}
 	
 	/**
@@ -25,14 +27,22 @@ public class GamePanel {
 	public boolean beginDisplay(JFrame frame){
 		try {
 		    this.frame = frame;
-		    this.frame.setSize(900, 500);
-		    JPanel panel = new JPanel(new GridLayout(5, 9));
+		    this.frame.setSize(900, 600);
+		    JPanel mainPanel = new JPanel(new BorderLayout());
+		    mainPanel.setSize(900, 500);
+		    JPanel board = new JPanel(new GridLayout(5, 9));
+		    
 		    for (int i = 0; i < map.length; i++) {
 		        for (int j = 0; j < map[i].length; j++) {
-		            panel.add(new JButton(map[i][j].getDisplay()));
+		            board.add(new JButton(map[i][j].getDisplay()));
 		        } 
 		    }
-		    this.frame.add(panel);
+		    
+		    NotificationPanel notification = new NotificationPanel(game);
+		    mainPanel.add(board);
+		    mainPanel.add(notification, BorderLayout.SOUTH);
+		    this.frame.add(mainPanel);
+		    
 		    return true;
 		} catch (Exception E) {
 			return false;
