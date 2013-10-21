@@ -83,10 +83,6 @@ public class Game {
 		gamePanel.beginDisplay(frame);
 		round.setNotificationPanel(notificationPanel);
 		landSelectionBegin();
-		//TownView town = new TownView(0,0);
-		//JFrame frame = new JFrame();       
-		
-       // town.displayTownSquare(frame);
 		return false; 
 		
 	}
@@ -156,5 +152,21 @@ public class Game {
 	        }
 	    }
 	    return parsedMap;
+	}
+
+	public void nextTurn() {
+		getCurrentTurn().stop();
+		if (getCurrentRound().hasNextTurn()) {
+			getCurrentRound().nextTurn();
+			getCurrentTurn().start();
+			
+		} else {
+			nextRound();
+			TownView town = new TownView(getCurrentTurn().getPlayer());
+			JFrame frame = new JFrame();       
+			
+	        town.displayTownSquare(frame);
+		}
+		
 	}
 }

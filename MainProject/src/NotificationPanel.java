@@ -24,7 +24,10 @@ public class NotificationPanel extends JPanel {
 		pass = new JButton("Pass");
 		pass.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (game.getCurrentTurn() instanceof LandSelectionTurn) ((LandSelectionTurn) game.getCurrentTurn()).pass();
+				if (game.getCurrentTurn() instanceof LandSelectionTurn) {
+					((LandSelectionTurn) game.getCurrentTurn()).pass();
+					game.nextTurn();
+				}
 			}
 		});
 		

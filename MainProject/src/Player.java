@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+
 /**
  * 
  * @author Team 7
@@ -186,7 +188,7 @@ public class Player extends Actor implements Comparable {
 			else{
 				playerIcon = new ImageIcon("flapperRed.png");
 			}
-		image = playerIcon;
+		image = playerIcon;}
 	}
 	
 	/**

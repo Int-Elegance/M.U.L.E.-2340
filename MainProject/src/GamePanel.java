@@ -43,23 +43,8 @@ public class GamePanel {
 			    			public void actionPerformed(ActionEvent e) {
 			    				if (game.getCurrentTurn() instanceof LandSelectionTurn && !current.isOwned()) {
 			    					((LandSelectionTurn) game.getCurrentTurn()).addProperty(current);
-			    					game.getCurrentTurn().stop();
-			    					if (game.getCurrentRound().hasNextTurn()) {
-				    					game.getCurrentRound().nextTurn();
-				    					game.getCurrentTurn().start();
-			    					} else {
-			    						/*TO BE CHANGED LATER!!!!!!!!!!!!!!!!!*/
-			    						System.out.println("next round");
-			    						game.nextRound();
-			    						System.out.println("next round done");
-			    					}
+			    					game.nextTurn();
 			    				}
-			    			}
-			    		});
-		            } else {
-		            	button.addActionListener(new ActionListener() {
-			    			public void actionPerformed(ActionEvent e) {
-			    				//TODO put town stuff here
 			    			}
 			    		});
 		            }

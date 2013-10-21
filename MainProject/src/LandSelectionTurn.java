@@ -41,9 +41,10 @@ public class LandSelectionTurn extends Turn {
      * Stops the time on the turn
      */
     public void stop() {
+    	System.out.println("stoped");
         timer.stop();
-        timer.restart();
         secondsLeft = getTime();
+        System.out.println(secondsLeft);
         numTurns++;
     }
 

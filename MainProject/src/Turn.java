@@ -36,14 +36,13 @@ public class Turn implements Comparable {
             public void actionPerformed(ActionEvent e) {
             	if (secondsLeft < 1) {
                     timer.stop();
-                    timer.restart();
                     round.nextTurn();
                     //TODO fix reset for actual turns
                     secondsLeft = getTime();
                     //TODO what happens if time runs out during land selection?
                 } else {
                     secondsLeft--;
-                    //TODO I need a way of repainting here. Should I just put the game in the constructor?
+                    System.out.println(secondsLeft);
                     round.panelUpdate();
                     
                 }
@@ -63,9 +62,6 @@ public class Turn implements Comparable {
         }
     }
     
-    public int getTimeLeft() {
-    	return secondsLeft;
-    }
     
     /**
      * returns the number of seconds left in the Turn
@@ -88,7 +84,6 @@ public class Turn implements Comparable {
      */
     public void stop() {
         timer.stop();
-        timer.restart();
         secondsLeft = getTime();
     }
     
