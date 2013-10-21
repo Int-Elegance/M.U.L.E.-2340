@@ -48,7 +48,10 @@ public class GamePanel {
 				    					game.getCurrentRound().nextTurn();
 				    					game.getCurrentTurn().start();
 			    					} else {
+			    						/*TO BE CHANGED LATER!!!!!!!!!!!!!!!!!*/
+			    						System.out.println("next round");
 			    						game.nextRound();
+			    						System.out.println("next round done");
 			    					}
 			    				}
 			    			}

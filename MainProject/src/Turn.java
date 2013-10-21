@@ -25,7 +25,6 @@ public class Turn implements Comparable {
     public Turn(final Round round, Player player) {
         this.round = round;
         this.player = player;
-        
      
         
         secondsLeft = getTime();
@@ -45,6 +44,8 @@ public class Turn implements Comparable {
                 } else {
                     secondsLeft--;
                     //TODO I need a way of repainting here. Should I just put the game in the constructor?
+                    round.panelUpdate();
+                    
                 }
             }
         });

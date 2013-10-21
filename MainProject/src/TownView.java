@@ -1,3 +1,4 @@
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -9,7 +10,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 
-public class Town {
+public class TownView {
 	
 	private float progress = 0.0f;
 	private JLabel playerImage;
@@ -39,16 +40,86 @@ public class Town {
 	/**
 	 * 
 	 */
-	public Town(int race,int color){
+	public TownView(Race race,String color){
 		//Sets the widths and heights for the player and the town. If the player is set to the correct width odd things happen. 
 		//If the player is set to 28x42 it works normally except near the edges.
-				
-		ImageIcon playerIcon = new ImageIcon("player.jpg");
+		ImageIcon playerIcon;
+		if(race==Race.Human){
+			if(color.equals("orange")){
+				playerIcon = new ImageIcon("humanOrange.jpg");
+			}
+			else if(color.equals("blue")){
+				playerIcon = new ImageIcon("humanBlue.jpg");
+			}
+			else if(color.equals("yellow")){
+				playerIcon = new ImageIcon("humanYellow.jpg");
+			}
+			else{
+				playerIcon = new ImageIcon("humanRed.jpg");
+			}
+		}
+		else if(race==Race.Bonzoid){
+			if(color.equals("orange")){
+				playerIcon = new ImageIcon("bonzoidOrange.jpg");
+			}
+			else if(color.equals("blue")){
+				playerIcon = new ImageIcon("bonzoidBlue.jpg");
+			}
+			else if(color.equals("yellow")){
+				playerIcon = new ImageIcon("bonzoidYellow.jpg");
+			}
+			else{
+				playerIcon = new ImageIcon("bonzoidRed.jpg");
+			}
+		}
+		else if(race==Race.Ugaite){
+			if(color.equals("orange")){
+				playerIcon = new ImageIcon("ugaiteOrange.jpg");
+			}
+			else if(color.equals("blue")){
+				playerIcon = new ImageIcon("ugaiteBlue.jpg");
+			}
+			else if(color.equals("yellow")){
+				playerIcon = new ImageIcon("ugaiteYellow.jpg");
+			}
+			else{
+				playerIcon = new ImageIcon("ugaiteRed.jpg");
+			}
+		}
+		else if(race==Race.Buzzite){
+			if(color.equals("orange")){
+				playerIcon = new ImageIcon("buzziteOrange.jpg");
+			}
+			else if(color.equals("blue")){
+				playerIcon = new ImageIcon("buzziteBlue.jpg");
+			}
+			else if(color.equals("yellow")){
+				playerIcon = new ImageIcon("buzziteYellow.jpg");
+			}
+			else{
+				playerIcon = new ImageIcon("buzziteRed.jpg");
+			}
+		}
+		else{
+			if(color.equals("orange")){
+				playerIcon = new ImageIcon("flapperOrange.jpg");
+			}
+			else if(color.equals("blue")){
+				playerIcon = new ImageIcon("flapperBlue.jpg");
+			}
+			else if(color.equals("yellow")){
+				playerIcon = new ImageIcon("flapperYellow.jpg");
+			}
+			else{
+				playerIcon = new ImageIcon("flapperRed.jpg");
+			}
+		}
+		playerIcon = new ImageIcon("player.jpg");
 		playerImage = new JLabel(playerIcon);
 		playerWidth=28;//playerIcon.getIconWidth();
 		playerHeight=42;//playerIcon.getIconHeight();
 		
-		ImageIcon townIcon = new ImageIcon("town.jpg");
+		ImageIcon townIcon = new ImageIcon("townview.jpg");
 		townImage = new JLabel(townIcon);
 		townWidth=townIcon.getIconWidth();
 		townHeight=townIcon.getIconHeight();
@@ -227,15 +298,7 @@ public class Town {
         });
         timer.start();
     }
-	
-	public static void main(String[] args){
-		Town town = new Town(0,0);
-		JFrame frame = new JFrame();       
-		
-        town.displayTownSquare(frame);
-        town.animate();
-        
-	}
+
 	
 	
 	private class KeyStroke implements KeyListener{

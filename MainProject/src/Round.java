@@ -11,6 +11,7 @@ public class Round {
     protected int currentTurn;
     protected List<Player> players;
     protected List<Turn> turns;
+    protected NotificationPanel notificationPanel;
     
     /**
      * Constructor for the round class.  Stores the round number 
@@ -20,11 +21,13 @@ public class Round {
      * @param the food requirement for this round
      */
     public Round(int roundNumber, List<Player> players, int foodRequirement) {
+
         this.roundNumber = roundNumber;
         this.players = players;
         this.foodRequirement = foodRequirement;
         setUp();
     }
+    
     
     public void setUp() {
     	turns = new ArrayList<Turn>();
@@ -35,6 +38,10 @@ public class Round {
         
         Collections.sort(turns);
         currentTurn = 0;
+    }
+    
+    public void setNotificationPanel(NotificationPanel notificationPanel){
+    	this.notificationPanel=notificationPanel;
     }
     
     public int getTurns() {
@@ -66,4 +73,10 @@ public class Round {
         return foodRequirement;
     }
     
+    public void panelUpdate(){
+    	if(notificationPanel!=null){
+    		notificationPanel.update();
+    	}
+
+    }
 }

@@ -42,4 +42,10 @@ public class NotificationPanel extends JPanel {
 		score.setText("Score: " + str);
 		time.setText("Time Remaining: " + game.getCurrentTurn().getSecondsLeft());
 	}
+	public void update(){
+		time.repaint();
+		score.repaint();
+		this.repaint();
+		this.validate();
+	}
 }

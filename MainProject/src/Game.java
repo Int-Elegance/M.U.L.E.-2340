@@ -11,7 +11,7 @@ import javax.swing.Timer;
 
 public class Game {
 	
-	public static final List<String> COLORS = Arrays.asList("Red", "Greed", "Blue", "Yellow", "Orange", "Purple");
+	public static final List<String> COLORS = Arrays.asList("Red", "Orange", "Blue", "Yellow");
 	public static final Race[] RACES = Race.values();
 	private List<Round> rounds; 
 	private GamePanel map;
@@ -22,6 +22,7 @@ public class Game {
 	private String difficulty;
 	private String mapType;
 	private Login window;
+	private JFrame frame;
 	public static final char[][] STANDARD_MAP = {{'P', 'P', '1', 'P', 'R', 'P', '3', 'P', 'P'},
 	                                             {'P', '1', 'P', 'P', 'R', 'P', 'P', 'P', '3'},
 	                                             {'3', 'P', 'P', 'P', 'T', 'P', 'P', 'P', '1'},
@@ -67,9 +68,7 @@ public class Game {
 		difficulty = window.getDifficulty();
 		mapType = window.getMapType();
 		players = window.getPlayers();
-		LandSelectionRound round = new LandSelectionRound(players);
-		currentRound = round;
-		gamePanel.beginDisplay(frame);
+		this.frame=frame;
 		play();
 	}
 	
@@ -79,8 +78,18 @@ public class Game {
 	
 	//TODO: Implement
 	public boolean play() { 
+		LandSelectionRound round = new LandSelectionRound(players);
+		currentRound = round;
+		gamePanel.beginDisplay(frame);
+		round.setNotificationPanel(notificationPanel);
 		landSelectionBegin();
-		return false; }
+		//TownView town = new TownView(0,0);
+		//JFrame frame = new JFrame();       
+		
+       // town.displayTownSquare(frame);
+		return false; 
+		
+	}
 	
 	/**
 	 * Adds a player to the game
