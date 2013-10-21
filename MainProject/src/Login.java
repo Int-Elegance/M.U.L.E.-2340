@@ -210,6 +210,7 @@ public class Login {
 				p.setRace((Race)raceBox.getSelectedItem());
 				p.setName(nameField.getText());
 				p.setColor((String) colorBox.getSelectedItem());
+				p.setImage();
 				if (num == numPlayers - 1) {
 					Login.getContentPane().removeAll();
 					game.loginComplete(Login);
