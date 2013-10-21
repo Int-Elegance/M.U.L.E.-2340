@@ -17,18 +17,29 @@ public class Town {
 	private int playerWidth;
 	private int playerHeight;
 	private int playerX=200;
+	private int tempPlayerX=200;
 	private int playerY=200;
+	private int tempPlayerY=200;
 	private int townWidth;
 	private int townHeight;
 	private JPanel panel;
 	private JFrame frame;
-	private int verticalDirection=0; //false is down
-	private int horizontalDirection=0; //false is left
+	int pubX=28;
+	int pubY=32;
+	int storeX=28;
+	int storeY=242;
+	int landOfficeX=348;
+	int landOfficeY=242;
+	int otherX=348;
+	int otherY=32;
+	int width=166;
+	int heightT=108;
+	int heightB=140;
 	
 	/**
 	 * 
 	 */
-	public Town(){
+	public Town(int race){
 		//Sets the widths and heights for the player and the town. If the player is set to the correct width odd things happen. 
 		//If the player is set to 28x42 it works normally except near the edges.
 				
@@ -82,56 +93,53 @@ public class Town {
 	 */
 	public void updatePlayer(){
 		//calculate new location		
-		checkOuterBoundaries();
-		checkInnerBoundaries();
+		System.out.println("before x "+playerX+" y "+playerY+" tempplayerX "+tempPlayerX+" tempplayerY "+tempPlayerY);
+		boolean touchingInner =checkInnerBoundaries();
+		boolean touchingOuter =checkOuterBoundaries();
+
+		if(!touchingInner&&!touchingOuter){
+			System.out.println("can move");
+			playerX=tempPlayerX;
+			playerY=tempPlayerY;
+		}
+		else{
+			System.out.println("cant move");
+			tempPlayerX=playerX;
+			tempPlayerY=playerY;
+		}
 		
 		playerImage.setBounds(playerX,playerY,playerX+playerWidth,playerY+playerHeight);
-		System.out.println("x "+playerX+" y "+playerY);
+		System.out.println("after x "+playerX+" y "+playerY+" tempplayerX "+tempPlayerX+" tempplayerY "+tempPlayerY);
+		System.out.println();
 	}
 	
 	/* checks if player is within outer bounds */
-	private void checkOuterBoundaries(){
+	private boolean checkOuterBoundaries(){
 		//if the code is running correctly then the 404 should be replaced by townHeight and the 534 should be replaced by townWidth
 		//the 10s should be replaced with 0
-		if(playerX+playerWidth>528){
-			playerX=528-playerWidth;
+		boolean touching=false;
+		
+		if(tempPlayerX+playerWidth>523){
+			touching=true;
 		}
-		if(playerX<10){
-			playerX=10;
+		if(tempPlayerX<22){
+			touching=true;
 		}
-		if(playerY+playerHeight>404){
-			playerY=404-playerHeight;
+		if(tempPlayerY+playerHeight>395){
+			touching=true;
 		}
-		if(playerY<10){
-			playerY=10;
+		if(tempPlayerY<22){
+			touching=true;
 		}
+		return touching;
 	}
 
 	/* checks if player is inside a shop */
-	private void checkInnerBoundaries(){
-		//hard codes values for the shops
-		int pubX=22;
-		int pubY=18;
-		int pubWidth=156;
-		int pubHeight=152;
-		int storeX=358;
-		int storeY=20;
-		int storeWidth=164;
-		int storeHeight=154;
-		int landOfficeX=28;
-		int landOfficeY=274;
-		int landOfficeWidth=154;
-		int landOfficeHeight=122;
-		int otherX=350;
-		int otherY=256;
-		int otherWidth=170;
-		int otherHeight=142;
-		
-		//checks if the player is in one of the locations
-		checkForSpecificLocation(pubX, pubY, pubWidth, pubHeight);
-		checkForSpecificLocation(storeX, storeY, storeWidth, storeHeight);
-		checkForSpecificLocation(landOfficeX, landOfficeY, landOfficeWidth, landOfficeHeight);
-		checkForSpecificLocation(otherX, otherY, otherWidth, otherHeight);
+	private boolean checkInnerBoundaries(){
+		return (checkForSpecificLocation(pubX, pubY, width, heightT)||
+				checkForSpecificLocation(storeX, storeY, width, heightB)||
+				checkForSpecificLocation(landOfficeX, landOfficeY, width, heightB)||
+				checkForSpecificLocation(otherX, otherY, width, heightT));
 	}
 	
 	/**
@@ -141,70 +149,52 @@ public class Town {
 	 * @param locWidth
 	 * @param locHeight
 	 */
-	private void checkForSpecificLocation(int locX,int locY,int locWidth, int locHeight){
+	private boolean checkForSpecificLocation(int locX,int locY,int locWidth, int locHeight){
 		//This is a very painful read through, basically it checks if the corner of the player overlaps with the corner of the location
 		//or if the player is hitting one of the sides of the location
 		//I believe this code to be correct
 		
+		boolean touching=false;
 		/*checking if corners are overlapping */
-		if(playerX+playerWidth>locX&&playerX<locX){
-			if(playerY+playerHeight>locY&&playerY<locY){//top right corner of loc
-				if(horizontalDirection!=0){
-					playerX=locX-playerWidth-1;
-				}
-				else{
-					playerY=locY-playerHeight-1;
-				}
+		if(tempPlayerX+playerWidth>locX&&tempPlayerX<locX){
+			if(tempPlayerY+playerHeight>locY&&tempPlayerY<locY){//top right corner of loc
+				touching=true;
 			}
-			if(playerY<locY+locHeight&&playerY+playerHeight>locY+locHeight){//bottom right corner of loc
-				if(horizontalDirection!=0){
-					playerX=locX-playerWidth-1;
-				}
-				else{
-					playerY=locY+locHeight+1;
-				}
+			if(tempPlayerY<locY+locHeight&&tempPlayerY+playerHeight>locY+locHeight){//bottom right corner of loc
+				touching=true;
 			}
 			
 		}
 		
-		if(playerX<locX+locWidth&&playerX+playerWidth>locX+locWidth){
-			if(playerY+playerHeight>locY&&playerY<locY){//top left corner of loc
-				if(horizontalDirection!=0){
-					playerX=locX+locWidth+1;
-				}
-				else{
-					playerY=locY-playerHeight-1;
-				}
+		if(tempPlayerX<locX+locWidth&&tempPlayerX+playerWidth>locX+locWidth){
+			if(tempPlayerY+playerHeight>locY&&tempPlayerY<locY){//top left corner of loc
+				touching=true;
 			}
-			if(playerY<locY+locHeight&&playerY+playerHeight>locY+locHeight){//bottom left corner of loc
-				if(horizontalDirection!=0){
-					playerX=locX+locWidth+1;
-				}
-				else{
-					playerY=locY+locHeight+1;
-				}
+			if(tempPlayerY<locY+locHeight&&tempPlayerY+playerHeight>locY+locHeight){//bottom left corner of loc
+				touching=true;
 			}
 			
 		}
 		/*checking if the player is overlapping the location from the size*/
-		if(playerY+playerHeight<locY+locHeight&&playerY>locY){
-			if(playerX+playerWidth>locX&&playerX<locX){//right side of loc
-					playerX=locX-playerWidth-1;
+		if(tempPlayerY+playerHeight<locY+locHeight&&tempPlayerY>locY){
+			if(tempPlayerX+playerWidth>locX&&tempPlayerX<locX){//right side of loc
+				touching=true;
 			}
 			
-		    if(playerX+playerWidth>locX+locWidth&&playerX<locX+locWidth){//left side of loc
-		    		playerX=locX+locWidth+1;
+		    if(tempPlayerX+playerWidth>locX+locWidth&&tempPlayerX<locX+locWidth){//left side of loc
+		    	touching=true;
 		    }
 		}
-		if(playerX+playerWidth<locX+locWidth&&playerX>locX){
-			if(playerY+playerHeight>locY&&playerY<locY){//top side of loc
-					playerY=locY-playerHeight-1;
+		if(tempPlayerX+playerWidth<locX+locWidth&&tempPlayerX>locX){
+			if(tempPlayerY+playerHeight>locY&&tempPlayerY<locY){//top side of loc
+				touching=true;
 			}
 			
-		    if(playerY+playerHeight>locY+locHeight&&playerY<locY+locHeight){//bottom side of loc
-		    		playerY=locY+locHeight+1;
+		    if(tempPlayerY+playerHeight>locY+locHeight&&tempPlayerY<locY+locHeight){//bottom side of loc
+		    	touching=true;
 		    }
 		}
+		return touching;
 	
 	}	
 	/**
@@ -239,10 +229,8 @@ public class Town {
     }
 	
 	public static void main(String[] args){
-		Town town = new Town();
+		Town town = new Town(0);
 		JFrame frame = new JFrame();       
-		ImageIcon playerIcon = new ImageIcon("player.jpg");
-		town.playerImage = new JLabel(playerIcon);
 		
         town.displayTownSquare(frame);
         town.animate();
@@ -260,24 +248,16 @@ public class Town {
 			//the movement of the player around the corners of locations in the checkForSpecificLocation() method.
 			//Given time a better method of moving around corners should be devised.
 			 if(KeyEvent.VK_UP==e.getKeyCode()||KeyEvent.VK_W==e.getKeyCode()){
-				 playerY-=2;
-				 verticalDirection=-1;
-				 horizontalDirection=0;
+				 tempPlayerY-=2;
 			 }
 			 else if(KeyEvent.VK_DOWN==e.getKeyCode()||KeyEvent.VK_S==e.getKeyCode()){
-				 playerY+=2;
-				 verticalDirection=1;
-				 horizontalDirection=0;
+				 tempPlayerY+=2;
 			 }
 			 else if(KeyEvent.VK_RIGHT==e.getKeyCode()||KeyEvent.VK_D==e.getKeyCode()){
-				 playerX+=2;
-				 verticalDirection=0;
-				 horizontalDirection=1;
+				 tempPlayerX+=2;
 			 }
 			 else if(KeyEvent.VK_LEFT==e.getKeyCode()||KeyEvent.VK_A==e.getKeyCode()){
-				 playerX-=2;
-				 verticalDirection=0;
-				 horizontalDirection=-1;
+				 tempPlayerX-=2;
 			 }
 		 }
 		 public void keyReleased(KeyEvent e){}
