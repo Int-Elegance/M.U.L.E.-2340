@@ -77,6 +77,9 @@ public class Round {
     	if(notificationPanel!=null){
     		notificationPanel.update();
     	}
-
     }
+    
+   public int getRoundNumber() {
+	   return roundNumber;
+   }
 }
