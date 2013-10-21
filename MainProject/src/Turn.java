@@ -1,4 +1,5 @@
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -8,10 +9,11 @@ import java.awt.event.*;
  */
 public class Turn implements Comparable {
     
-    private Timer timer;
-    private int secondsLeft;
-    private Round round; 
-    private Player player;
+    protected Timer timer;
+    protected int secondsLeft;
+    protected Round round; 
+    protected Player player;
+    
     
     /**  
      * Constructor for the Turn class, it creates a new turn with a timer.
@@ -20,21 +22,48 @@ public class Turn implements Comparable {
      * @param This is the round that the turn is contained within. 
      * @param This is the player who's turn it is
      */
-    public Turn(Round round, Player player) {
+    public Turn(final Round round, Player player) {
         this.round = round;
         this.player = player;
         
-        int food = player.getFood();
-        int requirement = round.getFoodRequirement();
+     
         
-        if (food >= requirement) {
-            secondsLeft = 50;
+        secondsLeft = getTime();
+        timer = new Timer(1000, new ActionListener() {
+        	/**
+             * Each time the timer fires an event, this method decrements the seconds left.  
+             * When the number of seconds reaches 0, the timer is stopped and the round moves to the next turn.
+             */
+            public void actionPerformed(ActionEvent e) {
+            	if (secondsLeft < 1) {
+                    timer.stop();
+                    timer.restart();
+                    round.nextTurn();
+                    //TODO fix reset for actual turns
+                    secondsLeft = getTime();
+                    //TODO what happens if time runs out during land selection?
+                } else {
+                    secondsLeft--;
+                    //TODO I need a way of repainting here. Should I just put the game in the constructor?
+                }
+            }
+        });
+    }
+    
+    public int getTime() {
+    	int food = player.getFood();
+        int requirement = round.getFoodRequirement();
+    	if (food >= requirement) {
+            return 50;
         } else if (food > 0) {
-            secondsLeft = 30;
+            return 30;
         } else {
-            secondsLeft = 5;
+            return 5;
         }
-        timer = new Timer(1000, new turnListener());
+    }
+    
+    public int getTimeLeft() {
+    	return secondsLeft;
     }
     
     /**
@@ -58,6 +87,8 @@ public class Turn implements Comparable {
      */
     public void stop() {
         timer.stop();
+        timer.restart();
+        secondsLeft = getTime();
     }
     
     /**
@@ -84,25 +115,6 @@ public class Turn implements Comparable {
         return this.getPlayer().compareTo(((Turn)o).getPlayer());
     }
     
-    /**
-     * private class that decrements the seconds eachtime the timer fires an event
-     */
-    private class turnListener implements ActionListener { 
+   
     
-        /**
-         * Each time the timer fires an event, this method decrements the seconds left.  
-         * When the number of seconds reaches 0, the timer is stopped and the round moves to the next turn.
-         */
-        public void actionPerformed(ActionEvent e) {
-            if (secondsLeft < 1) {
-                timer.stop();
-                round.nextTurn();
-            } else {
-                secondsLeft--;
-            }
-        }
-    }
-    
-    public static void main(String[] args) {
-    }
 }

@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 
  * @author Team 7
@@ -11,10 +14,12 @@ public class Player extends Actor implements Comparable {
 	private String name;
 	private int score;
 	private int money;
-
+	private List<Property> properties;
 	private int food;
 
-	public Player() {}
+	public Player() {
+		properties = new ArrayList<Property>();
+	}
 	
 	/**
 	 * @return the player's score
@@ -34,6 +39,16 @@ public class Player extends Actor implements Comparable {
 	}
 	
 
+	/**
+	 * @param p the property to be added to the players owned property
+	 */
+	public void addProperty(Property p)
+	{
+		properties.add(p);
+		p.setOwned(true);
+	}
+	
+	
 	/**
 	 * @param score The player's score to be changed to
 	 */
@@ -56,6 +71,13 @@ public class Player extends Actor implements Comparable {
 	public void setMoney(int money)
 	{
 		this.money = money;
+	}
+	
+	/**
+	 * @param amount how much you want to change the money be
+	 */
+	public void changeMoney(int amount) {
+		this.money = money + amount;
 	}
 	
 	/**
@@ -83,6 +105,7 @@ public class Player extends Actor implements Comparable {
 	 * @param race The player's race
 	 */
 	public void setRace(Race race) {
+		this.money = race.getStartingMoney();
 		this.race = race;
 	}
 	

@@ -8,9 +8,9 @@ import java.util.*;
 public class Round {
     private int foodRequirement;
     private int roundNumber;
-    private int currentTurn;
-    private List<Player> players;
-    private List<Turn> turns;
+    protected int currentTurn;
+    protected List<Player> players;
+    protected List<Turn> turns;
     
     /**
      * Constructor for the round class.  Stores the round number 
@@ -23,8 +23,11 @@ public class Round {
         this.roundNumber = roundNumber;
         this.players = players;
         this.foodRequirement = foodRequirement;
-        
-        turns = new ArrayList<Turn>();
+        setUp();
+    }
+    
+    public void setUp() {
+    	turns = new ArrayList<Turn>();
         for (Player p : players) {
             Turn turn = new Turn(this, p);
             turns.add(turn);
@@ -33,14 +36,25 @@ public class Round {
         Collections.sort(turns);
         currentTurn = 0;
     }
+    
+    public int getTurns() {
+    	return turns.size();
+    }
+    
     /**
      * Causes the round to continue to the next turn.
      */
-    public void nextTurn() {
+    public Turn nextTurn() {
+    	currentTurn = (currentTurn + 1) % turns.size();
+    	return turns.get(currentTurn);
     }
     
     public boolean hasNextTurn() {
-        return currentTurn < turns.size();
+        return currentTurn + 1 < turns.size();
+    }
+    
+    public Turn getCurrentTurn() {
+    	return turns.get(currentTurn);
     }
     
     /**

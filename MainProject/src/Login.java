@@ -28,7 +28,7 @@ public class Login {
 	private boolean complete;
 	private Game game;
 	private JFrame Login;
-	private List<Actor> players;
+	private List<Player> players;
 
 
 	/**
@@ -37,7 +37,7 @@ public class Login {
 	 */
 	public Login(Game game) {
 		complete=false;
-		players = new ArrayList<Actor>();
+		players = new ArrayList<Player>();
 		this.game = game;
 		initialize();
 		this.Login.pack();
@@ -77,7 +77,7 @@ public class Login {
 	/**
 	 * @return the list of players playing the game
 	 */
-	public List<Actor> getPlayers() {
+	public List<Player> getPlayers() {
 		return players;
 	}
 

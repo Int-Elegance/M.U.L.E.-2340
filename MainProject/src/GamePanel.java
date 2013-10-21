@@ -5,6 +5,8 @@
 import java.util.List;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GamePanel {
 	
@@ -34,17 +36,42 @@ public class GamePanel {
 		    
 		    for (int i = 0; i < map.length; i++) {
 		        for (int j = 0; j < map[i].length; j++) {
-		            board.add(new JButton(map[i][j].getDisplay()));
+		        	JButton button = new JButton(map[i][j].getDisplay());
+		        	if (map[i][j] instanceof Property) {
+			        	final Property current =  (Property) map[i][j];
+			            button.addActionListener(new ActionListener() {
+			    			public void actionPerformed(ActionEvent e) {
+			    				if (game.getCurrentTurn() instanceof LandSelectionTurn && !current.isOwned()) {
+			    					((LandSelectionTurn) game.getCurrentTurn()).addProperty(current);
+			    					game.getCurrentTurn().stop();
+			    					if (game.getCurrentRound().hasNextTurn()) {
+				    					game.getCurrentRound().nextTurn();
+				    					game.getCurrentTurn().start();
+			    					} else {
+			    						game.nextRound();
+			    					}
+			    				}
+			    			}
+			    		});
+		            } else {
+		            	button.addActionListener(new ActionListener() {
+			    			public void actionPerformed(ActionEvent e) {
+			    				//TODO put town stuff here
+			    			}
+			    		});
+		            }
+		            board.add(button);
 		        } 
 		    }
-		    
 		    NotificationPanel notification = new NotificationPanel(game);
+		    game.setNotificationPanel(notification);
 		    mainPanel.add(board);
 		    mainPanel.add(notification, BorderLayout.SOUTH);
 		    this.frame.add(mainPanel);
 		    
 		    return true;
 		} catch (Exception E) {
+			System.out.println(E.getMessage());
 			return false;
 		}
 	}

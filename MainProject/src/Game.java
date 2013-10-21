@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 public class Game {
 	
@@ -15,7 +16,9 @@ public class Game {
 	private List<Round> rounds; 
 	private GamePanel map;
 	private GamePanel gamePanel;
-	private List<Actor> players;
+	private NotificationPanel notificationPanel;
+	private List<Player> players;
+	private Round currentRound;
 	private String difficulty;
 	private String mapType;
 	private Login window;
@@ -28,8 +31,17 @@ public class Game {
 	
 	
 	public Game() {
-		players = new ArrayList<Actor>();
+		players = new ArrayList<Player>();
 		gamePanel = new GamePanel(mapParser(STANDARD_MAP), this);
+	}
+	
+	//TODO figure out a better way to have components visible everywhere to repaint
+	public void setNotificationPanel(NotificationPanel p) {
+		notificationPanel = p;
+	}
+	
+	public NotificationPanel getNotificationPanel() {
+		return notificationPanel;
 	}
 	
 	/**
@@ -55,12 +67,20 @@ public class Game {
 		difficulty = window.getDifficulty();
 		mapType = window.getMapType();
 		players = window.getPlayers();
+		LandSelectionRound round = new LandSelectionRound(players);
+		currentRound = round;
 		gamePanel.beginDisplay(frame);
 		play();
 	}
 	
+	private void landSelectionBegin() {
+		getCurrentTurn().start();
+	}	
+	
 	//TODO: Implement
-	public boolean play() { return false; }
+	public boolean play() { 
+		landSelectionBegin();
+		return false; }
 	
 	/**
 	 * Adds a player to the game
@@ -74,8 +94,28 @@ public class Game {
 	/**
 	 * @return The list of players currently added to the game
 	 */
-	public List<Actor> getPlayers() {
+	public List<Player> getPlayers() {
 		return players;
+	}
+	
+	/**
+	 * @return Current round of the game
+	 */
+	public Round getCurrentRound() {
+		return currentRound;
+	}
+	
+	/**
+	 * @return Current turn of the game
+	 */
+	public Turn getCurrentTurn() {
+		return currentRound.getCurrentTurn();
+	}
+	
+	//TODO implement
+	public Round nextRound() {
+		currentRound = new Round(0, players, 0);
+		return currentRound;
 	}
 	
 	
