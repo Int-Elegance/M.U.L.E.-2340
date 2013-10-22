@@ -1,3 +1,4 @@
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -10,13 +11,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 
 /**
-<<<<<<< HEAD
  * @author Team 7
  * Class for the in-town view of the town
-=======
- * This class represents the view of the town.  It generates
- * the GUI for the town and handles movement.
->>>>>>> 9bbed96f827b6178be193f167e290e334a384456
  */
 public class TownView {
 	
@@ -47,15 +43,10 @@ public class TownView {
 	static final int SPEED = 4;
 	
 	/**
-<<<<<<< HEAD
 	 * TownView constructor
 	 * 
 	 * 
 	 * @param player player to enter the town
-=======
-	 * Constructor for the townview which takes in the player
-	 * @param the player who can do stuff in the town
->>>>>>> 9bbed96f827b6178be193f167e290e334a384456
 	 */
 	public TownView(Player player){
 		//Sets the widths and heights for the player and the town. If the player is set to the correct width odd things happen. 
@@ -127,11 +118,7 @@ public class TownView {
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * @return if the player is out of bounds
-=======
-	 *  checks if player is within outer bounds 
->>>>>>> 9bbed96f827b6178be193f167e290e334a384456
 	 */
 	private boolean checkOuterBoundaries(){
 		//if the code is running correctly then the 404 should be replaced by townHeight and the 534 should be replaced by townWidth
@@ -154,11 +141,7 @@ public class TownView {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * @return if the player is in the shop
-=======
-	 * checks if player is inside a shop 
->>>>>>> 9bbed96f827b6178be193f167e290e334a384456
 	 */
 	private boolean checkInnerBoundaries(){
 		return (checkForSpecificLocation(pubX, pubY, width, heightT)||
@@ -223,8 +206,7 @@ public class TownView {
 	
 	}	
 	/**
-	 * moves player around the screen, sets a keylistener to listen for directions
-	 * animates the player
+	 * moves player around the screen
 	 */
 	private void animate() {
 		//sets a KeyListener to listen for directions
@@ -256,7 +238,6 @@ public class TownView {
 
 	
 	/**
-<<<<<<< HEAD
 	 * @author Team 7
 	 * KeyStroke class to move the player
 	 */
@@ -294,27 +275,5 @@ public class TownView {
 		 * @param e KeyEvent
 		 */
 		 public void keyReleased(KeyEvent e){}
-=======
-	 * Listens for key strokes, updates the player's location, monitos which direction
-	 * the player is going in, checks for the movement around corners.
-	 */
-	private class KeyStroke extends KeyAdapter {
-        
-        /**
-         * Checks for the keypress and moves the player in the direction
-         * @param the keyevent of the key pressed
-         */
-		public void keyPressed(KeyEvent e) {
-			 if (KeyEvent.VK_UP == e.getKeyCode() || KeyEvent.VK_W == e.getKeyCode()) {
-				 tempPlayerY -= SPEED;
-			 } else if (KeyEvent.VK_DOWN == e.getKeyCode() || KeyEvent.VK_S == e.getKeyCode()) {
-				 tempPlayerY += SPEED;
-			 } else if (KeyEvent.VK_RIGHT == e.getKeyCode() || KeyEvent.VK_D == e.getKeyCode()) {
-				 tempPlayerX += SPEED;
-			 } else if (KeyEvent.VK_LEFT == e.getKeyCode() || KeyEvent.VK_A == e.getKeyCode()) {
-				 tempPlayerX -= SPEED;
-			 }
-		 }
->>>>>>> 9bbed96f827b6178be193f167e290e334a384456
 	}
 }

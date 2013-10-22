@@ -46,18 +46,11 @@ public class Turn implements Comparable {
         });
     }
     
-<<<<<<< HEAD
-	/**
-	 * finds time of the turn
-	 * 
-	 * @return time of the turn
-	 */
-=======
+
     /**
      * Calculates the time that the players has depending on food
      * @return the time in the seconds that the player has
      */
->>>>>>> 9bbed96f827b6178be193f167e290e334a384456
     public int getTime() {
     	int food = player.getFood();
         int requirement = round.getFoodRequirement();
