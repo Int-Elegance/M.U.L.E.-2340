@@ -188,7 +188,8 @@ public class Player extends Actor implements Comparable {
 			else{
 				playerIcon = new ImageIcon("flapperRed.png");
 			}
-		image = playerIcon;}
+		}
+		image = playerIcon;
 	}
 	
 	/**

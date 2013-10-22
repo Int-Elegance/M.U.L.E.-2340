@@ -37,6 +37,7 @@ public class TownView {
 	int width=166;
 	int heightT=108;
 	int heightB=140;
+	static final int SPEED = 4;
 	
 	/**
 	 * 
@@ -87,31 +88,27 @@ public class TownView {
 		frame.add(panel);
         frame.pack();
         frame.setVisible(true);
+        animate();
 	}
 	
 	/**
 	 * updates player's location
 	 */
 	public void updatePlayer(){
-		//calculate new location		
-		System.out.println("before x "+playerX+" y "+playerY+" tempplayerX "+tempPlayerX+" tempplayerY "+tempPlayerY);
+		//calculate new location
 		boolean touchingInner =checkInnerBoundaries();
 		boolean touchingOuter =checkOuterBoundaries();
 
 		if(!touchingInner&&!touchingOuter){
-			System.out.println("can move");
 			playerX=tempPlayerX;
 			playerY=tempPlayerY;
 		}
 		else{
-			System.out.println("cant move");
 			tempPlayerX=playerX;
 			tempPlayerY=playerY;
 		}
 		
 		playerImage.setBounds(playerX,playerY,playerX+playerWidth,playerY+playerHeight);
-		System.out.println("after x "+playerX+" y "+playerY+" tempplayerX "+tempPlayerX+" tempplayerY "+tempPlayerY);
-		System.out.println();
 	}
 	
 	/* checks if player is within outer bounds */
@@ -241,16 +238,16 @@ public class TownView {
 			//the movement of the player around the corners of locations in the checkForSpecificLocation() method.
 			//Given time a better method of moving around corners should be devised.
 			 if(KeyEvent.VK_UP==e.getKeyCode()||KeyEvent.VK_W==e.getKeyCode()){
-				 tempPlayerY-=2;
+				 tempPlayerY-=SPEED;
 			 }
 			 else if(KeyEvent.VK_DOWN==e.getKeyCode()||KeyEvent.VK_S==e.getKeyCode()){
-				 tempPlayerY+=2;
+				 tempPlayerY+=SPEED;
 			 }
 			 else if(KeyEvent.VK_RIGHT==e.getKeyCode()||KeyEvent.VK_D==e.getKeyCode()){
-				 tempPlayerX+=2;
+				 tempPlayerX+=SPEED;
 			 }
 			 else if(KeyEvent.VK_LEFT==e.getKeyCode()||KeyEvent.VK_A==e.getKeyCode()){
-				 tempPlayerX-=2;
+				 tempPlayerX-=SPEED;
 			 }
 		 }
 		 public void keyReleased(KeyEvent e){}
