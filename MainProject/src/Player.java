@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-
+import java.awt.Color;
 import javax.swing.ImageIcon;
 
 /**
@@ -120,13 +120,13 @@ public class Player extends Actor implements Comparable {
 	public void setImage() {
 		ImageIcon playerIcon;
 		if(race==Race.Human){
-			if(color.equals("orange")){
+			if(color.equals("Orange")){
 				playerIcon = new ImageIcon("humanOrange.png");
 			}
-			else if(color.equals("blue")){
+			else if(color.equals("Blue")){
 				playerIcon = new ImageIcon("humanBlue.png");
 			}
-			else if(color.equals("yellow")){
+			else if(color.equals("Yellow")){
 				playerIcon = new ImageIcon("humanYellow.png");
 			}
 			else{
@@ -134,13 +134,13 @@ public class Player extends Actor implements Comparable {
 			}
 		}
 		else if(race==Race.Bonzoid){
-			if(color.equals("orange")){
+			if(color.equals("Orange")){
 				playerIcon = new ImageIcon("bonzoidOrange.png");
 			}
-			else if(color.equals("blue")){
+			else if(color.equals("Blue")){
 				playerIcon = new ImageIcon("bonzoidBlue.png");
 			}
-			else if(color.equals("yellow")){
+			else if(color.equals("Yellow")){
 				playerIcon = new ImageIcon("bonzoidYellow.png");
 			}
 			else{
@@ -148,13 +148,13 @@ public class Player extends Actor implements Comparable {
 			}
 		}
 		else if(race==Race.Ugaite){
-			if(color.equals("orange")){
+			if(color.equals("Orange")){
 				playerIcon = new ImageIcon("ugaiteOrange.png");
 			}
-			else if(color.equals("blue")){
+			else if(color.equals("Blue")){
 				playerIcon = new ImageIcon("ugaiteBlue.png");
 			}
-			else if(color.equals("yellow")){
+			else if(color.equals("Yellow")){
 				playerIcon = new ImageIcon("ugaiteYellow.png");
 			}
 			else{
@@ -162,13 +162,13 @@ public class Player extends Actor implements Comparable {
 			}
 		}
 		else if(race==Race.Buzzite){
-			if(color.equals("orange")){
+			if(color.equals("Orange")){
 				playerIcon = new ImageIcon("buzziteOrange.png");
 			}
-			else if(color.equals("blue")){
+			else if(color.equals("Blue")){
 				playerIcon = new ImageIcon("buzziteBlue.png");
 			}
-			else if(color.equals("yellow")){
+			else if(color.equals("Yellow")){
 				playerIcon = new ImageIcon("buzziteYellow.png");
 			}
 			else{
@@ -176,13 +176,13 @@ public class Player extends Actor implements Comparable {
 			}
 		}
 		else{
-			if(color.equals("orange")){
+			if(color.equals("Orange")){
 				playerIcon = new ImageIcon("flapperOrange.png");
 			}
-			else if(color.equals("blue")){
+			else if(color.equals("Blue")){
 				playerIcon = new ImageIcon("flapperBlue.png");
 			}
-			else if(color.equals("yellow")){
+			else if(color.equals("Yellow")){
 				playerIcon = new ImageIcon("flapperYellow.png");
 			}
 			else{
@@ -196,6 +196,17 @@ public class Player extends Actor implements Comparable {
 	 */
 	public String getColor() {
 		return color;
+	}
+	
+	public Color getColorRepresentation() {
+	    if (color.equals("Red"))
+	        return Color.RED;
+	    else if (color.equals("Orange"))
+	        return Color.ORANGE;
+	    else if (color.equals("Blue"))
+	        return Color.BLUE;
+	    else 
+	        return Color.YELLOW;
 	}
 	
 	/**
