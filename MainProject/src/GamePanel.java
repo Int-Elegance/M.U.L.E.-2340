@@ -49,7 +49,8 @@ public class GamePanel {
 		    mainPanel.add(board);
 		    mainPanel.add(notification, BorderLayout.SOUTH);
 		    this.frame.add(mainPanel);
-		    
+		    this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		    this.frame.setLocationRelativeTo(null);
 		    return true;
 		} catch (Exception E) {
 			System.out.println(E.getMessage());
