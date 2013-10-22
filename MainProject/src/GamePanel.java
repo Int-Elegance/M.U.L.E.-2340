@@ -16,6 +16,12 @@ public class GamePanel {
 	private JButton[][] buttons;
 	public GamePanel() {}
 
+	/**
+	 * Constructor for the GamePanel class
+	 * 
+	 * @param map 2d array consisting of tiles that make up board
+	 * @param game game object to be played
+	 */
 	public GamePanel(Tile[][] map, Game game) {
 		this.map = map;
 		this.game = game;
@@ -58,15 +64,34 @@ public class GamePanel {
 		}
 	}
 	
+	/**
+	 * @author Team 7
+	 * Listener class gives the Tile buttons functionality
+	 */
 	private class TileListener implements ActionListener {
 	    private int i;
 	    private int j;
 	    
+	    /**
+		 * Constructor for the TileListener class
+		 * 
+		 * @param i x coordinate of Tile
+		 * @param j y coordinate of Tile
+		 */
 	    public TileListener(int i, int j) {
 	        this.i = i;
 	        this.j = j;
 	    }
 	    
+	    /**
+		 * Performed when a Tile is clicked
+		 * 
+		 * Gives player property if it isn't owned
+		 * Adds border
+		 * Moves on to the next turn
+		 * 
+		 * @param e ActionEvent for the event
+		 */
 	    public void actionPerformed(ActionEvent e) {
 	        final Property current =  (Property) map[i][j];
 	        if (game.getCurrentTurn() instanceof LandSelectionTurn && !current.isOwned()) {

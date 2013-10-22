@@ -42,7 +42,6 @@ public class Turn implements Comparable {
                     //TODO what happens if time runs out during land selection?
                 } else {
                     secondsLeft--;
-                    System.out.println(secondsLeft);
                     round.panelUpdate();
                     
                 }
@@ -50,6 +49,11 @@ public class Turn implements Comparable {
         });
     }
     
+	/**
+	 * finds time of the turn
+	 * 
+	 * @return time of the turn
+	 */
     public int getTime() {
     	int food = player.getFood();
         int requirement = round.getFoodRequirement();

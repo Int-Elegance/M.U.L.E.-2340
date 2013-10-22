@@ -20,6 +20,11 @@ public class Player extends Actor implements Comparable {
 	private int food;
 	private ImageIcon image; // later, make this an array to hold all animation frames
 
+	/**
+	 * Player constructor
+	 * 
+	 * initializes property list
+	 */
 	public Player() {
 		properties = new ArrayList<Property>();
 	}
@@ -32,11 +37,16 @@ public class Player extends Actor implements Comparable {
 		return score;
 	}
 	
-
+	/**
+	 * @return the player's food
+	 */
 	public int getFood() {
 	    return food;
 	}
 	
+	/**
+	 * @param the players new food level
+	 */
 	public void setFood(int food) {
 	    this.food = food;
 	}
@@ -199,6 +209,9 @@ public class Player extends Actor implements Comparable {
 		return color;
 	}
 	
+	/**
+	 * @return the color of the player
+	 */
 	public Color getColorRepresentation() {
 	    if (color.equals("Red"))
 	        return Color.RED;
@@ -224,6 +237,12 @@ public class Player extends Actor implements Comparable {
 		this.color = color;
 	}
 	
+	/**
+	 * Compares two players
+	 * 
+	 * @param o object to be compared to
+	 * @return int number representing relationship
+	 */
 	public int compareTo(Object o) {
 	    return this.getScore() - ((Player)o).getScore();
 	}

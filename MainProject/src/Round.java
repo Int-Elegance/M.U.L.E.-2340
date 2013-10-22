@@ -28,7 +28,9 @@ public class Round {
         setUp();
     }
     
-    
+    /**
+     * Sets up by creating a turn for each player
+     */
     public void setUp() {
     	turns = new ArrayList<Turn>();
         for (Player p : players) {
@@ -40,10 +42,18 @@ public class Round {
         currentTurn = 0;
     }
     
+    /**
+     * sets the notification panel of the round
+     * 
+     * @param notificationPanel the notification panel for the game
+     */
     public void setNotificationPanel(NotificationPanel notificationPanel){
     	this.notificationPanel=notificationPanel;
     }
     
+    /**
+     * @return the number of turns
+     */
     public int getTurns() {
     	return turns.size();
     }
@@ -56,10 +66,16 @@ public class Round {
     	return turns.get(currentTurn);
     }
     
+    /**
+     * @return true if another turn exists in round
+     */
     public boolean hasNextTurn() {
         return currentTurn + 1 < turns.size();
     }
     
+    /**
+     * @return the current turn
+     */
     public Turn getCurrentTurn() {
     	return turns.get(currentTurn);
     }
@@ -73,12 +89,18 @@ public class Round {
         return foodRequirement;
     }
     
+    /**
+     * Updates the panel
+     */
     public void panelUpdate(){
     	if(notificationPanel!=null){
     		notificationPanel.update();
     	}
     }
     
+    /**
+     * @return the round number
+     */
    public int getRoundNumber() {
 	   return roundNumber;
    }

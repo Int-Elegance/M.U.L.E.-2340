@@ -1,3 +1,7 @@
+/**
+ * @author Team 7
+ * Race enum to symbolize Race
+ */
 public enum Race {
     Human   (600),
     Flapper (1600),
@@ -7,10 +11,18 @@ public enum Race {
     
     private final int startingMoney;
     
+    /**
+     * Race constructor 
+     * 
+     * @param startingMoney starting money of race
+     */
     private Race(int startingMoney) {
         this.startingMoney = startingMoney;
     }
     
+    /**
+     * @return starting money of race
+     */
     public int getStartingMoney() {
         return startingMoney;
     }

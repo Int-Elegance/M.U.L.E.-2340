@@ -11,6 +11,13 @@ public abstract class Property extends Tile {
     private int energy;
     private int ore;
     
+    /**
+	 * Property constructor
+	 * 
+	 * @param amount of food of property
+	 * @param amount of money of property 
+	 * @param amount of ore of property
+	 */
     public Property(int food, int energy, int ore) {
         this.food = food;
         this.energy = energy;
@@ -18,10 +25,16 @@ public abstract class Property extends Tile {
         this.isOwned = false;
     }
     
+    /**
+	 * @return if the property is owned
+	 */
     public boolean isOwned() {
     	return isOwned;
     }
     
+    /**
+	 * @param b true if property is owned
+	 */
     public void setOwned(boolean b) {
     	isOwned = b;
     }

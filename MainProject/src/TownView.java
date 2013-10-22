@@ -10,7 +10,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 
-
+/**
+ * @author Team 7
+ * Class for the in-town view of the town
+ */
 public class TownView {
 	
 	private float progress = 0.0f;
@@ -40,7 +43,10 @@ public class TownView {
 	static final int SPEED = 4;
 	
 	/**
+	 * TownView constructor
 	 * 
+	 * 
+	 * @param player player to enter the town
 	 */
 	public TownView(Player player){
 		//Sets the widths and heights for the player and the town. If the player is set to the correct width odd things happen. 
@@ -111,7 +117,9 @@ public class TownView {
 		playerImage.setBounds(playerX,playerY,playerX+playerWidth,playerY+playerHeight);
 	}
 	
-	/* checks if player is within outer bounds */
+	/**
+	 * @return if the player is out of bounds
+	 */
 	private boolean checkOuterBoundaries(){
 		//if the code is running correctly then the 404 should be replaced by townHeight and the 534 should be replaced by townWidth
 		//the 10s should be replaced with 0
@@ -132,7 +140,9 @@ public class TownView {
 		return touching;
 	}
 
-	/* checks if player is inside a shop */
+	/**
+	 * @return if the player is in the shop
+	 */
 	private boolean checkInnerBoundaries(){
 		return (checkForSpecificLocation(pubX, pubY, width, heightT)||
 				checkForSpecificLocation(storeX, storeY, width, heightB)||
@@ -227,10 +237,21 @@ public class TownView {
     }
 
 	
-	
+	/**
+	 * @author Team 7
+	 * KeyStroke class to move the player
+	 */
 	private class KeyStroke implements KeyListener{
 		
+		/**
+		 * @param e KeyEvent
+		 */
 		public void keyTyped(KeyEvent e){}
+		/**
+		 * listens for key strokes
+		 * 
+		 * @param e KeyEvent
+		 */
 		public void keyPressed(KeyEvent e){
 			//Listens for key storkes.
 			//Updates the player location.
@@ -250,6 +271,9 @@ public class TownView {
 				 tempPlayerX-=SPEED;
 			 }
 		 }
+		/**
+		 * @param e KeyEvent
+		 */
 		 public void keyReleased(KeyEvent e){}
 	}
 }

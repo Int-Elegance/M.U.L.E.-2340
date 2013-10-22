@@ -1,5 +1,9 @@
 import javax.swing.ImageIcon;
 
+/**
+ * @author Team 7
+ * Mountain class for the board
+ */
 public class Mountain extends Property {
     public final static int TYPE_1 = 1;
     public final static int TYPE_2 = 2;     
@@ -7,6 +11,11 @@ public class Mountain extends Property {
     
     private int type;
     
+    /**
+     * Mountain constructor
+     * 
+     * @int indicates what type of mountain it is
+     */
     public Mountain(int type) {
         super(1, 1, type + 1);
         if (type > 4 || type < 1)
