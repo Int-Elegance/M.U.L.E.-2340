@@ -1,4 +1,3 @@
-
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -10,7 +9,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 
-
+/**
+ * This class represents the view of the town.  It generates
+ * the GUI for the town and handles movement.
+ */
 public class TownView {
 	
 	private float progress = 0.0f;
@@ -40,7 +42,8 @@ public class TownView {
 	static final int SPEED = 4;
 	
 	/**
-	 * 
+	 * Constructor for the townview which takes in the player
+	 * @param the player who can do stuff in the town
 	 */
 	public TownView(Player player){
 		//Sets the widths and heights for the player and the town. If the player is set to the correct width odd things happen. 
@@ -111,7 +114,9 @@ public class TownView {
 		playerImage.setBounds(playerX,playerY,playerX+playerWidth,playerY+playerHeight);
 	}
 	
-	/* checks if player is within outer bounds */
+	/**
+	 *  checks if player is within outer bounds 
+	 */
 	private boolean checkOuterBoundaries(){
 		//if the code is running correctly then the 404 should be replaced by townHeight and the 534 should be replaced by townWidth
 		//the 10s should be replaced with 0
@@ -132,7 +137,9 @@ public class TownView {
 		return touching;
 	}
 
-	/* checks if player is inside a shop */
+	/**
+	 * checks if player is inside a shop 
+	 */
 	private boolean checkInnerBoundaries(){
 		return (checkForSpecificLocation(pubX, pubY, width, heightT)||
 				checkForSpecificLocation(storeX, storeY, width, heightB)||
@@ -196,7 +203,8 @@ public class TownView {
 	
 	}	
 	/**
-	 * moves player around the screen
+	 * moves player around the screen, sets a keylistener to listen for directions
+	 * animates the player
 	 */
 	private void animate() {
 		//sets a KeyListener to listen for directions
@@ -227,29 +235,26 @@ public class TownView {
     }
 
 	
-	
-	private class KeyStroke implements KeyListener{
-		
-		public void keyTyped(KeyEvent e){}
-		public void keyPressed(KeyEvent e){
-			//Listens for key storkes.
-			//Updates the player location.
-			//Monitors which direction the player is going in, currently this is being used to decide information about 
-			//the movement of the player around the corners of locations in the checkForSpecificLocation() method.
-			//Given time a better method of moving around corners should be devised.
-			 if(KeyEvent.VK_UP==e.getKeyCode()||KeyEvent.VK_W==e.getKeyCode()){
-				 tempPlayerY-=SPEED;
-			 }
-			 else if(KeyEvent.VK_DOWN==e.getKeyCode()||KeyEvent.VK_S==e.getKeyCode()){
-				 tempPlayerY+=SPEED;
-			 }
-			 else if(KeyEvent.VK_RIGHT==e.getKeyCode()||KeyEvent.VK_D==e.getKeyCode()){
-				 tempPlayerX+=SPEED;
-			 }
-			 else if(KeyEvent.VK_LEFT==e.getKeyCode()||KeyEvent.VK_A==e.getKeyCode()){
-				 tempPlayerX-=SPEED;
+	/**
+	 * Listens for key strokes, updates the player's location, monitos which direction
+	 * the player is going in, checks for the movement around corners.
+	 */
+	private class KeyStroke extends KeyAdapter {
+        
+        /**
+         * Checks for the keypress and moves the player in the direction
+         * @param the keyevent of the key pressed
+         */
+		public void keyPressed(KeyEvent e) {
+			 if (KeyEvent.VK_UP == e.getKeyCode() || KeyEvent.VK_W == e.getKeyCode()) {
+				 tempPlayerY -= SPEED;
+			 } else if (KeyEvent.VK_DOWN == e.getKeyCode() || KeyEvent.VK_S == e.getKeyCode()) {
+				 tempPlayerY += SPEED;
+			 } else if (KeyEvent.VK_RIGHT == e.getKeyCode() || KeyEvent.VK_D == e.getKeyCode()) {
+				 tempPlayerX += SPEED;
+			 } else if (KeyEvent.VK_LEFT == e.getKeyCode() || KeyEvent.VK_A == e.getKeyCode()) {
+				 tempPlayerX -= SPEED;
 			 }
 		 }
-		 public void keyReleased(KeyEvent e){}
 	}
 }

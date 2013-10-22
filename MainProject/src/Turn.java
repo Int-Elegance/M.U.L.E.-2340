@@ -1,5 +1,4 @@
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
 
@@ -25,8 +24,6 @@ public class Turn implements Comparable {
     public Turn(final Round round, Player player) {
         this.round = round;
         this.player = player;
-     
-        
         secondsLeft = getTime();
         timer = new Timer(1000, new ActionListener() {
         	/**
@@ -50,6 +47,10 @@ public class Turn implements Comparable {
         });
     }
     
+    /**
+     * Calculates the time that the players has depending on food
+     * @return the time in the seconds that the player has
+     */
     public int getTime() {
     	int food = player.getFood();
         int requirement = round.getFoodRequirement();
