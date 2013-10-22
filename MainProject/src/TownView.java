@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
 
 
 public class TownView {
