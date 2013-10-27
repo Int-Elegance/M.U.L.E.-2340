@@ -7,6 +7,7 @@ import java.util.*;
  */
 public class Round {
     private int foodRequirement;
+    private int nextFoodRequirement;
     private int roundNumber;
     protected int currentTurn;
     protected List<Player> players;
@@ -20,9 +21,10 @@ public class Round {
      * @param the list of players in the game
      * @param the food requirement for this round
      */
-    public Round(int roundNumber, List<Player> players, int foodRequirement) {
+    public Round(int roundNumber, List<Player> players, int foodRequirement, int nextFoodRequirement) {
 
         this.roundNumber = roundNumber;
+        this.nextFoodRequirement = nextFoodRequirement;
         this.players = players;
         this.foodRequirement = foodRequirement;
         setUp();
@@ -103,5 +105,13 @@ public class Round {
      */
    public int getRoundNumber() {
 	   return roundNumber;
+   }
+   
+   /**
+    * @return the next food requirement
+    */
+   public int getNextFoodRequirement()
+   {
+	   return nextFoodRequirement;
    }
 }
