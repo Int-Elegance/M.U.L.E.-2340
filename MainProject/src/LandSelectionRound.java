@@ -28,14 +28,20 @@ public class LandSelectionRound extends Round{
 	 * Called in the superclass constructor
 	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	public void setUp() {
     	turns = new ArrayList<Turn>();
+    	/*
+        Collections.sort(players);
+        Collections.reverse(players);
+        */
         for (Player p : players) {
             Turn turn = new LandSelectionTurn(this, p);
             turns.add(turn);
         }
         
         Collections.sort(turns);
+        Collections.reverse(turns);
         currentTurn = 0;
     }
 	

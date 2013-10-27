@@ -33,14 +33,20 @@ public class Round {
     /**
      * Sets up by creating a turn for each player
      */
-    public void setUp() {
+    @SuppressWarnings("unchecked")
+	public void setUp() {
     	turns = new ArrayList<Turn>();
+    	/*
+    	Collections.sort(players);
+    	Collections.reverse(players);
+    	*/
         for (Player p : players) {
             Turn turn = new Turn(this, p);
             turns.add(turn);
         }
         
         Collections.sort(turns);
+        Collections.reverse(turns);
         currentTurn = 0;
     }
     

@@ -1,11 +1,11 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 
 /**
  * This class takes care of the turn for a player and keeps track of the time passing.
  * @author Team 7
  */
+@SuppressWarnings("rawtypes")
 public class Turn implements Comparable {
     
     protected Timer timer;
