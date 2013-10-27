@@ -36,10 +36,6 @@ public class Round {
     @SuppressWarnings("unchecked")
 	public void setUp() {
     	turns = new ArrayList<Turn>();
-    	/*
-    	Collections.sort(players);
-    	Collections.reverse(players);
-    	*/
         for (Player p : players) {
             Turn turn = new Turn(this, p);
             turns.add(turn);
@@ -120,4 +116,6 @@ public class Round {
    {
 	   return nextFoodRequirement;
    }
+   
+   
 }
