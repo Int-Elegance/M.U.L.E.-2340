@@ -21,14 +21,15 @@ public class TownView {
 	private JLabel townImage;
 	private int playerWidth;
 	private int playerHeight;
-	private int playerX=200;
-	private int tempPlayerX=200;
-	private int playerY=200;
-	private int tempPlayerY=200;
+	private int playerX=250;
+	private int tempPlayerX=250;
+	private int playerY=180;
+	private int tempPlayerY=180;
 	private int townWidth;
 	private int townHeight;
 	private JPanel panel; 
 	private JFrame frame;
+	private JFrame pubframe;
 	int pubX=28;
 	int pubY=32;
 	int storeX=28;
@@ -38,7 +39,7 @@ public class TownView {
 	int otherX=348;
 	int otherY=32;
 	int width=166;
-	int heightT=108;
+	int heightT=78;//108;
 	int heightB=140;
 	static final int SPEED = 4;
 	
@@ -67,8 +68,8 @@ public class TownView {
 	 * displays initial town with player in the center of the board
 	 * @param frame 
 	 */
-	public void displayTownSquare(JFrame frame){
-		this.frame=frame;
+	public void displayTownSquare(){
+		frame=new JFrame();
 		
 		//creates layeredPane
 		JLayeredPane layeredPane = new JLayeredPane();
@@ -100,7 +101,7 @@ public class TownView {
 	/**
 	 * updates player's location
 	 */
-	public void updatePlayer(){
+	public boolean updatePlayer(){
 		//calculate new location
 		boolean touchingInner =checkInnerBoundaries();
 		boolean touchingOuter =checkOuterBoundaries();
@@ -115,6 +116,11 @@ public class TownView {
 		}
 		
 		playerImage.setBounds(playerX,playerY,playerX+playerWidth,playerY+playerHeight);
+		if(checkForSpecificLocation(pubX,pubY+heightT,width, 10)){
+			pubview();
+			return false;
+		}
+		return true;
 	}
 	
 	/**
@@ -227,7 +233,10 @@ public class TownView {
                 final long now = System.currentTimeMillis();
                 final long elapsed = now - start;
                 progress = (float) elapsed / animationTime;
-                updatePlayer();
+
+                if(!updatePlayer()){
+                	timer.stop();
+                }
                 if (elapsed >= animationTime) {
                  //   timer.stop();
                 }
@@ -235,8 +244,107 @@ public class TownView {
         });
         timer.start();
     }
-
 	
+	private void locAnimate() {
+		//sets a KeyListener to listen for directions
+		KeyStroke stork = new KeyStroke();
+		if(pubframe==null)
+			return;
+		pubframe.addKeyListener(stork);
+		
+		//animates the player moving across the screen at a certain fps
+		//also has an unused timer feature that could be used later on in the project.
+		final int animationTime = 1000;
+        int fps = 30;
+        int delay = 1000 / fps;
+        final long start = System.currentTimeMillis();
+        final Timer timer = new Timer(delay, null);
+        timer.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                final long now = System.currentTimeMillis();
+                final long elapsed = now - start;
+                progress = (float) elapsed / animationTime;
+                if(!updatePlayerPub()){
+                	timer.stop();
+                }
+            }
+        });
+        timer.start();
+    }
+	
+	private boolean pubview(){
+		
+		frame.setVisible(false);
+		
+		pubframe =new JFrame();
+		
+		ImageIcon pubIcon = new ImageIcon("pubview.jpg");
+		JLabel pubImage = new JLabel(pubIcon);
+		int pubWidth=pubIcon.getIconWidth();
+		int pubHeight=pubIcon.getIconHeight();
+		
+		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane.setOpaque(false);
+		layeredPane.setPreferredSize(new Dimension(pubWidth, pubHeight));
+		
+		//sets bounds on images so they can be drawn
+		pubImage.setBounds(0,0,pubWidth, pubHeight);
+		tempPlayerX=260;
+		tempPlayerY=332;
+		playerImage.setBounds(playerX,playerY,playerX+playerWidth,playerY+playerHeight);
+		
+		//adds images to the layeredPane
+		layeredPane.add(pubImage,JLayeredPane.DEFAULT_LAYER);
+		layeredPane.add(playerImage,JLayeredPane.POPUP_LAYER);
+		
+		//creates a new JPanel, and adds the layered pane to it
+		JPanel pubpanel = new JPanel();
+		pubpanel.add(layeredPane);
+		
+			
+		
+		pubframe.setSize(new Dimension(townWidth, townHeight));
+		pubframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		pubframe.add(pubpanel);
+        pubframe.pack();
+        pubframe.setVisible(true);
+        locAnimate();
+        
+		return true;
+	}
+	
+	private boolean updatePlayerPub(){
+		boolean touchingOuter =checkOuterBoundaries();
+
+		if(!touchingOuter){
+			playerX=tempPlayerX;
+			playerY=tempPlayerY;
+		}
+		else{
+			tempPlayerX=playerX;
+			tempPlayerY=playerY;
+		}
+		
+		playerImage.setBounds(playerX,playerY,playerX+playerWidth,playerY+playerHeight);
+		if(checkForSpecificLocation(170,140,200,130)){//gamble
+			
+			//WHERE YOU PLACE GAMBLE FUNCTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			
+			return false;
+		}
+		if(checkForSpecificLocation(168,388,216,10)){//exit
+			returnToTown(pubframe);
+			return false;
+		}
+		return true;
+	}
+	private boolean returnToTown(JFrame locFrame){
+		locFrame.setVisible(false);
+		tempPlayerX=250;
+		tempPlayerY=180;
+		displayTownSquare();
+		return true;
+	}
 	/**
 	 * @author Team 7
 	 * KeyStroke class to move the player

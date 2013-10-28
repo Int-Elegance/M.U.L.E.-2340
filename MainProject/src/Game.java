@@ -23,7 +23,6 @@ public class Game {
 	private String mapType;
 	private Login window;
 	private JFrame frame;
-	private int roundNumber = 1;
 	public static final char[][] STANDARD_MAP = {{'P', 'P', '1', 'P', 'R', 'P', '3', 'P', 'P'},
 	                                             {'P', '1', 'P', 'P', 'R', 'P', 'P', 'P', '3'},
 	                                             {'3', 'P', 'P', 'P', 'T', 'P', 'P', 'P', '1'},
@@ -142,31 +141,8 @@ public class Game {
 	 * @return the next round
 	 */
 	public Round nextRound() {
-		int foodReq = currentRound.getNextFoodRequirement();
-		int nextFoodReq = calcNextFoodRequirement(roundNumber);
-		currentRound = new Round(roundNumber, players, foodReq, nextFoodReq);
-		roundNumber++;
+		currentRound = new Round(0, players, 0);
 		return currentRound;
-	}
-	
-	/**
-	 * Helper method that calculates the next food requirement for a round
-	 * @param roundNumber
-	 * @return the next round's food requirement. The last round will return 0
-	 */
-	private int calcNextFoodRequirement(int roundNumber)
-	{
-		int nextFoodReq = 0;
-		if (roundNumber < 4) { nextFoodReq = 3; }
-		else
-		{
-			if (roundNumber < 8) { nextFoodReq = 4;}
-			else
-			{
-				if (roundNumber < 12) { nextFoodReq = 5; }
-			}
-		}
-		return nextFoodReq;
 	}
 	
 	
@@ -217,9 +193,8 @@ public class Game {
 			
 		} else {
 			nextRound();
-			TownView town = new TownView(getCurrentTurn().getPlayer());
-			JFrame frame = new JFrame();       
-	        town.displayTownSquare(frame);
+			TownView town = new TownView(getCurrentTurn().getPlayer());  
+	        town.displayTownSquare();
 		}
 		
 	}
