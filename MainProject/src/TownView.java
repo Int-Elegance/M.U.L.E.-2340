@@ -349,7 +349,7 @@ public class TownView {
 			timeBonus = 150;
 		if (timeRemaining > 37) // if time is between 37 and 50, timeBonus = 200
 			timeBonus = 200;
-		
+		System.out.println("Time Bonus:" + timeBonus);
 		// calculates the round bonus
 		int roundBonus = 50; // if it is round 1,2, or 3, roundBonus = 50
 		if (currentRound > 3) // if it is round 3,4,5,6, or 7, roundBonus = 100
@@ -358,11 +358,11 @@ public class TownView {
 			roundBonus = 150;
 		if (currentRound > 11) // if it is round 12, roundBonus = 200
 			roundBonus = 200;
-		
+		System.out.println("Round Bonus:" + roundBonus);
 		
 		// calculates the money bonus; Money Bonus = Round Bonus * random b/t 0 and Time Bonus
 		int moneyBonus = (int) (roundBonus * (Math.random() * timeBonus));
-		System.out.println(moneyBonus);
+		System.out.println("Money Bonus before limit:" + moneyBonus);
 		if (moneyBonus > 250) // you cannot earn more than 250 from gambling
 			moneyBonus = 250;
 		
