@@ -191,12 +191,16 @@ public class Game {
 		if (getCurrentRound().hasNextTurn()) {
 			getCurrentRound().nextTurn();
 			getCurrentTurn().start();
-			
 		} else {
 			nextRound();
-			town = new TownView(getCurrentTurn());  
-	        town.displayTownSquare();
+			getCurrentTurn().start();
 		}
+		if (getCurrentTurn() instanceof LandSelectionTurn)
+		{
+			return;
+		}
+		town = new TownView(getCurrentTurn());
+	    town.displayTownSquare();
 	}
 	
 	/**

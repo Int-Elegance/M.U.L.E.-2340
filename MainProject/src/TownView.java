@@ -442,4 +442,10 @@ public class TownView {
 		 */
 		 public void keyReleased(KeyEvent e){}
 	}
+	
+	//change the currentTurn
+	public void changeTurn(Turn currentTurn) {
+		this.currentTurn = currentTurn;
+		
+	}
 }
