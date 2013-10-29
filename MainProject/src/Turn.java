@@ -12,6 +12,7 @@ public class Turn implements Comparable {
     protected int secondsLeft;
     protected Round round; 
     protected Player player;
+    protected boolean passed;
     
     
     /**  
@@ -26,6 +27,7 @@ public class Turn implements Comparable {
         this.player = player;
         secondsLeft = getTime();
         timer = new Timer(1000, new ActionListener() {
+        	
         	/**
              * Each time the timer fires an event, this method decrements the seconds left.  
              * When the number of seconds reaches 0, the timer is stopped and the round moves to the next turn.
@@ -34,13 +36,10 @@ public class Turn implements Comparable {
             	if (secondsLeft < 1) {
                     timer.stop();
                     Game game = round.getGame();
-                    if (game.getCurrentTurn() instanceof LandSelectionTurn) {
-    					((LandSelectionTurn) game.getCurrentTurn()).pass();
-    					game.nextTurn();
-                    }
+    				game.getCurrentTurn().pass();
+    				game.nextTurn();
                     //TODO fix reset for actual turns
                     secondsLeft = getTime();
-                    //TODO what happens if time runs out during land selection?
                 } else {
                     secondsLeft--;
                     round.panelUpdate();
@@ -116,6 +115,20 @@ public class Turn implements Comparable {
         return this.getPlayer().compareTo(((Turn)o).getPlayer());
     }
     
-   
+    /**
+     * indicates the turn has been passed
+     */
+    public void pass()
+    {
+    	passed = true;
+    }
+    
+    /**
+     * @return if the turn has been passed
+     */
+    public boolean isPassed()
+    {
+    	return passed;
+    }
     
 }

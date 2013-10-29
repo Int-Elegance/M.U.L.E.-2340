@@ -14,8 +14,6 @@ import java.awt.event.ActionEvent;
 public class LandSelectionTurn extends Turn {
 	
 	private int numTurns;
-	private boolean passed;
-	
 	private static final int TIME = 60;
 
 	
@@ -78,15 +76,6 @@ public class LandSelectionTurn extends Turn {
      */
 	public void pass() {
 		((LandSelectionRound) round).addPass();
-		passed = true;
-	}
-	
-	/**
-	 * true if the turn is passed
-	 * 
-     * @return if the turn has been passed
-     */
-	public boolean isPassed() {
-		return passed;
+		super.pass();
 	}
 }
