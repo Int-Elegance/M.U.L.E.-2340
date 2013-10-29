@@ -34,12 +34,7 @@ public class Turn implements Comparable {
              */
             public void actionPerformed(ActionEvent e) {
             	if (secondsLeft < 1) {
-                    timer.stop();
-                    Game game = round.getGame();
-    				game.getCurrentTurn().pass();
-    				game.nextTurn();
-                    //TODO fix reset for actual turns
-                    secondsLeft = getTime();
+                    endTurn();
                 } else {
                     secondsLeft--;
                     round.panelUpdate();
@@ -47,6 +42,19 @@ public class Turn implements Comparable {
                 }
             }
         });
+    }
+    
+    /**
+     * Method that immediately ends turn, regardless of how many seconds are left
+     */
+    public void endTurn() {
+    	secondsLeft = 0;
+    	timer.stop();
+        Game game = round.getGame();
+		game.getCurrentTurn().pass();
+		game.nextTurn();
+        //TODO fix reset for actual turns
+        secondsLeft = getTime();
     }
     
 
@@ -97,6 +105,14 @@ public class Turn implements Comparable {
      */
     public Player getPlayer() {
         return player;
+    }
+    
+    /**
+     * Returns the current round of the turn
+     * @return round
+     */
+    public Round getRound() {
+    	return round;
     }
     
     /**

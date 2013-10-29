@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 public class TownView {
 	
 	private float progress = 0.0f;
+	private Player player;
 	private Turn currentTurn;
 	private JLabel playerImage;
 	private JLabel townImage;
@@ -54,9 +55,10 @@ public class TownView {
 	 */
 	public TownView(Turn currentTurn){
 		this.currentTurn = currentTurn;
+		this.player = currentTurn.getPlayer();
 		//Sets the widths and heights for the player and the town. If the player is set to the correct width odd things happen. 
 		//If the player is set to 28x42 it works normally except near the edges.
-		ImageIcon playerIcon = currentTurn.getPlayer().getImage();
+		ImageIcon playerIcon = player.getImage();
 		playerImage = new JLabel(playerIcon);
 		playerWidth=28;//playerIcon.getIconWidth();
 		playerHeight=42;//playerIcon.getIconHeight();
@@ -332,6 +334,43 @@ public class TownView {
 		return true;
 	}
 	
+	private void gamble() {
+		int timeRemaining = currentTurn.getSecondsLeft();
+		int currentRound = currentTurn.getRound().getRoundNumber(); // a number representing the current round
+		
+		// calculates time bonus
+		int timeBonus = 50; // if time is less than or equal to 12, timeBonus = 50
+		if (timeRemaining > 12) // if time is between 12 and 25, timeBonus = 100
+			timeBonus = 100;
+		if (timeRemaining > 25) // if time is between 25 and 37, timeBonus = 150
+			timeBonus = 150;
+		if (timeRemaining > 37) // if time is between 37 and 50, timeBonus = 200
+			timeBonus = 200;
+		
+		// calculates the round bonus
+		int roundBonus = 50; // if it is round 1,2, or 3, roundBonus = 50
+		if (currentRound > 3) // if it is round 3,4,5,6, or 7, roundBonus = 100
+			roundBonus = 100;
+		if (currentRound > 7) // if it is round 8,9,10, or 11, roundBonus = 150
+			roundBonus = 150;
+		if (currentRound > 11) // if it is round 12, roundBonus = 200
+			roundBonus = 200;
+		
+		
+		// calculates the money bonus; Money Bonus = Round Bonus * random b/t 0 and Time Bonus
+		int moneyBonus = (int) (roundBonus * (Math.random() * timeBonus));
+		if (moneyBonus > 250) // you cannot earn more than 250 from gambling
+			moneyBonus = 250;
+		
+		player.changeMoney(moneyBonus); // adds money from gambling to the player
+		
+		// notify the player of how much money they have made
+		JOptionPane.showMessageDialog(frame, "You made $" + moneyBonus + " from gambling! Your turn is now over.");
+		
+		// end the player's turn
+		currentTurn.endTurn();
+	}
+	
 	private boolean updatePlayerPub(){
 		boolean touchingOuter =checkOuterBoundaries();
 
@@ -347,7 +386,7 @@ public class TownView {
 		playerImage.setBounds(playerX,playerY,playerX+playerWidth,playerY+playerHeight);
 		if(checkForSpecificLocation(170,140,200,130)){//gamble
 			
-			//WHERE YOU PLACE GAMBLE FUNCTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			gamble();
 			
 			return false;
 		}
