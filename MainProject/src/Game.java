@@ -193,7 +193,7 @@ public class Game {
 			
 		} else {
 			nextRound();
-			TownView town = new TownView(getCurrentTurn().getPlayer());  
+			TownView town = new TownView(getCurrentTurn());  
 	        town.displayTownSquare();
 		}
 		

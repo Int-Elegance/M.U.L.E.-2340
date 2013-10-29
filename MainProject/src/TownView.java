@@ -1,4 +1,5 @@
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,7 @@ import javax.swing.ImageIcon;
 public class TownView {
 	
 	private float progress = 0.0f;
+	private Turn currentTurn;
 	private JLabel playerImage;
 	private JLabel townImage;
 	private int playerWidth;
@@ -49,10 +51,11 @@ public class TownView {
 	 * 
 	 * @param player player to enter the town
 	 */
-	public TownView(Player player){
+	public TownView(Turn currentTurn){
+		this.currentTurn = currentTurn;
 		//Sets the widths and heights for the player and the town. If the player is set to the correct width odd things happen. 
 		//If the player is set to 28x42 it works normally except near the edges.
-		ImageIcon playerIcon = player.getImage();
+		ImageIcon playerIcon = currentTurn.getPlayer().getImage();
 		playerImage = new JLabel(playerIcon);
 		playerWidth=28;//playerIcon.getIconWidth();
 		playerHeight=42;//playerIcon.getIconHeight();
@@ -71,6 +74,8 @@ public class TownView {
 	public void displayTownSquare(){
 		frame=new JFrame();
 		
+		TownNotificationPanel townNotifyPanel = new TownNotificationPanel(currentTurn);
+		townNotifyPanel.setPreferredSize(new Dimension(townWidth, 30));
 		//creates layeredPane
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setOpaque(false);
@@ -89,10 +94,15 @@ public class TownView {
 		panel.add(layeredPane);
 		
 		//adds the pane to the frame, the JFrame has a grid layout but changing the layout does not seem to help the size problem
-		frame.setSize(new Dimension(townWidth, townHeight));
+		frame.setSize(new Dimension(townWidth, townHeight + 30));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel.setLayout(new GridLayout(1,1));
-		frame.add(panel);
+		
+		JPanel wrapperPanel = new JPanel(new BorderLayout());
+		wrapperPanel.setPreferredSize(new Dimension(townWidth, townHeight+30));
+		wrapperPanel.add(panel, BorderLayout.SOUTH);
+		wrapperPanel.add(townNotifyPanel, BorderLayout.NORTH);
+		frame.add(wrapperPanel);
         frame.pack();
         frame.setVisible(true);
         animate();
