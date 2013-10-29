@@ -110,6 +110,10 @@ public class Round {
     	if(notificationPanel!=null){
     		notificationPanel.update();
     	}
+    	if (game.getTownNotificationPanel() != null)
+    	{
+    		game.getTownNotificationPanel().update();
+    	}
     }
     
     /**

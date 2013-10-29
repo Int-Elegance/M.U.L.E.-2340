@@ -32,6 +32,7 @@ public class TownView {
 	private JPanel panel; 
 	private JFrame frame;
 	private JFrame pubframe;
+	private TownNotificationPanel townNotifyPanel;
 	int pubX=28;
 	int pubY=32;
 	int storeX=28;
@@ -60,11 +61,20 @@ public class TownView {
 		playerWidth=28;//playerIcon.getIconWidth();
 		playerHeight=42;//playerIcon.getIconHeight();
 		
+		townNotifyPanel = new TownNotificationPanel(currentTurn);
 		ImageIcon townIcon = new ImageIcon("townview.jpg");
 		townImage = new JLabel(townIcon);
 		townWidth=townIcon.getIconWidth();
 		townHeight=townIcon.getIconHeight();
 		
+	}
+	
+	/**
+	 * @return the town notification panel
+	 */
+	public TownNotificationPanel getTownNotificationPanel()
+	{
+		return townNotifyPanel;
 	}
 	
 	/**
@@ -74,7 +84,6 @@ public class TownView {
 	public void displayTownSquare(){
 		frame=new JFrame();
 		
-		TownNotificationPanel townNotifyPanel = new TownNotificationPanel(currentTurn);
 		townNotifyPanel.setPreferredSize(new Dimension(townWidth, 30));
 		//creates layeredPane
 		JLayeredPane layeredPane = new JLayeredPane();

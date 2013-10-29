@@ -22,6 +22,7 @@ public class Game {
 	private String difficulty;
 	private String mapType;
 	private Login window;
+	private TownView town;
 	private JFrame frame;
 	public static final char[][] STANDARD_MAP = {{'P', 'P', '1', 'P', 'R', 'P', '3', 'P', 'P'},
 	                                             {'P', '1', 'P', 'P', 'R', 'P', 'P', 'P', '3'},
@@ -193,9 +194,21 @@ public class Game {
 			
 		} else {
 			nextRound();
-			TownView town = new TownView(getCurrentTurn());  
+			town = new TownView(getCurrentTurn());  
 	        town.displayTownSquare();
 		}
+	}
+	
+	/**
+	 * @return TownNotificationPanel
+	 */
+	public TownNotificationPanel getTownNotificationPanel()
+	{
+		if (town == null)
+		{
+			return null;
+		}
 		
+		return town.getTownNotificationPanel();
 	}
 }
