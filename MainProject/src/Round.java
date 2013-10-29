@@ -10,6 +10,7 @@ public class Round {
     private int nextFoodRequirement;
     private int roundNumber;
     protected int currentTurn;
+    protected Game game;
     protected List<Player> players;
     protected List<Turn> turns;
     protected NotificationPanel notificationPanel;
@@ -21,11 +22,12 @@ public class Round {
      * @param the list of players in the game
      * @param the food requirement for this round
      */
-    public Round(int roundNumber, List<Player> players, int foodRequirement, int nextFoodRequirement) {
+    public Round(int roundNumber, List<Player> players, int foodRequirement, int nextFoodRequirement, Game game) {
 
         this.roundNumber = roundNumber;
         this.nextFoodRequirement = nextFoodRequirement;
         this.players = players;
+        this.game = game;
         this.foodRequirement = foodRequirement;
         setUp();
     }
@@ -60,6 +62,14 @@ public class Round {
      */
     public int getTurns() {
     	return turns.size();
+    }
+    
+    /**
+     * @return the game associated with this round
+     */
+    public Game getGame()
+    {
+    	return game;
     }
     
     /**

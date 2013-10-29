@@ -24,9 +24,8 @@ public class Turn implements Comparable {
     public Turn(final Round round, Player player) {
         this.round = round;
         this.player = player;
-        int turnTime = getTime();
         secondsLeft = getTime();
-        timer = new Timer(turnTime, new ActionListener() {
+        timer = new Timer(1000, new ActionListener() {
         	/**
              * Each time the timer fires an event, this method decrements the seconds left.  
              * When the number of seconds reaches 0, the timer is stopped and the round moves to the next turn.
@@ -34,7 +33,11 @@ public class Turn implements Comparable {
             public void actionPerformed(ActionEvent e) {
             	if (secondsLeft < 1) {
                     timer.stop();
-                    round.nextTurn();
+                    Game game = round.getGame();
+                    if (game.getCurrentTurn() instanceof LandSelectionTurn) {
+    					((LandSelectionTurn) game.getCurrentTurn()).pass();
+    					game.nextTurn();
+                    }
                     //TODO fix reset for actual turns
                     secondsLeft = getTime();
                     //TODO what happens if time runs out during land selection?

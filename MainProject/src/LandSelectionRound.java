@@ -17,8 +17,8 @@ public class LandSelectionRound extends Round{
 	 * 
 	 * @param players players of the game
 	 */
-	public LandSelectionRound(List<Player> players) {
-		super(0, players, 0, 0);
+	public LandSelectionRound(List<Player> players, Game game) {
+		super(0, players, 0, 0,game);
 		passCount = 0;
 	}
 	

@@ -94,7 +94,7 @@ public class Game {
 	 * Initializes the land selection round and shows the gamepanel, notification panel
 	 */
 	public boolean play() { 
-		LandSelectionRound round = new LandSelectionRound(players);
+		LandSelectionRound round = new LandSelectionRound(players, this);
 		currentRound = round;
 		gamePanel.beginDisplay(frame);
 		round.setNotificationPanel(notificationPanel);
@@ -141,7 +141,7 @@ public class Game {
 	 * @return the next round
 	 */
 	public Round nextRound() {
-		currentRound = new Round(0, players, 0);
+		currentRound = new Round(0, players, 0, 0, this);
 		return currentRound;
 	}
 	
