@@ -5,8 +5,8 @@ import java.awt.event.*;
  * This class takes care of the turn for a player and keeps track of the time passing.
  * @author Team 7
  */
-@SuppressWarnings("rawtypes")
-public class Turn implements Comparable {
+
+public class Turn implements Comparable<Turn> {
     
     protected Timer timer;
     protected int secondsLeft;
@@ -127,8 +127,8 @@ public class Turn implements Comparable {
      * Returns positive if the turn should be before the other turn, negative if the turn should be after the other turn.
      * @return positive if this turn should be first or negative if this turn should be after the other turn
      */
-    public int compareTo(Object o) {
-        return this.getPlayer().compareTo(((Turn)o).getPlayer());
+    public int compareTo(Turn o) {
+        return this.getPlayer().compareTo(o.getPlayer());
     }
     
     /**
