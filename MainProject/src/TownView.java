@@ -334,6 +334,9 @@ public class TownView {
 		return true;
 	}
 	
+	/**
+	 * Handles everything that happens when player gambles at the pub
+	 */
 	private void gamble() {
 		int timeRemaining = currentTurn.getSecondsLeft();
 		int currentRound = currentTurn.getRound().getRoundNumber(); // a number representing the current round
@@ -359,6 +362,7 @@ public class TownView {
 		
 		// calculates the money bonus; Money Bonus = Round Bonus * random b/t 0 and Time Bonus
 		int moneyBonus = (int) (roundBonus * (Math.random() * timeBonus));
+		System.out.println(moneyBonus);
 		if (moneyBonus > 250) // you cannot earn more than 250 from gambling
 			moneyBonus = 250;
 		
