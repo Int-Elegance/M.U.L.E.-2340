@@ -9,8 +9,7 @@ import javax.swing.ImageIcon;
  * Represent a player in the MULE game
  *
  */
-@SuppressWarnings("rawtypes")
-public class Player extends Actor implements Comparable {
+public class Player extends Actor implements Comparable<Player> {
 	
 	private Race race;
 	private String color;
@@ -244,8 +243,8 @@ public class Player extends Actor implements Comparable {
 	 * @param o object to be compared to
 	 * @return int number representing relationship
 	 */
-	public int compareTo(Object o) {
-	    return  this.getScore() - ((Player)o).getScore();
+	public int compareTo(Player o) {
+	    return  this.getScore() - o.getScore();
 	}
 	
 }
