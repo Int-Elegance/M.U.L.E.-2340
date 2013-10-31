@@ -33,18 +33,20 @@ public class TownView {
 	private JPanel panel; 
 	private JFrame frame;
 	private JFrame pubframe;
+	private JFrame storeframe;
+	private JFrame loframe;
 	private TownNotificationPanel townNotifyPanel;
 	int pubX=28;
 	int pubY=32;
 	int storeX=28;
-	int storeY=242;
+	int storeY=272;//242;
 	int landOfficeX=348;
 	int landOfficeY=242;
 	int otherX=348;
 	int otherY=32;
 	int width=166;
 	int heightT=78;//108;
-	int heightB=140;
+	int heightB=110;//140;
 	static final int SPEED = 4;
 	
 	/**
@@ -139,6 +141,10 @@ public class TownView {
 		playerImage.setBounds(playerX,playerY,playerX+playerWidth,playerY+playerHeight);
 		if(checkForSpecificLocation(pubX,pubY+heightT,width, 10)){
 			pubview();
+			return false;
+		}
+		if(checkForSpecificLocation(storeX,storeY-20,width, 30)){
+			storeview();
 			return false;
 		}
 		return true;
@@ -266,7 +272,7 @@ public class TownView {
         timer.start();
     }
 	
-	private void locAnimate() {
+	private void pubAnimate() {
 		//sets a KeyListener to listen for directions
 		KeyStroke stork = new KeyStroke();
 		if(pubframe==null)
@@ -329,7 +335,7 @@ public class TownView {
 		pubframe.add(pubpanel);
         pubframe.pack();
         pubframe.setVisible(true);
-        locAnimate();
+        pubAnimate();
         
 		return true;
 	}
@@ -389,7 +395,7 @@ public class TownView {
 		
 		playerImage.setBounds(playerX,playerY,playerX+playerWidth,playerY+playerHeight);
 		if(checkForSpecificLocation(170,140,200,130)){//gamble
-			
+			pubframe.setVisible(false);
 			gamble();
 			
 			return false;
@@ -400,6 +406,273 @@ public class TownView {
 		}
 		return true;
 	}
+	
+	
+	
+	
+	private void storeAnimate() {
+		//sets a KeyListener to listen for directions
+		KeyStroke stork = new KeyStroke();
+		if(storeframe==null)
+			return;
+		storeframe.addKeyListener(stork);
+		
+		//animates the player moving across the screen at a certain fps
+		//also has an unused timer feature that could be used later on in the project.
+		final int animationTime = 1000;
+        int fps = 30;
+        int delay = 1000 / fps;
+        final long start = System.currentTimeMillis();
+        final Timer timer = new Timer(delay, null);
+        timer.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                final long now = System.currentTimeMillis();
+                final long elapsed = now - start;
+                progress = (float) elapsed / animationTime;
+                if(!updatePlayerStore()){
+                	timer.stop();
+                }
+            }
+        });
+        timer.start();
+    }
+	
+	private boolean storeview(){
+		
+		frame.setVisible(false);
+		
+		storeframe =new JFrame();
+		
+		ImageIcon storeIcon = new ImageIcon("storeview.jpg");
+		JLabel storeImage = new JLabel(storeIcon);
+		int storeWidth=storeIcon.getIconWidth();
+		int storeHeight=storeIcon.getIconHeight();
+		
+		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane.setOpaque(false);
+		layeredPane.setPreferredSize(new Dimension(storeWidth, storeHeight));
+		
+		//sets bounds on images so they can be drawn
+		storeImage.setBounds(0,0,storeWidth, storeHeight);
+		tempPlayerX=260;
+		tempPlayerY=40;
+		playerImage.setBounds(playerX,playerY,playerX+playerWidth,playerY+playerHeight);
+		
+		//adds images to the layeredPane
+		layeredPane.add(storeImage,JLayeredPane.DEFAULT_LAYER);
+		layeredPane.add(playerImage,JLayeredPane.POPUP_LAYER);
+		
+		//creates a new JPanel, and adds the layered pane to it
+		JPanel storepanel = new JPanel();
+		storepanel.add(layeredPane);
+		
+			
+		
+		storeframe.setSize(new Dimension(storeWidth, storeHeight));
+		storeframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		storeframe.add(storepanel);
+		storeframe.pack();
+		storeframe.setVisible(true);
+        storeAnimate();
+        
+		return true;
+	}
+	
+	
+	private boolean updatePlayerStore(){
+		boolean touchingOuter =checkOuterBoundaries();
+
+		if(!touchingOuter){
+			playerX=tempPlayerX;
+			playerY=tempPlayerY;
+		}
+		else{
+			tempPlayerX=playerX;
+			tempPlayerY=playerY;
+		}
+		
+		playerImage.setBounds(playerX,playerY,playerX+playerWidth,playerY+playerHeight);
+		if(checkForSpecificLocation(170,140,200,130)){//buy!
+			buy();
+			tempPlayerX=260;
+			tempPlayerY=40;
+		//	return false;
+		}
+		if(checkForSpecificLocation(168,0,216,10)){//exit
+			returnToTown(storeframe);
+			return false;
+		}
+		return true;
+	}
+	
+	private void buy(){
+		String cancel="Cancel";
+		Object[] options = {"Buy",
+        					"Sell", cancel};
+		int n = JOptionPane.showOptionDialog(frame,
+			"Would you like to buy or sell?",
+			"Store",
+			JOptionPane.YES_NO_OPTION,
+			JOptionPane.QUESTION_MESSAGE,
+			null,     //do not use a custom Icon
+			options,  //the titles of buttons
+			options[0]); //default button title
+		
+		if(n==0){//BUY
+			String mule ="Mule costs 100 (base price)";
+			String food ="Food costs 30";
+			String energy="Energy costs 25";
+			String ore="Ore costs 50";
+			
+			Object[] possibilitiesBuy = {food,energy,ore,mule};
+			String buy = (String)JOptionPane.showInputDialog(
+			                    storeframe,
+			                    "What would you like to buy?",
+			                    "Customized Dialog",
+			                    JOptionPane.PLAIN_MESSAGE,
+			                    null,
+			                    possibilitiesBuy,
+			                    "");
+			if(buy.equals(mule)){
+				String foodMule =  "Food Mule                                  100+25=125";
+				String energyMule ="Energy Mule                               100+50=150";
+				String oreMule =   "Ore Mule                                    100+75=175";
+	               
+				
+				Object[] possibilitiesMule = {foodMule,energyMule,oreMule};
+				String s = (String)JOptionPane.showInputDialog(
+				                    storeframe,
+				                    "Which kind of mule would you like to buy?",
+				                    "Customized Dialog",
+				                    JOptionPane.PLAIN_MESSAGE,
+				                    null,
+				                    possibilitiesMule,
+				                    "");
+				if(s.equals(foodMule)){
+					System.out.println("Buying Food Mule!!");
+					//DEAR FUTURE CODE WRITER!!!!!!!!!         
+					//The player can only buy a mule if the store has mules left (The store begins with 25 mules total: the type of mule does not factor into the number of mules in the store)
+					//AND if the player does not have a mule bought already that has not yet been emplaced.
+					//The price for a FOOD mule is 125
+				}
+				else if(s.equals(energyMule)){
+					System.out.println("Buying Energy Mule!!");
+					//DEAR FUTURE CODE WRITER!!!!!!!!!         
+					//The player can only buy a mule if the store has mules left (The store begins with 25 mules total: the type of mule does not factor into the number of mules in the store)
+					//AND if the player does not have a mule bought already that has not yet been emplaced.
+					//The price for a ENERGY mule is 150
+				}
+				else if(s.equals(oreMule)){
+					System.out.println("Buying Ore Mule!!");
+					//DEAR FUTURE CODE WRITER!!!!!!!!!         
+					//The player can only buy a mule if the store has mules left (The store begins with 25 mules total: the type of mule does not factor into the number of mules in the store)
+					//AND if the player does not have a mule bought already that has not yet been emplaced.
+					//The price for a ORE mule is 175
+				}
+			}
+			else if(buy.equals(food)){
+				System.out.println("Buying food!!");
+				//DEAR FUTURE CODE WRITER!!!!!!!!!         
+				//The player can only buy food if the store has food left (The store begins with 16 food)
+				//The price for a food is 30
+			}
+			else if(buy.equals(energy)){
+				System.out.println("Buying energy!!");
+				//DEAR FUTURE CODE WRITER!!!!!!!!!         
+				//The player can only buy energy if the store has energy left (The store begins with 16 energy)
+				//The price for a energy is 25
+			}
+			else if(buy.equals(ore)){
+				System.out.println("Buying ore!!");
+				//DEAR FUTURE CODE WRITER!!!!!!!!!         
+				//The player can only buy ore if the store has ore left (The store begins with 0 ore)
+				//The price for a ore is 50
+			}
+			else{//cancel
+				
+			}
+		}
+		else if(n==1){//SELL
+			
+			String mule ="Mule sells for 100 (base price)";
+			String food ="Food sells for 30";
+			String energy="Energy sells for 25";
+			String ore="Ore sells for 50";
+			
+			Object[] possibilitiesBuy = {food,energy,ore,mule};
+			String sell = (String)JOptionPane.showInputDialog(
+			                    storeframe,
+			                    "What would you like to sell?",
+			                    "Customized Dialog",
+			                    JOptionPane.PLAIN_MESSAGE,
+			                    null,
+			                    possibilitiesBuy,
+			                    "");
+			if(sell.equals(mule)){
+				String foodMule =  "Food Mule                                  100+25=125";
+				String energyMule ="Energy Mule                               100+50=150";
+				String oreMule =   "Ore Mule                                    100+75=175";
+	               
+				
+				Object[] possibilitiesMule = {foodMule,energyMule,oreMule};
+				String s = (String)JOptionPane.showInputDialog(
+				                    storeframe,
+				                    "Which kind of mule would you like to sell?",
+				                    "Customized Dialog",
+				                    JOptionPane.PLAIN_MESSAGE,
+				                    null,
+				                    possibilitiesMule,
+				                    "");
+				if(s.equals(foodMule)){
+					System.out.println("Selling Food Mule!!");
+					//DEAR FUTURE CODE WRITER!!!!!!!!!         
+					//The player can only sell a food mule if it has a food mule in its inventory. How will we let them pick which food mule?
+					//The price for a FOOD mule is 125
+				}
+				else if(s.equals(energyMule)){
+					System.out.println("Selling Energy Mule!!");
+					//DEAR FUTURE CODE WRITER!!!!!!!!!         
+					//The player can only sell a energy mule if it has a energy mule in its inventory. How will we let them pick which energy mule?
+					//The price for a ENERGY mule is 150
+				}
+				else if(s.equals(oreMule)){
+					System.out.println("Selling Ore Mule!!");
+					//DEAR FUTURE CODE WRITER!!!!!!!!!         
+					//The player can only sell a ore mule if it has a ore mule in its inventory. How will we let them pick which ore mule?
+					//The price for a ORE mule is 175
+				}
+			}
+			else if(sell.equals(food)){
+				System.out.println("Selling food!!");
+				//DEAR FUTURE CODE WRITER!!!!!!!!!         
+				//The player can only sell food if the player has food
+				//The price for a food is 30
+			}
+			else if(sell.equals(energy)){
+				System.out.println("Selling energy!!");
+				//DEAR FUTURE CODE WRITER!!!!!!!!!         
+				//The player can only sell energy if the player has energy
+				//The price for a energy is 25
+			}
+			else if(sell.equals(ore)){
+				System.out.println("Selling ore!!");
+				//DEAR FUTURE CODE WRITER!!!!!!!!!         
+				//The player can only sell ore if the player has ore
+				//The price for a ore is 50
+			}
+			else{//cancel
+				
+			}
+		}
+		else{//cancel
+			
+		}
+	}
+	
+	
+	
+	
+	
 	private boolean returnToTown(JFrame locFrame){
 		locFrame.setVisible(false);
 		tempPlayerX=250;
@@ -449,6 +722,16 @@ public class TownView {
 	
 	//change the currentTurn
 	public void changeTurn(Turn currentTurn) {
+		frame.setVisible(false);
+		if(pubframe!=null){
+			pubframe.setVisible(false);
+		}
+		if(storeframe!=null){
+			storeframe.setVisible(false);
+		}
+		if(loframe!=null){
+			loframe.setVisible(false);
+		}
 		this.currentTurn = currentTurn;
 		
 	}
