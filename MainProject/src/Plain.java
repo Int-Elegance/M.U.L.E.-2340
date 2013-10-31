@@ -11,6 +11,6 @@ public class Plain extends Property {
 	 */
     public Plain() {
         super(2, 3, 1);
-        this.display = new ImageIcon(getClass().getClassLoader().getResource("resources/plain.jpg"));
+        this.display = new ImageIcon(getClass().getResource("resources/plain.jpg"));
     }
 }

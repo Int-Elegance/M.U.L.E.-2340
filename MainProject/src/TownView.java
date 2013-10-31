@@ -443,7 +443,7 @@ public class TownView {
 		
 		storeframe =new JFrame();
 		
-		ImageIcon storeIcon = new ImageIcon(getClass().getClassLoader().getResource("resources/storeview.jpg"));
+		ImageIcon storeIcon = new ImageIcon(getClass().getResource("resources/storeview.jpg"));
 		JLabel storeImage = new JLabel(storeIcon);
 		int storeWidth=storeIcon.getIconWidth();
 		int storeHeight=storeIcon.getIconHeight();

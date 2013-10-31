@@ -11,6 +11,6 @@ public class Town extends Tile {
      * Contructor for town that sets the default town image
      */
     public Town() {
-        this.display = new ImageIcon(getClass().getClassLoader().getResource("resources/town.jpg"));
+        this.display = new ImageIcon(getClass().getResource("resources/town.jpg"));
     }
 }

@@ -20,6 +20,6 @@ public class Mountain extends Property {
         super(1, 1, type + 1);
         if (type > 4 || type < 1)
             throw new RuntimeException("Invalid mountain type.");
-        this.display = new ImageIcon(getClass().getClassLoader().getResource("resources/" + String.format("mount%d.jpg", type)));
+        this.display = new ImageIcon(getClass().getResource("resources/" + String.format("mount%d.jpg", type)));
     }
 }

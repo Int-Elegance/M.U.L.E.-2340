@@ -128,7 +128,7 @@ public class Player extends Actor implements Comparable<Player> {
 	 * sets the player's image icon based on race and color
 	 */
 	public void setImage() {
-		ImageIcon playerIcon = new ImageIcon(getClass().getClassLoader().getResource("resources/" + race.toString().toLowerCase() + color + ".png"));			
+		ImageIcon playerIcon = new ImageIcon(getClass().getResource("resources/" + race.toString().toLowerCase() + color + ".png"));			
 		this.image = playerIcon;
 	}
 	

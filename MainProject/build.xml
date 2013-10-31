@@ -1,0 +1,70 @@
+<!-- Ant build -->
+<!-- For our MULE project -->
+
+<project name="MainProject" basedir="." default="all">
+
+  <target name ="init">
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="bin"/>
+    <property name="javadoc.dir" value="javadoc"/>
+    <property name="library.dir" value="lib"/>
+  </target>
+
+  <target name="prepare" depends="init">
+    <mkdir dir="${build.dir}"/>
+    <mkdir dir="${javadoc.dir}"/>
+  </target>
+  
+  
+  <target name="compile" depends="init">
+    <javac destdir="${build.dir}">
+      <src path="${src.dir}"/>
+      <classpath>
+	<pathelement path="${build.dir}"/>
+	<pathelement path="${library.dir}/*"/>
+      </classpath>
+    </javac>
+  </target>
+ 
+
+  <target name="javadoc" depends="init">
+    <javadoc sourcepath="${src.dir}" destdir="${javadoc.dir}">
+       <fileset dir="${src.dir}">
+	<include name="*.java"/>
+      </fileset>
+      <classpath>
+	<pathelement path="${build.dir}"/>
+	<pathelement path="${library.dir}/*"/>
+      </classpath>
+    </javadoc>
+  </target>
+
+  <target name="jar" depends="init, compile">
+    <jar destfile="mule.jar" basedir="${build.dir}">
+      <fileset dir="${src.dir}">
+	<include name="resources/*.png" />
+	<include name="resources/*.jpg" />
+      </fileset>
+      <manifest>
+	<attribute name="Main-Class" value="Game"/>
+	<attribute name="Class-Path" value="${library.dir}/*"/>
+      </manifest>
+    </jar>
+  </target>
+  
+  <target name="run">
+    <java jar="mule.jar" fork="true">
+      <classpath>
+	<pathelement location="java.class.path"/>
+      </classpath>
+    </java>
+  </target>
+  
+  <target name="all" depends="init,prepare,compile,javadoc,jar,run"/>
+
+  <target name="clean" depends="init">
+    <delete dir="${build.dir}"/>
+    <delete dir="${javadoc.dir}"/>
+    <delete file="mule.jar"/>
+  </target>
+</project>

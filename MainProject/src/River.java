@@ -12,7 +12,7 @@ public class River extends Property {
 	 */
     public River() {
         super(4, 2, 0);
-        this.display = new ImageIcon(getClass().getClassLoader().getResource("resources/river.jpg"));
+        this.display = new ImageIcon(getClass().getResource("resources/river.jpg"));
     }
     
 }
