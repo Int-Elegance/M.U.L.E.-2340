@@ -128,78 +128,8 @@ public class Player extends Actor implements Comparable<Player> {
 	 * sets the player's image icon based on race and color
 	 */
 	public void setImage() {
-		ImageIcon playerIcon;
-		if(race==Race.Human){
-			if(color.equals("Orange")){
-				playerIcon = new ImageIcon("humanOrange.png");
-			}
-			else if(color.equals("Blue")){
-				playerIcon = new ImageIcon("humanBlue.png");
-			}
-			else if(color.equals("Yellow")){
-				playerIcon = new ImageIcon("humanYellow.png");
-			}
-			else{
-				playerIcon = new ImageIcon("humanRed.png");
-			}
-		}
-		else if(race==Race.Bonzoid){
-			if(color.equals("Orange")){
-				playerIcon = new ImageIcon("bonzoidOrange.png");
-			}
-			else if(color.equals("Blue")){
-				playerIcon = new ImageIcon("bonzoidBlue.png");
-			}
-			else if(color.equals("Yellow")){
-				playerIcon = new ImageIcon("bonzoidYellow.png");
-			}
-			else{
-				playerIcon = new ImageIcon("bonzoidRed.png");
-			}
-		}
-		else if(race==Race.Ugaite){
-			if(color.equals("Orange")){
-				playerIcon = new ImageIcon("ugaiteOrange.png");
-			}
-			else if(color.equals("Blue")){
-				playerIcon = new ImageIcon("ugaiteBlue.png");
-			}
-			else if(color.equals("Yellow")){
-				playerIcon = new ImageIcon("ugaiteYellow.png");
-			}
-			else{
-				playerIcon = new ImageIcon("ugaiteRed.png");
-			}
-		}
-		else if(race==Race.Buzzite){
-			if(color.equals("Orange")){
-				playerIcon = new ImageIcon("buzziteOrange.png");
-			}
-			else if(color.equals("Blue")){
-				playerIcon = new ImageIcon("buzziteBlue.png");
-			}
-			else if(color.equals("Yellow")){
-				playerIcon = new ImageIcon("buzziteYellow.png");
-			}
-			else{
-				playerIcon = new ImageIcon("buzziteRed.png");
-			}
-		}
-		else{
-			if(color.equals("Orange")){
-				playerIcon = new ImageIcon("flapperOrange.png");
-			}
-			else if(color.equals("Blue")){
-				playerIcon = new ImageIcon("flapperBlue.png");
-			}
-			else if(color.equals("Yellow")){
-				playerIcon = new ImageIcon("flapperYellow.png");
-			}
-			else{
-				playerIcon = new ImageIcon("flapperRed.png");
-			}
-		}
-		image = playerIcon;
+		ImageIcon playerIcon = new ImageIcon(getClass().getClassLoader().getResource("resources/" + race.toString().toLowerCase() + color + ".png"));			
+		this.image = playerIcon;
 	}
 	
 	/**

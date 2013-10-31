@@ -66,7 +66,7 @@ public class TownView {
 		playerHeight=42;//playerIcon.getIconHeight();
 		
 		townNotifyPanel = new TownNotificationPanel(currentTurn);
-		ImageIcon townIcon = new ImageIcon("townview.jpg");
+		ImageIcon townIcon = new ImageIcon(getClass().getClassLoader().getResource("resources/townview.jpg"));
 		townImage = new JLabel(townIcon);
 		townWidth=townIcon.getIconWidth();
 		townHeight=townIcon.getIconHeight();
@@ -305,7 +305,7 @@ public class TownView {
 		
 		pubframe =new JFrame();
 		
-		ImageIcon pubIcon = new ImageIcon("pubview.jpg");
+		ImageIcon pubIcon = new ImageIcon(getClass().getClassLoader().getResource("resources/pubview.jpg"));
 		JLabel pubImage = new JLabel(pubIcon);
 		int pubWidth=pubIcon.getIconWidth();
 		int pubHeight=pubIcon.getIconHeight();
@@ -443,7 +443,7 @@ public class TownView {
 		
 		storeframe =new JFrame();
 		
-		ImageIcon storeIcon = new ImageIcon("storeview.jpg");
+		ImageIcon storeIcon = new ImageIcon(getClass().getClassLoader().getResource("resources/storeview.jpg"));
 		JLabel storeImage = new JLabel(storeIcon);
 		int storeWidth=storeIcon.getIconWidth();
 		int storeHeight=storeIcon.getIconHeight();

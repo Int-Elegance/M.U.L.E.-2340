@@ -5,8 +5,7 @@ import javax.swing.ImageIcon;
  * abstract Tile class for game board
  */
 public abstract class Tile {
-    private int x;
-    private int y;
+
     protected ImageIcon display;
     
     /**

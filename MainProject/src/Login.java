@@ -21,7 +21,7 @@ import java.util.List;
 
 public class Login {
 	
-	//TODO add actual map and difficulty to different classes
+	//TODO add actual map and culty to different classes
 	private String difficulty;
 	private String mapType;
 	private int numPlayers;
@@ -112,18 +112,18 @@ public class Login {
 		lblSelectDifficulty.setBounds(106, 79, 89, 14);
 		login.add(lblSelectDifficulty);
 		
-		final JComboBox difficultyBox = new JComboBox();
+		final JComboBox<String> difficultyBox = new JComboBox<>();
 		difficultyBox.setBounds(226, 76, 83, 20);
-		difficultyBox.setModel(new DefaultComboBoxModel(new String[] {"Beginner", "Standard", "Tournament"}));
+		difficultyBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Beginner", "Standard", "Tournament"}));
 		login.add(difficultyBox);
 		
 		JLabel lblSelectMapType = new JLabel("Map Type");
 		lblSelectMapType.setBounds(106, 105, 89, 14);
 		login.add(lblSelectMapType);
 		
-		final JComboBox mapBox = new JComboBox();
+		final JComboBox<String> mapBox = new JComboBox<>();
 		mapBox.setBounds(226, 102, 100, 20);
-		mapBox.setModel(new DefaultComboBoxModel(new String[] {"Standard", "Random"}));
+		mapBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Standard", "Random"}));
 		login.add(mapBox);
 		
 		JLabel lblNumberOfPlayers = new JLabel("Number of Players");
@@ -185,8 +185,8 @@ public class Login {
 		raceLabel.setBounds(106, 105, 89, 14);
 		playerPanel.add(raceLabel);
 		
-		final JComboBox raceBox = new JComboBox();
-		raceBox.setModel(new DefaultComboBoxModel(Game.RACES));
+		final JComboBox<Race> raceBox = new JComboBox<>();
+		raceBox.setModel(new DefaultComboBoxModel<Race>(Game.RACES));
 		raceBox.setBounds(226, 102, 69, 20);
 		playerPanel.add(raceBox);
 		
@@ -199,8 +199,8 @@ public class Login {
 		playerPanel.add(nameField);
 		nameField.setColumns(10);
 		
-		final JComboBox colorBox = new JComboBox();
-		colorBox.setModel(new DefaultComboBoxModel(Game.COLORS.toArray()));
+		final JComboBox<String> colorBox = new JComboBox<>();
+		colorBox.setModel(new DefaultComboBoxModel<String>((String[])Game.COLORS.toArray()));
 		colorBox.setBounds(226, 128, 69, 20);
 		playerPanel.add(colorBox);
 		
