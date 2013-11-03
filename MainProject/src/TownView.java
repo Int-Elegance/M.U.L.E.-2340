@@ -49,6 +49,18 @@ public class TownView {
 	int heightB=110;//140;
 	static final int SPEED = 4;
 	
+	/* store values */
+	private int foodQuantity = 16;
+	private int energyQuantity = 16;
+	private int muleQuantity = 25;
+	private int smithoreQuantity = 0;
+	private final int FOOD_COST = 30;
+	private final int ENERGY_COST = 25;
+	private final int SMITHORE_COST = 50;
+	private final int FOOD_MULE_COST = 125;
+	private final int ENERGY_MULE_COST = 150;
+	private final int SMITHORE_MULE_COST = 175;
+	
 	/**
 	 * TownView constructor
 	 * 
@@ -505,7 +517,7 @@ public class TownView {
 		return true;
 	}
 	
-	private void buy(){
+	private void buy() {
 		String cancel="Cancel";
 		Object[] options = {"Buy",
         					"Sell", cancel};
@@ -518,7 +530,7 @@ public class TownView {
 			options,  //the titles of buttons
 			options[0]); //default button title
 		
-		if(n==0){//BUY
+		if (n==0) {//BUY
 			String mule ="Mule costs 100 (base price)";
 			String food ="Food costs 30";
 			String energy="Energy costs 25";
@@ -533,13 +545,13 @@ public class TownView {
 			                    null,
 			                    possibilitiesBuy,
 			                    "");
-			if(buy.equals(mule)){
+			if (buy.equals(mule)) {
 				String foodMule =  "Food Mule                                  100+25=125";
 				String energyMule ="Energy Mule                               100+50=150";
 				String oreMule =   "Ore Mule                                    100+75=175";
 	               
 				
-				Object[] possibilitiesMule = {foodMule,energyMule,oreMule};
+				Object[] possibilitiesMule = {foodMule, energyMule, oreMule};
 				String s = (String)JOptionPane.showInputDialog(
 				                    storeframe,
 				                    "Which kind of mule would you like to buy?",
@@ -548,51 +560,56 @@ public class TownView {
 				                    null,
 				                    possibilitiesMule,
 				                    "");
-				if(s.equals(foodMule)){
-					System.out.println("Buying Food Mule!!");
+				if (s.equals(foodMule)) {
+                    
 					//DEAR FUTURE CODE WRITER!!!!!!!!!         
 					//The player can only buy a mule if the store has mules left (The store begins with 25 mules total: the type of mule does not factor into the number of mules in the store)
 					//AND if the player does not have a mule bought already that has not yet been emplaced.
 					//The price for a FOOD mule is 125
-				}
-				else if(s.equals(energyMule)){
+				} else if (s.equals(energyMule)) {
 					System.out.println("Buying Energy Mule!!");
 					//DEAR FUTURE CODE WRITER!!!!!!!!!         
 					//The player can only buy a mule if the store has mules left (The store begins with 25 mules total: the type of mule does not factor into the number of mules in the store)
 					//AND if the player does not have a mule bought already that has not yet been emplaced.
 					//The price for a ENERGY mule is 150
-				}
-				else if(s.equals(oreMule)){
+				} else if (s.equals(oreMule)) {
 					System.out.println("Buying Ore Mule!!");
 					//DEAR FUTURE CODE WRITER!!!!!!!!!         
 					//The player can only buy a mule if the store has mules left (The store begins with 25 mules total: the type of mule does not factor into the number of mules in the store)
 					//AND if the player does not have a mule bought already that has not yet been emplaced.
 					//The price for a ORE mule is 175
 				}
-			}
-			else if(buy.equals(food)){
-				System.out.println("Buying food!!");
-				//DEAR FUTURE CODE WRITER!!!!!!!!!         
-				//The player can only buy food if the store has food left (The store begins with 16 food)
-				//The price for a food is 30
-			}
-			else if(buy.equals(energy)){
+			} else if (buy.equals(food)) {
+			    System.out.println("Buying food!!");
+				if (player.canPurchase(FOOD_COST) && foodQuantity > 0) {
+				    player.changeMoney(-FOOD_COST);
+				    player.setFood(player.getFood() + 1);
+				    foodQuantity--;
+				} else {
+				    //possible not enough dialogue??
+				}
+			} else if (buy.equals(energy)) {
 				System.out.println("Buying energy!!");
-				//DEAR FUTURE CODE WRITER!!!!!!!!!         
-				//The player can only buy energy if the store has energy left (The store begins with 16 energy)
-				//The price for a energy is 25
-			}
-			else if(buy.equals(ore)){
+				if (player.canPurchase(ENERGY_COST) && energyQuantity > 0) {
+				    player.changeMoney(-ENERGY_COST);
+				    player.setEnergy(player.getEnergy() + 1);
+				    energyQuantity--;
+				} else {
+				    //possible not enough dialogue??
+				}
+			} else if (buy.equals(ore)) {
 				System.out.println("Buying ore!!");
-				//DEAR FUTURE CODE WRITER!!!!!!!!!         
-				//The player can only buy ore if the store has ore left (The store begins with 0 ore)
-				//The price for a ore is 50
-			}
-			else{//cancel
+				if (player.canPurchase(SMITHORE_COST) && smithoreQuantity > 0) {
+				    player.changeMoney(-SMITHORE_COST);
+				    player.setSmithore(player.getSmithore() + 1);
+				    smithoreQuantity--;
+				} else {
+				    //possible not enough dialogue??
+				}
+			} else {//cancel
 				
 			}
-		}
-		else if(n==1){//SELL
+		} else if (n == 1){//SELL
 			
 			String mule ="Mule sells for 100 (base price)";
 			String food ="Food sells for 30";
@@ -608,7 +625,7 @@ public class TownView {
 			                    null,
 			                    possibilitiesBuy,
 			                    "");
-			if(sell.equals(mule)){
+			if (sell.equals(mule)) {
 				String foodMule =  "Food Mule                                  100+25=125";
 				String energyMule ="Energy Mule                               100+50=150";
 				String oreMule =   "Ore Mule                                    100+75=175";
@@ -623,53 +640,56 @@ public class TownView {
 				                    null,
 				                    possibilitiesMule,
 				                    "");
-				if(s.equals(foodMule)){
+				if (s.equals(foodMule)) {
 					System.out.println("Selling Food Mule!!");
 					//DEAR FUTURE CODE WRITER!!!!!!!!!         
 					//The player can only sell a food mule if it has a food mule in its inventory. How will we let them pick which food mule?
 					//The price for a FOOD mule is 125
-				}
-				else if(s.equals(energyMule)){
+				} else if(s.equals(energyMule)) {
 					System.out.println("Selling Energy Mule!!");
 					//DEAR FUTURE CODE WRITER!!!!!!!!!         
 					//The player can only sell a energy mule if it has a energy mule in its inventory. How will we let them pick which energy mule?
 					//The price for a ENERGY mule is 150
-				}
-				else if(s.equals(oreMule)){
+				} else if(s.equals(oreMule)) {
 					System.out.println("Selling Ore Mule!!");
 					//DEAR FUTURE CODE WRITER!!!!!!!!!         
 					//The player can only sell a ore mule if it has a ore mule in its inventory. How will we let them pick which ore mule?
 					//The price for a ORE mule is 175
 				}
-			}
-			else if(sell.equals(food)){
+			} else if(sell.equals(food)) {
 				System.out.println("Selling food!!");
-				//DEAR FUTURE CODE WRITER!!!!!!!!!         
-				//The player can only sell food if the player has food
-				//The price for a food is 30
-			}
-			else if(sell.equals(energy)){
+				if (player.getFood() > 0) {
+				    player.changeMoney(FOOD_COST);
+				    player.setFood(player.getFood() - 1);
+				    foodQuantity++;
+				} else {
+				    //possible not enough dialogue??
+				}
+			} else if(sell.equals(energy)) {
 				System.out.println("Selling energy!!");
-				//DEAR FUTURE CODE WRITER!!!!!!!!!         
-				//The player can only sell energy if the player has energy
-				//The price for a energy is 25
-			}
-			else if(sell.equals(ore)){
+				if (player.getEnergy() > 0) {
+				    player.changeMoney(ENERGY_COST);
+				    player.setEnergy(player.getEnergy() - 1);
+				    energyQuantity++;
+				} else {
+				    //possible not enough dialogue??
+				}
+			} else if(sell.equals(ore)) {
 				System.out.println("Selling ore!!");
-				//DEAR FUTURE CODE WRITER!!!!!!!!!         
-				//The player can only sell ore if the player has ore
-				//The price for a ore is 50
-			}
-			else{//cancel
+				if (player.getSmithore() > 0) {
+				    player.changeMoney(SMITHORE_COST);
+				    player.setSmithore(player.getSmithore() - 1);
+				    smithoreQuantity++;
+				} else {
+				    //possible not enough dialogue??
+				}
+			} else {//cancel
 				
 			}
-		}
-		else{//cancel
+		} else {//cancel
 			
 		}
 	}
-	
-	
 	
 	
 	
@@ -733,6 +753,9 @@ public class TownView {
 			loframe.setVisible(false);
 		}
 		this.currentTurn = currentTurn;
-		
+		this.player = currentTurn.getPlayer();
+		ImageIcon playerIcon = player.getImage();
+		playerImage = new JLabel(playerIcon);		
+		townNotifyPanel = new TownNotificationPanel(currentTurn);
 	}
 }

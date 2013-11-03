@@ -16,9 +16,12 @@ public class Player extends Actor implements Comparable<Player> {
 	private String name;
 	private int score;
 	private int money;
+	private int smithore;
+	private int energy;
 	private List<Property> properties;
 	private int food;
 	private ImageIcon image; // later, make this an array to hold all animation frames
+	private Mule mule;
 
 	/**
 	 * Player constructor
@@ -27,7 +30,35 @@ public class Player extends Actor implements Comparable<Player> {
 	 */
 	public Player() {
 		properties = new ArrayList<Property>();
+		this.food = 8;
+		this.energy = 4;
+		this.smithore = 0;
+		this.mule = null;
 	}
+	
+	/**
+	 * Returns the current mule in player's inventory
+	 * @return player's mule
+	 */
+	 public boolean hasMule() {
+	    return mule != null;
+	 }
+	 
+	 /**
+	  * Sets the mule currently with the player
+	  * @param the mule that is currently with the player
+	  */
+	 public void setMule(Mule mule) {
+	    this.mule = mule;
+	 }
+	 
+	 /**
+	  * Returns the mule currently in the player's inventory
+	  * @return the mule currently in the player's inventory
+	  */
+	 public Mule getMule() {
+	    return mule;
+	 }
 	
 	/**
 	 * @return the player's score
@@ -87,11 +118,51 @@ public class Player extends Actor implements Comparable<Player> {
 	}
 	
 	/**
+	 * This method returns true if the player has enough money to purchase an item from the store
+	 * @param cost the cost of the item
+	 */
+	public boolean canPurchase(int cost) {
+	    return money - cost >= 0;
+	}
+	
+	/**
 	 * @param amount how much you want to change the money be
 	 */
 	public void changeMoney(int amount) {
 		this.money = money + amount;
 	}
+	
+	/**
+	 * Changes the player's energy
+	 * @param energy the value the one wants to set energy to
+	 */
+	public void setEnergy(int energy) {
+        this.energy = energy;	
+    }
+    
+    /**
+     * Returns the value of the player's energy
+     * @return the value of the player's energy
+     */
+    public int getEnergy() {
+        return energy;
+    }
+	
+	/**
+	 * Changes the player's energy
+	 * @param energy the value the one wants to set energy to
+	 */
+	public void setSmithore(int smithore) {
+        this.smithore = smithore;	
+    }
+    
+    /**
+     * Returns the value of the player's energy
+     * @return the value of the player's energy
+     */
+    public int getSmithore() {
+        return smithore;
+    }
 	
 	/**
 	 * @return the name of the player

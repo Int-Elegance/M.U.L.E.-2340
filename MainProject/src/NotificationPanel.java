@@ -29,6 +29,7 @@ public class NotificationPanel extends JPanel {
 	{
 		game = g;
 		score = new JLabel();
+		
 		time = new JLabel();
 		turn = new JLabel();
 		//round = new JLabel();

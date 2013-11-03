@@ -199,8 +199,14 @@ public class Game {
 		{
 			return;
 		}
-		town = new TownView(getCurrentTurn());
-	    town.displayTownSquare();
+		
+		if (town != null) {
+		    town.changeTurn(this.getCurrentTurn());
+		    town.displayTownSquare();
+        } else {
+            town = new TownView(getCurrentTurn());
+            town.displayTownSquare();
+        }
 	}
 	
 	/**
