@@ -11,10 +11,10 @@ public class Mule {
     private int type;
     
     /* We can evaluate if we need basic later */
-    private final static int BASIC = 0;
-    private final static int FOOD = 1;
-    private final static int ENERGY = 2;
-    private final static int SMITHORE = 3;
+    public final static int BASIC = 0;
+    public final static int FOOD = 1;
+    public final static int ENERGY = 2;
+    public final static int SMITHORE = 3;
     
     /**
      * Constructor for the Mule class

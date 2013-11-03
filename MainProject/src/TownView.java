@@ -129,6 +129,7 @@ public class TownView {
 		wrapperPanel.add(townNotifyPanel, BorderLayout.NORTH);
 		frame.add(wrapperPanel);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         animate();
 	}
@@ -346,6 +347,7 @@ public class TownView {
 		pubframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pubframe.add(pubpanel);
         pubframe.pack();
+		pubframe.setLocationRelativeTo(null);
         pubframe.setVisible(true);
         pubAnimate();
         
@@ -484,7 +486,9 @@ public class TownView {
 		storeframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		storeframe.add(storepanel);
 		storeframe.pack();
+		storeframe.setLocationRelativeTo(null);
 		storeframe.setVisible(true);
+		
         storeAnimate();
         
 		return true;
@@ -561,23 +565,50 @@ public class TownView {
 				                    possibilitiesMule,
 				                    "");
 				if (s.equals(foodMule)) {
-                    
-					//DEAR FUTURE CODE WRITER!!!!!!!!!         
-					//The player can only buy a mule if the store has mules left (The store begins with 25 mules total: the type of mule does not factor into the number of mules in the store)
-					//AND if the player does not have a mule bought already that has not yet been emplaced.
-					//The price for a FOOD mule is 125
+                    System.out.println("Buying food mule.");
+					if (player.canPurchase(FOOD_MULE_COST) && muleQuantity > 0 && !player.hasMule()) {
+				        player.changeMoney(-FOOD_MULE_COST);
+				        player.setMule(new Mule(player, Mule.FOOD));
+				        muleQuantity--;
+				    } else {
+				        if (muleQuantity <= 0) {
+				            JOptionPane.showMessageDialog(storeframe, "Store is out of mules.");
+				        } else if (player.hasMule()) {
+				            JOptionPane.showMessageDialog(storeframe, "You already have mule!");
+				        } else {
+				            JOptionPane.showMessageDialog(storeframe, "You don't have enough money to buy that.");
+				        }
+				    }
 				} else if (s.equals(energyMule)) {
 					System.out.println("Buying Energy Mule!!");
-					//DEAR FUTURE CODE WRITER!!!!!!!!!         
-					//The player can only buy a mule if the store has mules left (The store begins with 25 mules total: the type of mule does not factor into the number of mules in the store)
-					//AND if the player does not have a mule bought already that has not yet been emplaced.
-					//The price for a ENERGY mule is 150
+					if (player.canPurchase(ENERGY_MULE_COST) && muleQuantity > 0 && !player.hasMule()) {
+				        player.changeMoney(-ENERGY_MULE_COST);
+				        player.setMule(new Mule(player, Mule.ENERGY));
+				        muleQuantity--;
+				    } else {
+				        if (muleQuantity <= 0) {
+				            JOptionPane.showMessageDialog(storeframe, "Store is out of mules.");
+				        } else if (player.hasMule()) {
+				            JOptionPane.showMessageDialog(storeframe, "You already have mule!");
+				        } else {
+				            JOptionPane.showMessageDialog(storeframe, "You don't have enough money to buy that.");
+				        }
+				    }
 				} else if (s.equals(oreMule)) {
 					System.out.println("Buying Ore Mule!!");
-					//DEAR FUTURE CODE WRITER!!!!!!!!!         
-					//The player can only buy a mule if the store has mules left (The store begins with 25 mules total: the type of mule does not factor into the number of mules in the store)
-					//AND if the player does not have a mule bought already that has not yet been emplaced.
-					//The price for a ORE mule is 175
+					if (player.canPurchase(SMITHORE_MULE_COST) && muleQuantity > 0 && !player.hasMule()) {
+				        player.changeMoney(-SMITHORE_MULE_COST);
+				        player.setMule(new Mule(player, Mule.SMITHORE));
+				        muleQuantity--;
+				    } else {
+				        if (muleQuantity <= 0) {
+				            JOptionPane.showMessageDialog(storeframe, "Store is out of mules.");
+				        } else if (player.hasMule()) {
+				            JOptionPane.showMessageDialog(storeframe, "You already have mule!");
+				        } else {
+				            JOptionPane.showMessageDialog(storeframe, "You don't have enough money to buy that.");
+				        }
+				    }
 				}
 			} else if (buy.equals(food)) {
 			    System.out.println("Buying food!!");
@@ -586,7 +617,11 @@ public class TownView {
 				    player.setFood(player.getFood() + 1);
 				    foodQuantity--;
 				} else {
-				    //possible not enough dialogue??
+				    if (foodQuantity <= 0) {
+				        JOptionPane.showMessageDialog(storeframe, "Store is out of food.");
+				    } else {
+				        JOptionPane.showMessageDialog(storeframe, "You don't have enough money to buy that.");
+				    }
 				}
 			} else if (buy.equals(energy)) {
 				System.out.println("Buying energy!!");
@@ -595,7 +630,11 @@ public class TownView {
 				    player.setEnergy(player.getEnergy() + 1);
 				    energyQuantity--;
 				} else {
-				    //possible not enough dialogue??
+				    if (energyQuantity <= 0) {
+				        JOptionPane.showMessageDialog(storeframe, "Store is out of energy.");
+				    } else {
+				        JOptionPane.showMessageDialog(storeframe, "You don't have enough money to buy that.");
+				    }
 				}
 			} else if (buy.equals(ore)) {
 				System.out.println("Buying ore!!");
@@ -604,7 +643,11 @@ public class TownView {
 				    player.setSmithore(player.getSmithore() + 1);
 				    smithoreQuantity--;
 				} else {
-				    //possible not enough dialogue??
+				    if (smithoreQuantity <= 0) {
+				        JOptionPane.showMessageDialog(storeframe, "Store is out of smithore.");
+				    } else {
+				        JOptionPane.showMessageDialog(storeframe, "You don't have enough money to buy that.");
+				    }
 				}
 			} else {//cancel
 				
@@ -642,19 +685,31 @@ public class TownView {
 				                    "");
 				if (s.equals(foodMule)) {
 					System.out.println("Selling Food Mule!!");
-					//DEAR FUTURE CODE WRITER!!!!!!!!!         
-					//The player can only sell a food mule if it has a food mule in its inventory. How will we let them pick which food mule?
-					//The price for a FOOD mule is 125
-				} else if(s.equals(energyMule)) {
+					if (player.hasMule() && player.getMule().getType() == Mule.FOOD) {
+					    player.changeMoney(FOOD_MULE_COST);
+					    player.setMule(null);
+					    muleQuantity++;
+					} else {
+				        JOptionPane.showMessageDialog(storeframe, "You don't have a food mule!");
+					}
+				} else if (s.equals(energyMule)) {
 					System.out.println("Selling Energy Mule!!");
-					//DEAR FUTURE CODE WRITER!!!!!!!!!         
-					//The player can only sell a energy mule if it has a energy mule in its inventory. How will we let them pick which energy mule?
-					//The price for a ENERGY mule is 150
-				} else if(s.equals(oreMule)) {
+					if (player.hasMule() && player.getMule().getType() == Mule.ENERGY) {
+					    player.changeMoney(ENERGY_MULE_COST);
+					    player.setMule(null);
+					    muleQuantity++;
+					} else {
+				        JOptionPane.showMessageDialog(storeframe, "You don't have a energy mule!");
+					}
+				} else if (s.equals(oreMule)) {
 					System.out.println("Selling Ore Mule!!");
-					//DEAR FUTURE CODE WRITER!!!!!!!!!         
-					//The player can only sell a ore mule if it has a ore mule in its inventory. How will we let them pick which ore mule?
-					//The price for a ORE mule is 175
+					if (player.hasMule() && player.getMule().getType() == Mule.SMITHORE) {
+					    player.changeMoney(SMITHORE_MULE_COST);
+					    player.setMule(null);
+					    muleQuantity++;
+					} else {
+				        JOptionPane.showMessageDialog(storeframe, "You don't have a smithore mule!");
+					}
 				}
 			} else if(sell.equals(food)) {
 				System.out.println("Selling food!!");
@@ -663,7 +718,7 @@ public class TownView {
 				    player.setFood(player.getFood() - 1);
 				    foodQuantity++;
 				} else {
-				    //possible not enough dialogue??
+				    JOptionPane.showMessageDialog(storeframe, "You don't have any food!");
 				}
 			} else if(sell.equals(energy)) {
 				System.out.println("Selling energy!!");
@@ -672,7 +727,7 @@ public class TownView {
 				    player.setEnergy(player.getEnergy() - 1);
 				    energyQuantity++;
 				} else {
-				    //possible not enough dialogue??
+				    JOptionPane.showMessageDialog(storeframe, "You don't have any energy!");
 				}
 			} else if(sell.equals(ore)) {
 				System.out.println("Selling ore!!");
@@ -681,7 +736,7 @@ public class TownView {
 				    player.setSmithore(player.getSmithore() - 1);
 				    smithoreQuantity++;
 				} else {
-				    //possible not enough dialogue??
+				    JOptionPane.showMessageDialog(storeframe, "You don't have any smithore!");
 				}
 			} else {//cancel
 				
