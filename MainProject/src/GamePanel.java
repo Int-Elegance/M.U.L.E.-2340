@@ -14,7 +14,7 @@ public class GamePanel {
 	private JFrame frame;
 	private Game game;
 	private Mule mule;
-	private boolean muleEmplacement;
+	private int state; //1 for land selection, 2 for mule emplacement, 3 for mule selling, 4 for land selling
 	private JButton[][] buttons;
 	public GamePanel() {}
 
@@ -27,19 +27,18 @@ public class GamePanel {
 	public GamePanel(Tile[][] map, Game game) {
 		this.map = map;
 		this.game = game;
-		muleEmplacement = false;
+		state = 1;
 	}
 	
 	public void turnMuleEmplacementOn(Mule mule)
 	{
 		this.mule = mule;
-		muleEmplacement = true;
+		state = 2;
 	}
 	
 	public void turnMuleEmplacementOff()
 	{
 		this.mule = null;
-		muleEmplacement = false;
 	}
 	
 	/**
@@ -109,7 +108,7 @@ public class GamePanel {
 		 */
 	    public void actionPerformed(ActionEvent e) {
 	    	final Property current =  (Property) map[i][j];
-	    	if (!muleEmplacement)
+	    	if (state == 1)
 	    	{
 	    		if (game.getCurrentTurn() instanceof LandSelectionTurn && !current.isOwned()) 
 	    		{
@@ -120,17 +119,20 @@ public class GamePanel {
 	    		}
 	    		else
 	    		{
-	    			if (!current.isOwned() || (current.isOwned() && current.getOwner() != mule.getOwner()))
+	    			if (state == 2)
 	    			{
-	    				mule.getOwner().setMule(null);
-	    				System.out.println("Mule not emplaced");
-	    				game.nextTurn();
-	    			}
-	    			else
-	    			{
-	    				mule.setLocation(current);
-	    				System.out.println("Mule emplaced");
-	    				game.nextTurn();
+	    				if (!current.isOwned() || (current.isOwned() && current.getOwner() != mule.getOwner()))
+	    				{
+	    					mule.getOwner().setMule(null);
+	    					System.out.println("Mule not emplaced");
+	    					game.nextTurn();
+	    				}
+	    				else
+	    				{
+	    					mule.setLocation(current);
+	    					System.out.println("Mule emplaced");
+	    					game.nextTurn();
+	    				}
 	    			}
 	    		}
 	    		}
