@@ -588,6 +588,7 @@ public class TownView {
 					if (player.canPurchase(FOOD_MULE_COST) && muleQuantity > 0 && !player.hasMule()) {
 				        player.changeMoney(-FOOD_MULE_COST);
 				        Mule m = new Mule(player, Mule.FOOD);
+				        m.setOwner(player);
 				        player.setMule(m);
 				        currentTurn.getRound().getGame().setMule(m);
 				        muleQuantity--;
@@ -605,6 +606,7 @@ public class TownView {
 					if (player.canPurchase(ENERGY_MULE_COST) && muleQuantity > 0 && !player.hasMule()) {
 				        player.changeMoney(-ENERGY_MULE_COST);
 				        Mule m = new Mule(player, Mule.ENERGY);
+				        m.setOwner(player);
 				        player.setMule(m);
 				        currentTurn.getRound().getGame().setMule(m);
 				        muleQuantity--;
@@ -622,6 +624,7 @@ public class TownView {
 					if (player.canPurchase(SMITHORE_MULE_COST) && muleQuantity > 0 && !player.hasMule()) {
 				        player.changeMoney(-SMITHORE_MULE_COST);
 				        Mule m = new Mule(player, Mule.SMITHORE);
+				        m.setOwner(player);
 				        player.setMule(m);
 				        currentTurn.getRound().getGame().setMule(m);
 				        muleQuantity--;
@@ -772,7 +775,7 @@ public class TownView {
 	}
 
 	
-	private boolean returnToTown(JFrame locFrame){
+	public boolean returnToTown(JFrame locFrame){
 		locFrame.setVisible(false);
 		tempPlayerX=250;
 		tempPlayerY=180;
@@ -819,7 +822,11 @@ public class TownView {
 		 public void keyReleased(KeyEvent e){}
 	}
 	
-	//change the currentTurn
+	/**
+     * Changes the current turn
+     * 
+     * @param the current turn
+     */
 	public void changeTurn(Turn currentTurn) {
 		frame.setVisible(false);
 		if(pubframe!=null){
@@ -838,6 +845,11 @@ public class TownView {
 		townNotifyPanel = new TownNotificationPanel(currentTurn);
 	}
 	
+	/**
+     * Gets the storeframe from the townview
+     * 
+     * @return JFrame the storeframe
+     */
 	public JFrame getFrame()
 	{
 		return storeframe;

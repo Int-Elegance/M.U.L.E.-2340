@@ -182,10 +182,22 @@ public class Game {
 	    return parsedMap;
 	}
 	
+	/**
+     * Prepares the game for mule placement
+     * 
+     * @param the mule to place
+     */
 	public void setMule(Mule mule)
 	{
 		gamePanel.turnMuleEmplacementOn(mule);
 		town.getFrame().setVisible(false);
+	}
+	
+	/**
+     * Causes player to return to the townsquare after placing a mule
+     */
+	public void endMuleEmplacement() {
+		town.returnToTown(town.getFrame());
 	}
     
     /**

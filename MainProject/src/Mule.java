@@ -44,6 +44,14 @@ public class Mule {
     }
     
     /**
+     * sets the owner of the mule
+     * @param the owner of the mule
+     */
+    public void setOwner(Player p) {
+    	this.owner = p;
+    }
+    
+    /**
      * returns the property that the mule is placed on
      * @returns the property that the mule is on
      */

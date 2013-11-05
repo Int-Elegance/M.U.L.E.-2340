@@ -90,6 +90,7 @@ public class Player extends Actor implements Comparable<Player> {
 	{
 		properties.add(p);
 		p.setOwned(true);
+		p.setOwner(this);
 	}
 	
 	
