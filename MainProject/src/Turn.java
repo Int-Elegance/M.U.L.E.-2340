@@ -1,4 +1,5 @@
 import javax.swing.*;
+
 import java.awt.event.*;
 
 /**
@@ -50,6 +51,11 @@ public class Turn implements Comparable<Turn> {
     public void endTurn() {
     	secondsLeft = 0;
     	timer.stop();
+    	// if the player still has a mule in his/her inventory at the end of the turn
+		if (player.getMule()!=null) {
+			JOptionPane.showMessageDialog(new JDialog(), "You ran out of time...So you lost your mule!");
+			player.setMule(null); // fixes bug where player can't buy mules after not placing one last turn
+		}
         Game game = round.getGame();
 		game.getCurrentTurn().pass();
 		game.nextTurn();

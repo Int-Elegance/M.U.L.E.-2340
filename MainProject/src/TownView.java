@@ -459,6 +459,7 @@ public class TownView {
                 	timer.stop();
                 }
             }
+            
         });
         timer.start();
     }
@@ -859,6 +860,7 @@ public class TownView {
      * @param the current turn
      */
 	public void changeTurn(Turn currentTurn) {
+		
 		frame.setVisible(false);
 		if(pubframe!=null){
 			pubframe.setVisible(false);
