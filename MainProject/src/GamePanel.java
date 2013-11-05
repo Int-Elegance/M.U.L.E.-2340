@@ -117,26 +117,27 @@ public class GamePanel {
 	    			buttons[i][j].setBorder(BorderFactory.createLineBorder(p.getColorRepresentation(), 5));
 	    			game.nextTurn();
 	    		}
-	    		else
+	    		if (state == 2)
 	    		{
-	    			if (state == 2)
+	    			if (!current.isOwned() || (current.isOwned() && current.getOwner() != mule.getOwner()))
 	    			{
-	    				if (!current.isOwned() || (current.isOwned() && current.getOwner() != mule.getOwner()))
-	    				{
-	    					mule.getOwner().setMule(null);
-	    					System.out.println("Mule not emplaced");
-	    					game.nextTurn();
-	    				}
-	    				else
-	    				{
-	    					mule.setLocation(current);
-	    					System.out.println("Mule emplaced");
-	    					game.nextTurn();
-	    				}
+	    				mule.getOwner().setMule(null);
+	    				System.out.println("Mule not emplaced");
+	    				game.nextTurn();
 	    			}
+	   				else
+	   				{
+	   					mule.setLocation(current);
+	   					System.out.println("Mule emplaced");
+    					game.nextTurn();	    				
+	   				}
 	    		}
-	    		}
-	        }
+	    		
+	    	}	
 	    }
-    }
+	       
+	}
+	    
+}
+  
 
