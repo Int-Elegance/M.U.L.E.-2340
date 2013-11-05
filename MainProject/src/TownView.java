@@ -587,7 +587,9 @@ public class TownView {
                     System.out.println("Buying food mule.");
 					if (player.canPurchase(FOOD_MULE_COST) && muleQuantity > 0 && !player.hasMule()) {
 				        player.changeMoney(-FOOD_MULE_COST);
-				        player.setMule(new Mule(player, Mule.FOOD));
+				        Mule m = new Mule(player, Mule.FOOD);
+				        player.setMule(m);
+				        currentTurn.getRound().getGame().setMule(m);
 				        muleQuantity--;
 				    } else {
 				        if (muleQuantity <= 0) {
@@ -602,7 +604,9 @@ public class TownView {
 					System.out.println("Buying Energy Mule!!");
 					if (player.canPurchase(ENERGY_MULE_COST) && muleQuantity > 0 && !player.hasMule()) {
 				        player.changeMoney(-ENERGY_MULE_COST);
-				        player.setMule(new Mule(player, Mule.ENERGY));
+				        Mule m = new Mule(player, Mule.ENERGY);
+				        player.setMule(m);
+				        currentTurn.getRound().getGame().setMule(m);
 				        muleQuantity--;
 				    } else {
 				        if (muleQuantity <= 0) {
@@ -617,9 +621,9 @@ public class TownView {
 					System.out.println("Buying Ore Mule!!");
 					if (player.canPurchase(SMITHORE_MULE_COST) && muleQuantity > 0 && !player.hasMule()) {
 				        player.changeMoney(-SMITHORE_MULE_COST);
-				        player.setMule(new Mule(player, Mule.SMITHORE));
-				        
-				        currentTurn.getRound().getGame().setMule();
+				        Mule m = new Mule(player, Mule.SMITHORE);
+				        player.setMule(m);
+				        currentTurn.getRound().getGame().setMule(m);
 				        muleQuantity--;
 				    } else {
 				        if (muleQuantity <= 0) {

@@ -182,10 +182,10 @@ public class Game {
 	    return parsedMap;
 	}
 	
-	public void setMule()
+	public void setMule(Mule mule)
 	{
+		gamePanel.turnMuleEmplacementOn(mule);
 		town.getFrame().setVisible(false);
-		System.out.println("visibility settings... :(");
 	}
     
     /**

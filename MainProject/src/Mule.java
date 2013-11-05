@@ -58,4 +58,9 @@ public class Mule {
     public void setLocation(Property location) {
         this.location = location;
     }
+    
+    public Player getOwner()
+    {
+    	return owner;
+    }
 }

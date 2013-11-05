@@ -38,4 +38,14 @@ public abstract class Property extends Tile {
     public void setOwned(boolean b) {
     	isOwned = b;
     }
+    
+    public void setOwner(Player p)
+    {
+    	this.owner = p;
+    }
+    
+    public Player getOwner()
+    {
+    	return owner;
+    }
 }

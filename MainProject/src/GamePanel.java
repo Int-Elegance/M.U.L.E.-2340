@@ -13,6 +13,8 @@ public class GamePanel {
 	private Tile[][] map;
 	private JFrame frame;
 	private Game game;
+	private Mule mule;
+	private boolean muleEmplacement;
 	private JButton[][] buttons;
 	public GamePanel() {}
 
@@ -25,6 +27,19 @@ public class GamePanel {
 	public GamePanel(Tile[][] map, Game game) {
 		this.map = map;
 		this.game = game;
+		muleEmplacement = false;
+	}
+	
+	public void turnMuleEmplacementOn(Mule mule)
+	{
+		this.mule = mule;
+		muleEmplacement = true;
+	}
+	
+	public void turnMuleEmplacementOff()
+	{
+		this.mule = null;
+		muleEmplacement = false;
 	}
 	
 	/**
@@ -93,13 +108,33 @@ public class GamePanel {
 		 * @param e ActionEvent for the event
 		 */
 	    public void actionPerformed(ActionEvent e) {
-	        final Property current =  (Property) map[i][j];
-	        if (game.getCurrentTurn() instanceof LandSelectionTurn && !current.isOwned()) {
-			    ((LandSelectionTurn) game.getCurrentTurn()).addProperty(current);
-			    Player p = game.getCurrentRound().getCurrentTurn().getPlayer();
-			    buttons[i][j].setBorder(BorderFactory.createLineBorder(p.getColorRepresentation(), 5));
-			    game.nextTurn();
+	    	final Property current =  (Property) map[i][j];
+	    	if (!muleEmplacement)
+	    	{
+	    		if (game.getCurrentTurn() instanceof LandSelectionTurn && !current.isOwned()) 
+	    		{
+	    			((LandSelectionTurn) game.getCurrentTurn()).addProperty(current);
+	    			Player p = game.getCurrentRound().getCurrentTurn().getPlayer();
+	    			buttons[i][j].setBorder(BorderFactory.createLineBorder(p.getColorRepresentation(), 5));
+	    			game.nextTurn();
+	    		}
+	    		else
+	    		{
+	    			if (!current.isOwned() || (current.isOwned() && current.getOwner() != mule.getOwner()))
+	    			{
+	    				mule.getOwner().setMule(null);
+	    				System.out.println("Mule not emplaced");
+	    				game.nextTurn();
+	    			}
+	    			else
+	    			{
+	    				mule.setLocation(current);
+	    				System.out.println("Mule emplaced");
+	    				game.nextTurn();
+	    			}
+	    		}
+	    		}
 	        }
 	    }
     }
-}
+
