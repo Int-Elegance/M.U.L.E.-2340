@@ -15,4 +15,11 @@ public class River extends Property {
         this.display = new ImageIcon(getClass().getResource("resources/river.jpg"));
     }
     
+    /**
+     * Changes the ImageIcon to one displaying a mule
+     */
+    public void addMule() {
+    	this.display = new ImageIcon(getClass().getResource("resources/river_mule.jpg"));
+    }
+    
 }

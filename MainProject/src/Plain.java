@@ -13,4 +13,11 @@ public class Plain extends Property {
         super(2, 3, 1);
         this.display = new ImageIcon(getClass().getResource("resources/plain.jpg"));
     }
+    
+    /**
+     * Changes the ImageIcon to one displaying a mule
+     */
+    public void addMule() {
+    	this.display = new ImageIcon(getClass().getResource("resources/plain_mule.jpg"));
+    }
 }

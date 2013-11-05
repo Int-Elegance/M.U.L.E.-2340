@@ -22,4 +22,16 @@ public class Mountain extends Property {
             throw new RuntimeException("Invalid mountain type.");
         this.display = new ImageIcon(getClass().getResource("resources/" + String.format("mount%d.jpg", type)));
     }
+    
+    /**
+     * Changes the ImageIcon to one displaying a mule
+     */
+    public void addMule() {
+    	if (type == TYPE_1)
+    		this.display = new ImageIcon(getClass().getResource("resources/mount1_mule.jpg"));
+    	if (type == TYPE_2)
+    		this.display = new ImageIcon(getClass().getResource("resources/mount2_mule.jpg"));
+    	if (type == TYPE_3)
+    		this.display = new ImageIcon(getClass().getResource("resources/mount3_mule.jpg"));
+    }
 }

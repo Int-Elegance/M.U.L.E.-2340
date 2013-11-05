@@ -4,6 +4,7 @@
  */
 import java.util.List;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +18,7 @@ public class GamePanel {
 	private int state; //1 for land selection, 2 for mule emplacement, 3 for mule selling, 4 for land selling
 	private JButton[][] buttons;
 	public GamePanel() {}
+	private JPanel board;
 	
 	private static final int LAND_SELECTION = 1;
 	private static final int MULE_EMPLACEMENT = 2;
@@ -145,7 +147,28 @@ public class GamePanel {
 	   		    	    owner.setMule(null);
 	   			    	mule.setLocation((Property)current);
 	   			    	if (((Property)current).setMule(mule)) {
-	   			    		JOptionPane.showMessageDialog(frame, "Mule emplaced!"); 
+	   			    		JOptionPane.showMessageDialog(frame, "Mule emplaced!");
+	   			    		// changes the image of the tile to show a mule has been placed there
+	   			    		if (current instanceof Plain) {
+	   			    			((Plain)current).addMule();
+	   			    			System.out.println("Image changed.");
+	   			    		}
+	   			    		if (current instanceof Mountain) {
+	   			    			((Mountain)current).addMule();
+	   			    			System.out.println("Image changed.");
+	   			    		}
+	   			    		if (current instanceof River) {
+	   			    			((River)current).addMule();
+	   			    			System.out.println("Image changed.");
+	   			    		}
+	   			    		// repaints the board to show mule placement
+	   			        	buttons[i][j].setIcon(current.getDisplay());
+	   			        	buttons[i][j].revalidate();
+	   			        	buttons[i][j].repaint();
+	   			        	board.revalidate();
+	   			        	board.repaint();
+	   			        	frame.revalidate();
+	   			        	frame.repaint();
 	   			    	}
 	   			    	else {
 	   			    		JOptionPane.showMessageDialog(frame, "Mule already in place here...so you lost your mule!");
