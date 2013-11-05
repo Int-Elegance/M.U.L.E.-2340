@@ -187,6 +187,9 @@ public class Game {
      * Causes the game to go to the next turn
      */
 	public void nextTurn() {
+		if(town!=null){
+			town.removeSquare();
+		}
 		getCurrentTurn().stop();
 		if (getCurrentRound().hasNextTurn()) {
 			getCurrentRound().nextTurn();
@@ -200,13 +203,17 @@ public class Game {
 			return;
 		}
 		
-		if (town != null) {
-		    town.changeTurn(this.getCurrentTurn());
-		    town.displayTownSquare();
-        } else {
-            town = new TownView(getCurrentTurn());
-            town.displayTownSquare();
-        }
+		
+		town = new TownView(getCurrentTurn());
+		town.displayTownSquare();
+		//if (town != null) {
+		//    town.changeTurn(this.getCurrentTurn());
+		 //   town.displayTownSquare();
+			
+     //   } else {
+         //  town = new TownView(getCurrentTurn());
+         //   town.displayTownSquare();
+      //  }
 	}
 	
 	/**

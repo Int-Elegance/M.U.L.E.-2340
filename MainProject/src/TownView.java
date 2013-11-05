@@ -521,6 +521,25 @@ public class TownView {
 		return true;
 	}
 	
+	
+	
+	public void removeSquare(){
+		if(loframe!=null){
+			loframe.setVisible(false);
+		}
+		if(storeframe!=null){
+			storeframe.setVisible(false);
+		}
+		if(pubframe!=null){
+			pubframe.setVisible(false);
+		}
+		if(frame!=null){
+			frame.setVisible(false);
+		}
+	}
+	
+	
+	
 	private void buy() {
 		String cancel="Cancel";
 		Object[] options = {"Buy",
@@ -745,8 +764,7 @@ public class TownView {
 			
 		}
 	}
-	
-	
+
 	
 	private boolean returnToTown(JFrame locFrame){
 		locFrame.setVisible(false);
