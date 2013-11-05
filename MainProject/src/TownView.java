@@ -514,7 +514,7 @@ public class TownView {
 			tempPlayerY=40;
 		//	return false;
 		}
-		if(checkForSpecificLocation(168,0,216,10)){//exit
+		if(checkForSpecificLocation(168,0,216,30)){//exit
 			returnToTown(storeframe);
 			return false;
 		}
