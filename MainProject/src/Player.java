@@ -246,7 +246,7 @@ public class Player extends Actor implements Comparable<Player> {
 	 * @return int number representing relationship
 	 */
 	public int compareTo(Player o) {
-	    return  this.getScore() - o.getScore();
+	    return this.getMoney() - o.getMoney();
 	}
 	
 }

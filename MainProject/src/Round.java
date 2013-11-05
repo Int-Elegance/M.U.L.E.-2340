@@ -44,7 +44,6 @@ public class Round {
         }
         
         Collections.sort(turns);
-        Collections.reverse(turns);
         currentTurn = 0;
     }
     

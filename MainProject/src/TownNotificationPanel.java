@@ -47,7 +47,7 @@ public class TownNotificationPanel extends JPanel {
 		str += p.getName() + " " + p.getMoney() + " ";
 		
 		turn.setText("Current Turn: " + currentTurn.player.getName());
-		score.setText("Score: " + str);
+		score.setText("|  Money: " + p.getMoney() + " | Food: " + p.getFood() + " | Energy: " + p.getEnergy() + " | Smithore: " + p.getSmithore() + " |");
 		time.setText("Time Remaining: " + currentTurn.getSecondsLeft());
 	}
 	

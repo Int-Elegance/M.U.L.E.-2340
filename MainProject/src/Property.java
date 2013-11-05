@@ -32,6 +32,10 @@ public abstract class Property extends Tile {
     	return isOwned;
     }
     
+    public void setMule(Mule mule) {
+        this.mule = mule;
+    }
+    
     /**
 	 * @param b true if property is owned
 	 */

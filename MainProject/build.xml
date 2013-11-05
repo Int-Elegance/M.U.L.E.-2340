@@ -60,7 +60,7 @@
     </java>
   </target>
   
-  <target name="all" depends="init,prepare,compile,javadoc,jar,run"/>
+  <target name="all" depends="init,prepare,compile,jar,run"/>
 
   <target name="clean" depends="init">
     <delete dir="${build.dir}"/>

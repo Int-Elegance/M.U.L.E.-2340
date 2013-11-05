@@ -233,6 +233,10 @@ public class Game {
       //  }
 	}
 	
+	public TownView getTownView() {
+	    return town;
+	}
+	
 	/**
 	 * @return TownNotificationPanel
 	 */

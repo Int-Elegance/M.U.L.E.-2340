@@ -17,6 +17,11 @@ public class GamePanel {
 	private int state; //1 for land selection, 2 for mule emplacement, 3 for mule selling, 4 for land selling
 	private JButton[][] buttons;
 	public GamePanel() {}
+	
+	private static final int LAND_SELECTION = 1;
+	private static final int MULE_EMPLACEMENT = 2;
+	private static final int MULE_SELLING = 3;
+	private static final int LAND_SELLING = 4;
 
 	/**
 	 * Constructor for the GamePanel class
@@ -27,13 +32,13 @@ public class GamePanel {
 	public GamePanel(Tile[][] map, Game game) {
 		this.map = map;
 		this.game = game;
-		state = 1;
+		state = LAND_SELECTION;
 	}
 	
 	public void turnMuleEmplacementOn(Mule mule)
 	{
 		this.mule = mule;
-		state = 2;
+		state = MULE_EMPLACEMENT;
 	}
 	
 	public void turnMuleEmplacementOff()
@@ -58,7 +63,7 @@ public class GamePanel {
 		        for (int j = 0; j < map[i].length; j++) {
 		        	JButton button = new JButton(map[i][j].getDisplay());
 		        	buttons[i][j] = button;
-		        	if (map[i][j] instanceof Property) {
+		        	if (map[i][j] instanceof Tile) {
 			            button.addActionListener(new TileListener(i,j));
 		            }
 		            board.add(button);
@@ -107,35 +112,45 @@ public class GamePanel {
 		 * @param e ActionEvent for the event
 		 */
 	    public void actionPerformed(ActionEvent e) {
-	    	final Property current =  (Property) map[i][j];
-	    	if (state == 1)
+	    	final Tile current =  map[i][j];
+	    	if (state == LAND_SELECTION)
 	    	{
-	    		if (game.getCurrentTurn() instanceof LandSelectionTurn && !current.isOwned()) 
+	    	    
+	    		if (game.getCurrentTurn() instanceof LandSelectionTurn && !((Property)current).isOwned()) 
 	    		{
-	    			((LandSelectionTurn) game.getCurrentTurn()).addProperty(current);
+	    			((LandSelectionTurn) game.getCurrentTurn()).addProperty((Property)current);
 	    			Player p = game.getCurrentRound().getCurrentTurn().getPlayer();
 	    			buttons[i][j].setBorder(BorderFactory.createLineBorder(p.getColorRepresentation(), 5));
+	    			((Property)current).setOwned(true);
+	    			((Property)current).setOwner(p);
 	    			game.nextTurn();
 	    		}
+	    	}
+	        if (state == MULE_EMPLACEMENT)
+	    	{
+	    	    if (current instanceof Town) {
+	    	        System.out.println("Displaying town square!");
+	    	        game.getTownView().displayTownSquare();
+	    	    } else {
+	    	        if (mule == null) {
+	    	            JOptionPane.showMessageDialog(frame, "You don't have a mule to place there.");
+	    		    } else if (!((Property)current).isOwned() || (((Property)current).isOwned() && 
+	    		        (((Property)current).getOwner() != mule.getOwner()))) {
+	    		        Player owner = mule.getOwner();
+	    		    	owner.setMule(null);
+	    		    	JOptionPane.showMessageDialog(frame, "You don't own that tile.. so you lost your mule!!");
+	    		    	mule = null;
+	    		    } else {
+	   		    	    Player owner = mule.getOwner();
+	   		    	    owner.setMule(null);
+	   			    	mule.setLocation((Property)current);
+	   			    	((Property)current).setMule(mule);
+	   			    	JOptionPane.showMessageDialog(frame, "Mule emplaced!");   			
+	   			    	mule = null;	
+	   			    }
+	   			
+	    		}
 	    	}	
-	    	if (state == 2)
-    		{
-    			if (current.isOwned() && current.getOwner() == game.getCurrentTurn().getPlayer())
-    			{
-    				mule.setLocation(current);
-   					mule.getOwner().setMule(null);
-   					System.out.println("Mule emplaced");
-   					state = 5;
-   					game.endMuleEmplacement();
-    			}
-   				else
-   				{
-   					mule.getOwner().setMule(null);
-    				System.out.println("Mule not emplaced");
-    				state = 5;
-    				game.endMuleEmplacement();
-   				}
-    		}
 	    }
 	       
 	}

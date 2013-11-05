@@ -50,10 +50,10 @@ public class TownView {
 	static final int SPEED = 4;
 	
 	/* store values */
-	private int foodQuantity = 16;
-	private int energyQuantity = 16;
-	private int muleQuantity = 25;
-	private int smithoreQuantity = 0;
+	private static int foodQuantity = 16;
+	private static int energyQuantity = 16;
+	private static int muleQuantity = 25;
+	private static int smithoreQuantity = 0;
 	private final int FOOD_COST = 30;
 	private final int ENERGY_COST = 25;
 	private final int SMITHORE_COST = 50;
@@ -138,6 +138,10 @@ public class TownView {
 	 * updates player's location
 	 */
 	public boolean updatePlayer(){
+	
+	    if (!frame.isVisible()) {
+	        return false;
+	    }
 		//calculate new location
 		boolean touchingInner =checkInnerBoundaries();
 		boolean touchingOuter =checkOuterBoundaries();
@@ -275,6 +279,7 @@ public class TownView {
                 progress = (float) elapsed / animationTime;
 
                 if(!updatePlayer()){
+                    System.out.println("Stopping general timer");
                 	timer.stop();
                 }
                 if (elapsed >= animationTime) {
@@ -305,6 +310,7 @@ public class TownView {
                 final long elapsed = now - start;
                 progress = (float) elapsed / animationTime;
                 if(!updatePlayerPub()){
+                    System.out.println("Stopping pub timer");
                 	timer.stop();
                 }
             }
@@ -340,12 +346,14 @@ public class TownView {
 		//creates a new JPanel, and adds the layered pane to it
 		JPanel pubpanel = new JPanel();
 		pubpanel.add(layeredPane);
-		
-			
-		
-		pubframe.setSize(new Dimension(townWidth, townHeight));
+
 		pubframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		pubframe.add(pubpanel);
+		JPanel pubWrapperPanel = new JPanel(new BorderLayout());
+		pubWrapperPanel.setPreferredSize(new Dimension(townWidth, townHeight+30));
+		pubWrapperPanel.add(pubpanel, BorderLayout.SOUTH);
+		pubWrapperPanel.add(townNotifyPanel, BorderLayout.NORTH);
+		pubframe.add(pubWrapperPanel);
+		
         pubframe.pack();
 		pubframe.setLocationRelativeTo(null);
         pubframe.setVisible(true);
@@ -397,7 +405,10 @@ public class TownView {
 	
 	private boolean updatePlayerPub(){
 		boolean touchingOuter =checkOuterBoundaries();
-
+        if (!pubframe.isVisible()) {
+            return false;
+        }
+        
 		if(!touchingOuter){
 			playerX=tempPlayerX;
 			playerY=tempPlayerY;
@@ -444,6 +455,7 @@ public class TownView {
                 final long elapsed = now - start;
                 progress = (float) elapsed / animationTime;
                 if(!updatePlayerStore()){
+                    System.out.println("Stopping store timer");
                 	timer.stop();
                 }
             }
@@ -480,11 +492,15 @@ public class TownView {
 		JPanel storepanel = new JPanel();
 		storepanel.add(layeredPane);
 		
-			
+				
 		
-		storeframe.setSize(new Dimension(storeWidth, storeHeight));
 		storeframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		storeframe.add(storepanel);
+		JPanel storeWrapperPanel = new JPanel(new BorderLayout());
+		storeWrapperPanel.setPreferredSize(new Dimension(townWidth, townHeight+30));
+		storeWrapperPanel.add(storepanel, BorderLayout.SOUTH);
+		storeWrapperPanel.add(townNotifyPanel, BorderLayout.NORTH);
+		storeframe.add(storeWrapperPanel);
+		
 		storeframe.pack();
 		storeframe.setLocationRelativeTo(null);
 		storeframe.setVisible(true);
@@ -496,8 +512,13 @@ public class TownView {
 	
 	
 	private boolean updatePlayerStore(){
-		boolean touchingOuter =checkOuterBoundaries();
-
+	
+		boolean touchingOuter = checkOuterBoundaries();
+		
+        if (!storeframe.isVisible()) {
+            return false;
+        }
+        
 		if(!touchingOuter){
 			playerX=tempPlayerX;
 			playerY=tempPlayerY;
