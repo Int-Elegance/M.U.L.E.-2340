@@ -14,7 +14,6 @@ public class Game {
 	public static final List<String> COLORS = Arrays.asList("Red", "Orange", "Blue", "Yellow");
 	public static final Race[] RACES = Race.values();
 	private List<Round> rounds; 
-	private GamePanel map;
 	private GamePanel gamePanel;
 	private NotificationPanel notificationPanel;
 	private List<Player> players;
@@ -181,6 +180,12 @@ public class Game {
 	        }
 	    }
 	    return parsedMap;
+	}
+	
+	public void setMule()
+	{
+		town.getFrame().setVisible(false);
+		System.out.println("visibility settings... :(");
 	}
     
     /**

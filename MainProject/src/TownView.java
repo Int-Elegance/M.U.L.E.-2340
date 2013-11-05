@@ -618,6 +618,8 @@ public class TownView {
 					if (player.canPurchase(SMITHORE_MULE_COST) && muleQuantity > 0 && !player.hasMule()) {
 				        player.changeMoney(-SMITHORE_MULE_COST);
 				        player.setMule(new Mule(player, Mule.SMITHORE));
+				        
+				        currentTurn.getRound().getGame().setMule();
 				        muleQuantity--;
 				    } else {
 				        if (muleQuantity <= 0) {
@@ -830,5 +832,10 @@ public class TownView {
 		ImageIcon playerIcon = player.getImage();
 		playerImage = new JLabel(playerIcon);		
 		townNotifyPanel = new TownNotificationPanel(currentTurn);
+	}
+	
+	public JFrame getFrame()
+	{
+		return storeframe;
 	}
 }
