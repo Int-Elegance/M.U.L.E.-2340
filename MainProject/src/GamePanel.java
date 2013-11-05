@@ -138,13 +138,11 @@ public class GamePanel {
 	    	            JOptionPane.showMessageDialog(frame, "You don't have a mule to place there.");
 	    		    } else if (!((Property)current).isOwned() || (((Property)current).isOwned() && 
 	    		        (((Property)current).getOwner() != mule.getOwner()))) {
-	    		        Player owner = mule.getOwner();
-	    		    	owner.setMule(null);
-	    		    	JOptionPane.showMessageDialog(frame, "You don't own that tile...so you lost your mule!");
+	    		    	mule.getOwner().setMule(null);
 	    		    	mule = null;
+	    		    	JOptionPane.showMessageDialog(frame, "You don't own that tile...so you lost your mule!");
+	    		    	
 	    		    } else {
-	   		    	    Player owner = mule.getOwner();
-	   		    	    owner.setMule(null);
 	   			    	mule.setLocation((Property)current);
 	   			    	if (((Property)current).setMule(mule)) {
 	   			    		JOptionPane.showMessageDialog(frame, "Mule emplaced!");
@@ -160,7 +158,10 @@ public class GamePanel {
 	   			    		if (current instanceof River) {
 	   			    			((River)current).addMule();
 	   			    			System.out.println("Image changed.");
+	   			    			
 	   			    		}
+	   			    		mule.getOwner().setMule(null);
+		    		    	mule = null;
 	   			    		// repaints the board to show mule placement
 	   			        	buttons[i][j].setIcon(current.getDisplay());
 	   			        	buttons[i][j].revalidate();
@@ -170,10 +171,12 @@ public class GamePanel {
 	   			        	frame.revalidate();
 	   			        	frame.repaint();
 	   			    	}
+	   			    		
 	   			    	else {
 	   			    		JOptionPane.showMessageDialog(frame, "Mule already in place here...so you lost your mule!");
-	   			    	}
-	   			    	mule = null;	
+	   			    		mule.getOwner().setMule(null);
+		    		    	mule = null;
+	   			    	}	
 	   			    }
 	   			
 	    		}

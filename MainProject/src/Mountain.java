@@ -27,6 +27,7 @@ public class Mountain extends Property {
      * Changes the ImageIcon to one displaying a mule
      */
     public void addMule() {
+    	//this.display = new ImageIcon(getClass().getResource("resources/" + String.format("mount%d_mule.jpg", type)));
     	if (type == TYPE_1)
     		this.display = new ImageIcon(getClass().getResource("resources/mount1_mule.jpg"));
     	if (type == TYPE_2)
