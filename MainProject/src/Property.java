@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 /**
  * Property is a Tile that can be owned by a Player
  * @author Team 7
@@ -32,8 +34,18 @@ public abstract class Property extends Tile {
     	return isOwned;
     }
     
-    public void setMule(Mule mule) {
-        this.mule = mule;
+    public boolean setMule(Mule mule) {
+    	boolean toReturn;
+    	// if there is not a mule in place here
+    	if (this.mule == null) {
+    		this.mule = mule;
+    		toReturn = true;
+    	}
+    	// if there is a mule in place here
+    	else {
+    		toReturn = false;
+    	}
+    	return toReturn;
     }
     
     /**

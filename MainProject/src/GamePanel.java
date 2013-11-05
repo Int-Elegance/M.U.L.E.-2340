@@ -138,14 +138,18 @@ public class GamePanel {
 	    		        (((Property)current).getOwner() != mule.getOwner()))) {
 	    		        Player owner = mule.getOwner();
 	    		    	owner.setMule(null);
-	    		    	JOptionPane.showMessageDialog(frame, "You don't own that tile.. so you lost your mule!!");
+	    		    	JOptionPane.showMessageDialog(frame, "You don't own that tile...so you lost your mule!");
 	    		    	mule = null;
 	    		    } else {
 	   		    	    Player owner = mule.getOwner();
 	   		    	    owner.setMule(null);
 	   			    	mule.setLocation((Property)current);
-	   			    	((Property)current).setMule(mule);
-	   			    	JOptionPane.showMessageDialog(frame, "Mule emplaced!");   			
+	   			    	if (((Property)current).setMule(mule)) {
+	   			    		JOptionPane.showMessageDialog(frame, "Mule emplaced!"); 
+	   			    	}
+	   			    	else {
+	   			    		JOptionPane.showMessageDialog(frame, "Mule already in place here...so you lost your mule!");
+	   			    	}
 	   			    	mule = null;	
 	   			    }
 	   			
