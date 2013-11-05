@@ -589,7 +589,10 @@ public class TownView {
 			                    null,
 			                    possibilitiesBuy,
 			                    "");
-			if (buy.equals(mule)) {
+			if(buy==null){
+				System.out.println("buy is null");
+			}
+			else if (buy.equals(mule)) {
 				String foodMule =  "Food Mule                                  100+25=125";
 				String energyMule ="Energy Mule                               100+50=150";
 				String oreMule =   "Ore Mule                                    100+75=175";
@@ -604,7 +607,10 @@ public class TownView {
 				                    null,
 				                    possibilitiesMule,
 				                    "");
-				if (s.equals(foodMule)) {
+				if(s==null){
+					System.out.println("s is null");
+				}
+				else if (s.equals(foodMule)) {
                     System.out.println("Buying food mule.");
 					if (player.canPurchase(FOOD_MULE_COST) && muleQuantity > 0 && !player.hasMule()) {
 				        player.changeMoney(-FOOD_MULE_COST);
@@ -708,7 +714,7 @@ public class TownView {
 			String energy="Energy sells for 25";
 			String ore="Ore sells for 50";
 			
-			Object[] possibilitiesBuy = {food,energy,ore,mule};
+			Object[] possibilitiesBuy = {food,energy,ore};
 			String sell = (String)JOptionPane.showInputDialog(
 			                    storeframe,
 			                    "What would you like to sell?",
@@ -717,7 +723,11 @@ public class TownView {
 			                    null,
 			                    possibilitiesBuy,
 			                    "");
-			if (sell.equals(mule)) {
+			
+			if(sell==null){
+				
+			}
+		/*	else if (sell.equals(mule)) {
 				String foodMule =  "Food Mule                                  100+25=125";
 				String energyMule ="Energy Mule                               100+50=150";
 				String oreMule =   "Ore Mule                                    100+75=175";
@@ -760,7 +770,7 @@ public class TownView {
 				        JOptionPane.showMessageDialog(storeframe, "You don't have a smithore mule!");
 					}
 				}
-			} else if(sell.equals(food)) {
+			} */else if(sell.equals(food)) {
 				System.out.println("Selling food!!");
 				if (player.getFood() > 0) {
 				    player.changeMoney(FOOD_COST);
