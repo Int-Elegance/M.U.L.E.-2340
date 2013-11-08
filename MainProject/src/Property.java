@@ -9,9 +9,9 @@ public abstract class Property extends Tile {
     private Player owner;
     private boolean isOwned;
     private Mule mule;
-    private int food;
-    private int energy;
-    private int ore;
+    protected int food;
+    protected int energy;
+    protected int ore;
     
     /**
 	 * Property constructor
@@ -60,8 +60,22 @@ public abstract class Property extends Tile {
     	this.owner = p;
     }
     
+
     public Player getOwner()
     {
     	return owner;
     }
+    
+    
+    public void updatePlayerResources(Mule mule){
+    	if(mule!=null){
+	    	Player player=mule.getOwner();
+	    	System.out.println("food before "+player.getFood());
+	    	player.setFood(player.getFood()+food);
+	    	System.out.println("food after "+player.getFood());
+	    	player.setEnergy(player.getEnergy()+energy);
+	    	player.setSmithore(player.getSmithore()+ore);
+    	}
+    }
+    
 }

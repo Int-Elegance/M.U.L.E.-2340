@@ -41,7 +41,7 @@ public class Player extends Actor implements Comparable<Player> {
 	 * @return player's mule
 	 */
 	 public boolean hasMule() {
-	    return mule != null;
+	return mule != null;
 	 }
 	 
 	 /**
@@ -131,6 +131,9 @@ public class Player extends Actor implements Comparable<Player> {
 	 */
 	public void changeMoney(int amount) {
 		this.money = money + amount;
+		if(money<0){
+			this.money=0;
+		}
 	}
 	
 	/**
@@ -218,11 +221,11 @@ public class Player extends Actor implements Comparable<Player> {
 	    if (color.equals("Red"))
 	        return Color.RED;
 	    else if (color.equals("Orange"))
-	        return Color.ORANGE;
+	    	return Color.ORANGE;
 	    else if (color.equals("Blue"))
 	        return Color.BLUE;
-	    else 
-	        return Color.YELLOW;
+	    else
+	    	return Color.YELLOW;
 	}
 	
 	/**

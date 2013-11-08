@@ -213,7 +213,7 @@ public class Login {
 				p.setImage();
 				if (num == numPlayers - 1) {
 					Login.getContentPane().removeAll();
-					game.loginComplete(Login);
+					game.loginComplete(Login,mapType,difficulty);
 					return;
 				} else {
 					cl.next(Login.getContentPane());

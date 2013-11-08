@@ -2,6 +2,7 @@
  * @author Team 7
  * Contains the visual information for the MULE game
  */
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
@@ -19,6 +20,7 @@ public class GamePanel {
 	private JButton[][] buttons;
 	public GamePanel() {}
 	private JPanel board;
+	private ArrayList<Mule> mules;
 	
 	private static final int LAND_SELECTION = 1;
 	private static final int MULE_EMPLACEMENT = 2;
@@ -35,6 +37,8 @@ public class GamePanel {
 		this.map = map;
 		this.game = game;
 		state = LAND_SELECTION;
+
+		mules = new ArrayList<Mule>();
 	}
 	
 	public void turnMuleEmplacementOn(Mule mule)
@@ -46,6 +50,11 @@ public class GamePanel {
 	public void turnMuleEmplacementOff()
 	{
 		this.mule = null;
+	}
+	
+	
+	public ArrayList<Mule> getMulesOnMap(){
+		return mules;
 	}
 	
 	/**
@@ -145,6 +154,10 @@ public class GamePanel {
 	    		    } else {
 	   			    	mule.setLocation((Property)current);
 	   			    	if (((Property)current).setMule(mule)) {
+	   			    		Mule temp =new Mule(mule.getOwner(),mule.getType());
+	   			    		temp.setLocation((Property)current);
+	   			    		mules.add(temp);
+	   			    		
 	   			    		JOptionPane.showMessageDialog(frame, "Mule emplaced!");
 	   			    		// changes the image of the tile to show a mule has been placed there
 	   			    		if (current instanceof Plain) {

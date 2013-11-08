@@ -50,16 +50,16 @@ public class TownView {
 	static final int SPEED = 4;
 	
 	/* store values */
-	private static int foodQuantity = 16;
-	private static int energyQuantity = 16;
-	private static int muleQuantity = 25;
-	private static int smithoreQuantity = 0;
-	private final int FOOD_COST = 30;
-	private final int ENERGY_COST = 25;
-	private final int SMITHORE_COST = 50;
-	private final int FOOD_MULE_COST = 125;
-	private final int ENERGY_MULE_COST = 150;
-	private final int SMITHORE_MULE_COST = 175;
+//	private static int foodQuantity = 16;
+//	private static int energyQuantity = 16;
+//	private static int muleQuantity = 25;
+//	private static int smithoreQuantity = 0;
+//	private final int FOOD_COST = 30;
+//	private final int ENERGY_COST = 25;
+//	private final int SMITHORE_COST = 50;
+//	private final int FOOD_MULE_COST = 125;
+//	private final int ENERGY_MULE_COST = 150;
+//	private final int SMITHORE_MULE_COST = 175;
 	
 	/**
 	 * TownView constructor
@@ -563,6 +563,8 @@ public class TownView {
 	
 	
 	private void buy() {
+		Store store = new Store(true);
+		
 		String cancel="Cancel";
 		Object[] options = {"Buy",
         					"Sell", cancel};
@@ -613,15 +615,15 @@ public class TownView {
 				}
 				else if (s.equals(foodMule)) {
                     System.out.println("Buying food mule.");
-					if (player.canPurchase(FOOD_MULE_COST) && muleQuantity > 0 && !player.hasMule()) {
-				        player.changeMoney(-FOOD_MULE_COST);
+					if (player.canPurchase(store.getFOOD_MULE_COST()) && store.getMuleQuantity() > 0 && !player.hasMule()) {
+				        player.changeMoney(-store.getFOOD_MULE_COST());
 				        Mule m = new Mule(player, Mule.FOOD);
 				        m.setOwner(player);
 				        player.setMule(m);
 				        currentTurn.getRound().getGame().setMule(m);
-				        muleQuantity--;
+				        store.setMuleQuantity(store.getMuleQuantity()-1);
 				    } else {
-				        if (muleQuantity <= 0) {
+				        if (store.getMuleQuantity() <= 0) {
 				            JOptionPane.showMessageDialog(storeframe, "Store is out of mules.");
 				        } else if (player.hasMule()) {
 				            JOptionPane.showMessageDialog(storeframe, "You already have mule!");
@@ -631,15 +633,15 @@ public class TownView {
 				    }
 				} else if (s.equals(energyMule)) {
 					System.out.println("Buying Energy Mule!!");
-					if (player.canPurchase(ENERGY_MULE_COST) && muleQuantity > 0 && !player.hasMule()) {
-				        player.changeMoney(-ENERGY_MULE_COST);
+					if (player.canPurchase(store.getENERGY_MULE_COST()) && store.getMuleQuantity() > 0 && !player.hasMule()) {
+				        player.changeMoney(-store.getENERGY_MULE_COST());
 				        Mule m = new Mule(player, Mule.ENERGY);
 				        m.setOwner(player);
 				        player.setMule(m);
 				        currentTurn.getRound().getGame().setMule(m);
-				        muleQuantity--;
+				        store.setMuleQuantity(store.getMuleQuantity()-1);
 				    } else {
-				        if (muleQuantity <= 0) {
+				        if (store.getMuleQuantity() <= 0) {
 				            JOptionPane.showMessageDialog(storeframe, "Store is out of mules.");
 				        } else if (player.hasMule()) {
 				            JOptionPane.showMessageDialog(storeframe, "You already have mule!");
@@ -649,15 +651,15 @@ public class TownView {
 				    }
 				} else if (s.equals(oreMule)) {
 					System.out.println("Buying Ore Mule!!");
-					if (player.canPurchase(SMITHORE_MULE_COST) && muleQuantity > 0 && !player.hasMule()) {
-				        player.changeMoney(-SMITHORE_MULE_COST);
+					if (player.canPurchase(store.getSMITHORE_MULE_COST()) && store.getMuleQuantity() > 0 && !player.hasMule()) {
+				        player.changeMoney(-store.getSMITHORE_MULE_COST());
 				        Mule m = new Mule(player, Mule.SMITHORE);
 				        m.setOwner(player);
 				        player.setMule(m);
 				        currentTurn.getRound().getGame().setMule(m);
-				        muleQuantity--;
+				        store.setMuleQuantity(store.getMuleQuantity()-1);
 				    } else {
-				        if (muleQuantity <= 0) {
+				        if (store.getMuleQuantity() <= 0) {
 				            JOptionPane.showMessageDialog(storeframe, "Store is out of mules.");
 				        } else if (player.hasMule()) {
 				            JOptionPane.showMessageDialog(storeframe, "You already have mule!");
@@ -668,12 +670,12 @@ public class TownView {
 				}
 			} else if (buy.equals(food)) {
 			    System.out.println("Buying food!!");
-				if (player.canPurchase(FOOD_COST) && foodQuantity > 0) {
-				    player.changeMoney(-FOOD_COST);
+				if (player.canPurchase(store.getFOOD_COST()) && store.getFoodQuantity() > 0) {
+				    player.changeMoney(-store.getFOOD_COST());
 				    player.setFood(player.getFood() + 1);
-				    foodQuantity--;
+				    store.setFoodQuantity(store.getFoodQuantity()-1);
 				} else {
-				    if (foodQuantity <= 0) {
+				    if (store.getFoodQuantity() <= 0) {
 				        JOptionPane.showMessageDialog(storeframe, "Store is out of food.");
 				    } else {
 				        JOptionPane.showMessageDialog(storeframe, "You don't have enough money to buy that.");
@@ -681,12 +683,12 @@ public class TownView {
 				}
 			} else if (buy.equals(energy)) {
 				System.out.println("Buying energy!!");
-				if (player.canPurchase(ENERGY_COST) && energyQuantity > 0) {
-				    player.changeMoney(-ENERGY_COST);
+				if (player.canPurchase(store.getENERGY_COST()) && store.getEnergyQuantity() > 0) {
+				    player.changeMoney(-store.getENERGY_COST());
 				    player.setEnergy(player.getEnergy() + 1);
-				    energyQuantity--;
+				    store.setEnergyQuantity(store.getEnergyQuantity()-1);
 				} else {
-				    if (energyQuantity <= 0) {
+				    if (store.getEnergyQuantity() <= 0) {
 				        JOptionPane.showMessageDialog(storeframe, "Store is out of energy.");
 				    } else {
 				        JOptionPane.showMessageDialog(storeframe, "You don't have enough money to buy that.");
@@ -694,12 +696,12 @@ public class TownView {
 				}
 			} else if (buy.equals(ore)) {
 				System.out.println("Buying ore!!");
-				if (player.canPurchase(SMITHORE_COST) && smithoreQuantity > 0) {
-				    player.changeMoney(-SMITHORE_COST);
+				if (player.canPurchase(store.getSMITHORE_COST()) && store.getSmithoreQuantity() > 0) {
+				    player.changeMoney(-store.getSMITHORE_COST());
 				    player.setSmithore(player.getSmithore() + 1);
-				    smithoreQuantity--;
+				    store.setSmithoreQuantity(store.getSmithoreQuantity()-1);
 				} else {
-				    if (smithoreQuantity <= 0) {
+				    if (store.getSmithoreQuantity() <= 0) {
 				        JOptionPane.showMessageDialog(storeframe, "Store is out of smithore.");
 				    } else {
 				        JOptionPane.showMessageDialog(storeframe, "You don't have enough money to buy that.");
@@ -774,27 +776,27 @@ public class TownView {
 			} */else if(sell.equals(food)) {
 				System.out.println("Selling food!!");
 				if (player.getFood() > 0) {
-				    player.changeMoney(FOOD_COST);
+				    player.changeMoney(store.getFOOD_COST());
 				    player.setFood(player.getFood() - 1);
-				    foodQuantity++;
+				    store.setFoodQuantity(store.getFoodQuantity()+1);
 				} else {
 				    JOptionPane.showMessageDialog(storeframe, "You don't have any food!");
 				}
 			} else if(sell.equals(energy)) {
 				System.out.println("Selling energy!!");
 				if (player.getEnergy() > 0) {
-				    player.changeMoney(ENERGY_COST);
+				    player.changeMoney(store.getENERGY_COST());
 				    player.setEnergy(player.getEnergy() - 1);
-				    energyQuantity++;
+				    store.setEnergyQuantity(store.getEnergyQuantity()+1);
 				} else {
 				    JOptionPane.showMessageDialog(storeframe, "You don't have any energy!");
 				}
 			} else if(sell.equals(ore)) {
 				System.out.println("Selling ore!!");
 				if (player.getSmithore() > 0) {
-				    player.changeMoney(SMITHORE_COST);
+				    player.changeMoney(store.getSMITHORE_COST());
 				    player.setSmithore(player.getSmithore() - 1);
-				    smithoreQuantity++;
+				    store.setSmithoreQuantity(store.getSmithoreQuantity()+1);
 				} else {
 				    JOptionPane.showMessageDialog(storeframe, "You don't have any smithore!");
 				}

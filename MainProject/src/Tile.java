@@ -16,4 +16,7 @@ public abstract class Tile {
     public ImageIcon getDisplay() {
         return display;
     }
+    
+    
+    
 }

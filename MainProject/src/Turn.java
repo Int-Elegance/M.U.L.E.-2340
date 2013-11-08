@@ -26,8 +26,13 @@ public class Turn implements Comparable<Turn> {
     public Turn(final Round round, Player player) {
         this.round = round;
         this.player = player;
-        secondsLeft = getTime();
+        secondsLeft = getTime(false);
+        
+    	
+        
         timer = new Timer(1000, new ActionListener() {
+        	
+        	
         	
         	/**
              * Each time the timer fires an event, this method decrements the seconds left.  
@@ -60,7 +65,7 @@ public class Turn implements Comparable<Turn> {
 		game.getCurrentTurn().pass();
 		game.nextTurn();
         //TODO fix reset for actual turns
-        secondsLeft = getTime();
+        secondsLeft = getTime(false);
     }
     
 
@@ -68,12 +73,18 @@ public class Turn implements Comparable<Turn> {
      * Calculates the time that the players has depending on food
      * @return the time in the seconds that the player has
      */
-    public int getTime() {
+    public int getTime(boolean deductRequirement) {
     	int food = player.getFood();
         int requirement = round.getFoodRequirement();
     	if (food >= requirement) {
+    		if(deductRequirement){
+    			player.setFood(food-requirement);
+    		}
             return 50;
         } else if (food > 0) {
+        	if(deductRequirement){
+        		player.setFood(0);
+        	}
             return 30;
         } else {
             return 5;
@@ -102,7 +113,7 @@ public class Turn implements Comparable<Turn> {
      */
     public void stop() {
         timer.stop();
-        secondsLeft = getTime();
+        secondsLeft = getTime(false);
     }
     
     /**

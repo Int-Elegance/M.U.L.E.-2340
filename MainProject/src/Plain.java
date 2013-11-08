@@ -6,12 +6,17 @@ import javax.swing.ImageIcon;
  */
 public class Plain extends Property {
     
+	
+	
 	/**
 	 * Plain constructor
 	 */
     public Plain() {
         super(2, 3, 1);
         this.display = new ImageIcon(getClass().getResource("resources/plain.jpg"));
+        food=2;
+        energy=3;
+        ore=1;
     }
     
     /**
@@ -20,4 +25,6 @@ public class Plain extends Property {
     public void addMule() {
     	this.display = new ImageIcon(getClass().getResource("resources/plain_mule.jpg"));
     }
+    
+    
 }

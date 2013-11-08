@@ -37,6 +37,15 @@ public class Round {
      */
     @SuppressWarnings("unchecked")
 	public void setUp() {
+    	ArrayList<Mule> mules = game.getMulesOnProperty();
+        for(Mule mule:mules){
+        	Player player=mule.getOwner();
+        	if(player.getEnergy()>0){
+        		player.setEnergy(player.getEnergy()-1);
+        		mule.getLocation().updatePlayerResources(mule);
+        		
+        	}
+        }
     	turns = new ArrayList<Turn>();
         for (Player p : players) {
             Turn turn = new Turn(this, p);
@@ -45,6 +54,9 @@ public class Round {
         
         Collections.sort(turns);
         currentTurn = 0;
+        
+        
+        
     }
     
     /**

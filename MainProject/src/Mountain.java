@@ -22,6 +22,9 @@ public class Mountain extends Property {
             throw new RuntimeException("Invalid mountain type.");
         this.display = new ImageIcon(getClass().getResource("resources/" + String.format("mount%d.jpg", type)));
         this.type = type;
+        food=1;
+        energy=1;
+        ore=1+type;
     }
     
     /**

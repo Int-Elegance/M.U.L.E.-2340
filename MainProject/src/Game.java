@@ -2,6 +2,8 @@ import java.awt.EventQueue;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
+
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
@@ -23,19 +25,20 @@ public class Game {
 	private Login window;
 	private TownView town;
 	private JFrame frame;
+	private int roundNumber;
+	private int[] foodRequirements={3,3,3,3,4,4,4,4,5,5,5,5};
 	public static final char[][] STANDARD_MAP = {{'P', 'P', '1', 'P', 'R', 'P', '3', 'P', 'P'},
 	                                             {'P', '1', 'P', 'P', 'R', 'P', 'P', 'P', '3'},
 	                                             {'3', 'P', 'P', 'P', 'T', 'P', 'P', 'P', '1'},
 	                                             {'P', '2', 'P', 'P', 'R', 'P', '2', 'P', 'P'},
                                                  {'P', 'P', '2', 'P', 'R', 'P', 'P', 'P', '2'}};
 	
-	
 	/**
 	 * Constructor for the game class
 	 */
 	public Game() {
 		players = new ArrayList<Player>();
-		gamePanel = new GamePanel(mapParser(STANDARD_MAP), this);
+	//	gamePanel = new GamePanel(mapParser(STANDARD_MAP), this);
 	}
 	
 	//TODO figure out a better way to have components visible everywhere to repaint
@@ -69,16 +72,41 @@ public class Game {
 			}
 		}); 
 	}
+
 	
 	/**
 	 *  Called by Login class when the Login has finished
 	 * @param frame Represents the frame on which to display the visuals
 	 */
-	public void loginComplete(JFrame frame){
+	public void loginComplete(JFrame frame,String mapType,String difficulty){
 		difficulty = window.getDifficulty();
 		mapType = window.getMapType();
 		players = window.getPlayers();
 		this.frame=frame;
+		this.mapType=mapType;
+		if(mapType=="Standard"){
+			gamePanel = new GamePanel(mapParser(STANDARD_MAP), this);
+		}
+		else{
+			gamePanel = new GamePanel(mapParser(randomMap()), this);
+		}
+		this.difficulty=difficulty;
+		int food=4;
+		int energy=2;
+		
+		if(difficulty=="Standard"||difficulty=="Tournament"){
+			Store store = new Store(false);
+			for(Player p:players){
+				p.setFood(food);
+				p.setEnergy(energy);
+			}			
+		}
+		else{
+			Store store = new Store(true);
+		}
+		
+		
+		
 		play();
 	}
 	
@@ -141,10 +169,18 @@ public class Game {
 	 * @return the next round
 	 */
 	public Round nextRound() {
-		currentRound = new Round(0, players, 0, 0, this);
+		
+		
+		currentRound = new Round(roundNumber, players, foodRequirements[roundNumber], 0, this);
+		
+		roundNumber++;
+		
 		return currentRound;
 	}
 	
+	public ArrayList<Mule> getMulesOnProperty(){
+		return gamePanel.getMulesOnMap();
+	}
 	
 	/**
 	 * Main method for the Game class that creates an Game
@@ -153,6 +189,29 @@ public class Game {
 	public static void main(String[] args) {
 		Game game = new Game();
 		game.loginBegin();
+	}
+	
+	public char[][] randomMap(){
+		Random r = new Random();
+		char[][] map=new char[5][9];
+		for(int i=0;i<map.length;i++){
+			for(int j=0;j<map[0].length;j++){
+				map[i][j]='P';
+			}
+		}
+		char[] m={'1','2','3'};
+		int numMountians = 10+ r.nextInt(4);
+		for(int i=0;i<numMountians;i++){
+			map[r.nextInt(map.length)][r.nextInt(map[0].length)]=m[r.nextInt(m.length)];
+		}
+		
+		int riverIndex=r.nextInt(map[0].length);
+		for(int i=0;i<map.length;i++){
+			map[i][riverIndex]='R';
+		}
+		
+		map[2][4]='T';
+		return map;
 	}
 	
 	/**
@@ -210,9 +269,11 @@ public class Game {
 		getCurrentTurn().stop();
 		if (getCurrentRound().hasNextTurn()) {
 			getCurrentRound().nextTurn();
+			
 			getCurrentTurn().start();
 		} else {
 			nextRound();
+			RandomEvent.roundEventOccur(frame, players);
 			getCurrentTurn().start();
 		}
 		if (getCurrentTurn() instanceof LandSelectionTurn)
@@ -220,17 +281,9 @@ public class Game {
 			return;
 		}
 		
-		
+		RandomEvent.turnEventOccur(frame, players, getCurrentTurn().getPlayer());
 		town = new TownView(getCurrentTurn());
 		town.displayTownSquare();
-		//if (town != null) {
-		//    town.changeTurn(this.getCurrentTurn());
-		 //   town.displayTownSquare();
-			
-     //   } else {
-         //  town = new TownView(getCurrentTurn());
-         //   town.displayTownSquare();
-      //  }
 	}
 	
 	public TownView getTownView() {
