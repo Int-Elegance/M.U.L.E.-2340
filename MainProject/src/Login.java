@@ -99,7 +99,33 @@ public class Login {
 		Login.setTitle("M.U.L.E.\r\n");
 		final CardLayout cl = new CardLayout();
 		Login.getContentPane().setLayout(cl);
-				
+		
+		JPanel saveGamePanel = new JPanel();
+		Login.getContentPane().add(saveGamePanel, "Saved Game?");
+		saveGamePanel.setLayout(null);
+		
+		JLabel welcomeToMule = new JLabel("Welcome to MULE!");
+		welcomeToMule.setBounds(106, 25, 162, 14);
+		saveGamePanel.add(welcomeToMule);
+		
+		JButton newGame = new JButton("New Game");
+		newGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl.next(Login.getContentPane());
+			}
+		});
+		newGame.setBounds(106, 79, 100, 20);
+		saveGamePanel.add(newGame);
+		
+		JButton loadGame = new JButton("Load Game");
+		newGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO load game logic
+			}
+		});
+		loadGame.setBounds(226, 79, 100, 20);
+		saveGamePanel.add(loadGame);
+		
 		JPanel login = new JPanel();
 		Login.getContentPane().add(login, "login");
 		login.setLayout(null);
