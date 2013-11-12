@@ -1,4 +1,5 @@
 import java.awt.EventQueue;
+import java.awt.event.WindowEvent;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -98,9 +99,9 @@ public class Game implements Serializable{
 		}); 
 	}
 
-	public void loadOldGame()
+	public void loadOldGame(JFrame login)
 	{
-		frame.pack();
+		login.setVisible(false);
 		frame.setVisible(true);
 		gamePanel.beginDisplay(frame);
 		currentRound.setNotificationPanel(notificationPanel);

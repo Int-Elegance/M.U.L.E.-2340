@@ -20,6 +20,10 @@ public class GameFrame extends JFrame implements Serializable
 		System.out.println("Creating game frame...");
 	}
 	
+	public void close()
+	{
+		super.dispose();
+	}
 	public void dispose()
 	{
 		System.out.println("dispose game...");
