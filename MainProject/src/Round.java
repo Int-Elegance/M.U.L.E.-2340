@@ -65,23 +65,11 @@ public class Round implements Serializable{
     
     @SuppressWarnings("unchecked")
    	public void resetUp() {
-       	ArrayList<Mule> mules = game.getMulesOnProperty();
-           for(Mule mule:mules){
-           	Player player=mule.getOwner();
-           	if(player.getEnergy()>0){
-           		player.setEnergy(player.getEnergy()-1);
-           		mule.getLocation().updatePlayerResources(mule);
-           		
-           	}
-           }
-       	turns = new ArrayList<Turn>();
-           for (Player p : players) {
-               Turn turn = new Turn(this, p);
-               turns.add(turn);
-           }
-           
-           Collections.sort(turns);
-       }
+        for (Turn t : turns) 
+        {
+        	t = new Turn(this, t.getPlayer());
+        }
+    }
        
     /**
      * sets the notification panel of the round
@@ -147,12 +135,17 @@ public class Round implements Serializable{
      * Updates the panel
      */
     public void panelUpdate(){
+    	System.out.println("updating panel");
     	if(notificationPanel!=null){
     		notificationPanel.update();
     	}
     	if (game.getTownNotificationPanel() != null)
     	{
     		game.getTownNotificationPanel().update();
+    	}
+    	else
+    	{
+    		System.out.println("is null");
     	}
     }
     

@@ -57,6 +57,7 @@ public class Turn implements Comparable<Turn>, Serializable {
      * Method that immediately ends turn, regardless of how many seconds are left
      */
     public void endTurn() {
+    	System.out.println("Ending turn of " + player.toString());
     	secondsLeft = 0;
     	timer.stop();
     	// if the player still has a mule in his/her inventory at the end of the turn

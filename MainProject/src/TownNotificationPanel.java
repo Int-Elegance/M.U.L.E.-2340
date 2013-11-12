@@ -55,6 +55,7 @@ public class TownNotificationPanel extends JPanel implements Serializable{
 	 * repaints the NotificationPanel
 	 */
 	public void update(){
+		System.out.println("updating town notification panel");
 		this.repaint();
 		this.validate();
 	}

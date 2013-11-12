@@ -103,7 +103,7 @@ public class Game implements Serializable{
 		frame.pack();
 		frame.setVisible(true);
 		gamePanel.beginDisplay(frame);
-		
+		currentRound.setNotificationPanel(notificationPanel);
 		if (getCurrentTurn() instanceof LandSelectionTurn)
 		{
 			System.out.println("land selection round");
@@ -119,10 +119,14 @@ public class Game implements Serializable{
 		else
 		{
 			currentRound.setNotificationPanel(notificationPanel);
-			town.displayTownSquare();
 			getCurrentTurn().endTurn();
-			getCurrentTurn().getRound().resetUp();
+			Turn t = new Turn(getCurrentTurn().getRound(), getCurrentTurn().getPlayer());
+			getCurrentTurn().getRound().setCurrentTurn(t);
+			town = new TownView(getCurrentTurn());
+			town.displayTownSquare();
 			getCurrentTurn().start();
+			//getCurrentTurn().getRound().resetUp();
+			//getCurrentTurn().start();
 			/*
 			Turn t = new Turn(getCurrentTurn().getRound(), getCurrentTurn().getPlayer());
 			getCurrentTurn().getRound().setCurrentTurn(t);
