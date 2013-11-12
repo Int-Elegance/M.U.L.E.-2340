@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 
 import javax.swing.*;
 import java.util.List;
@@ -9,8 +10,9 @@ import java.util.List;
  * @author Team 7
  * NotificationPanel class to display info at the bottom of the screen
  */
-public class TownNotificationPanel extends JPanel {
+public class TownNotificationPanel extends JPanel implements Serializable{
 
+	private static final long serialVersionUID = 3L;
 	private Turn currentTurn;
 	private JLabel turn;
 	private JLabel score;
@@ -18,9 +20,7 @@ public class TownNotificationPanel extends JPanel {
 	
 	/**
 	 * NotificationPanel constructor
-	 * 
 	 * Initializes labels and buttons
-	 * 
 	 * @param g the game to be played
 	 */
 	public TownNotificationPanel(Turn t)

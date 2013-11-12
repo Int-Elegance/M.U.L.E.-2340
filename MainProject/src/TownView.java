@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.Serializable;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -15,8 +16,9 @@ import javax.swing.ImageIcon;
  * @author Team 7
  * Class for the in-town view of the town
  */
-public class TownView {
+public class TownView implements Serializable{
 	
+	private static final long serialVersionUID = 2L;
 	private float progress = 0.0f;
 	private Player player;
 	private Turn currentTurn;
@@ -93,12 +95,22 @@ public class TownView {
 		return townNotifyPanel;
 	}
 	
+	public JFrame getPubFrame()
+	{
+		return pubframe;
+	}
+	
+	public JFrame getStoreFrame()
+	{
+		return storeframe;
+	}
+	
 	/**
 	 * displays initial town with player in the center of the board
 	 * @param frame 
 	 */
 	public void displayTownSquare(){
-		frame=new JFrame();
+		frame=new GameFrame(currentTurn.getRound().getGame());
 		
 		townNotifyPanel.setPreferredSize(new Dimension(townWidth, 30));
 		//creates layeredPane
@@ -120,7 +132,6 @@ public class TownView {
 		
 		//adds the pane to the frame, the JFrame has a grid layout but changing the layout does not seem to help the size problem
 		frame.setSize(new Dimension(townWidth, townHeight + 30));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel.setLayout(new GridLayout(1,1));
 		
 		JPanel wrapperPanel = new JPanel(new BorderLayout());
@@ -322,7 +333,7 @@ public class TownView {
 		
 		frame.setVisible(false);
 		
-		pubframe =new JFrame();
+		pubframe =new GameFrame(currentTurn.getRound().getGame());
 		
 		ImageIcon pubIcon = new ImageIcon(getClass().getClassLoader().getResource("resources/pubview.jpg"));
 		JLabel pubImage = new JLabel(pubIcon);
@@ -347,7 +358,6 @@ public class TownView {
 		JPanel pubpanel = new JPanel();
 		pubpanel.add(layeredPane);
 
-		pubframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel pubWrapperPanel = new JPanel(new BorderLayout());
 		pubWrapperPanel.setPreferredSize(new Dimension(townWidth, townHeight+30));
 		pubWrapperPanel.add(pubpanel, BorderLayout.SOUTH);
@@ -468,7 +478,7 @@ public class TownView {
 		
 		frame.setVisible(false);
 		
-		storeframe =new JFrame();
+		storeframe =new GameFrame(currentTurn.getRound().getGame());
 		
 		ImageIcon storeIcon = new ImageIcon(getClass().getResource("resources/storeview.jpg"));
 		JLabel storeImage = new JLabel(storeIcon);
@@ -492,10 +502,7 @@ public class TownView {
 		//creates a new JPanel, and adds the layered pane to it
 		JPanel storepanel = new JPanel();
 		storepanel.add(layeredPane);
-		
 				
-		
-		storeframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel storeWrapperPanel = new JPanel(new BorderLayout());
 		storeWrapperPanel.setPreferredSize(new Dimension(townWidth, townHeight+30));
 		storeWrapperPanel.add(storepanel, BorderLayout.SOUTH);

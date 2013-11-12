@@ -1,11 +1,15 @@
+import java.io.Serializable;
+
 import javax.swing.ImageIcon;
 
 /**
  * @author Team 7
  * Mountain class for the board
  */
-public class Mountain extends Property {
-    public final static int TYPE_1 = 1;
+public class Mountain extends Property implements Serializable {
+	
+	private static final long serialVersionUID = 15L;
+	public final static int TYPE_1 = 1;
     public final static int TYPE_2 = 2;     
     public final static int TYPE_3 = 3;
     

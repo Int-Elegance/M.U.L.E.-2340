@@ -1,13 +1,17 @@
+import java.io.Serializable;
+
 import javax.swing.ImageIcon;
 
 /**
  * @author Team 7
  * Plain class for the board
  */
-public class Plain extends Property {
+public class Plain extends Property implements Serializable {
     
 	
 	
+	private static final long serialVersionUID = 12L;
+
 	/**
 	 * Plain constructor
 	 */

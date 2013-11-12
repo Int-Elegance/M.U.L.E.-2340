@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 
 import javax.swing.*;
 import java.util.List;
@@ -9,8 +10,9 @@ import java.util.List;
  * @author Team 7
  * NotificationPanel class to display info at the bottom of the screen
  */
-public class NotificationPanel extends JPanel {
+public class NotificationPanel extends JPanel implements Serializable{
 
+	private static final long serialVersionUID = 13L;
 	private Game game;
 	private JLabel turn;
 	private JLabel score;

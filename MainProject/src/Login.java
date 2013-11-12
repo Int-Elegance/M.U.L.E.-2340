@@ -15,12 +15,15 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.CardLayout;
+import java.io.Serializable;
+
 import javax.swing.JTextField;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Login {
+public class Login implements Serializable {
 	
+	private static final long serialVersionUID = 16L;
 	//TODO add actual map and culty to different classes
 	private String difficulty;
 	private String mapType;
@@ -95,7 +98,8 @@ public class Login {
 	 * 
 	 */
 	private void initialize() {
-		Login = new JFrame();
+		System.out.println("initializing game...");
+		Login = new GameFrame(game);
 		Login.setTitle("M.U.L.E.\r\n");
 		final CardLayout cl = new CardLayout();
 		Login.getContentPane().setLayout(cl);
@@ -111,6 +115,7 @@ public class Login {
 		JButton newGame = new JButton("New Game");
 		newGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("New game!");
 				cl.next(Login.getContentPane());
 			}
 		});
@@ -118,9 +123,28 @@ public class Login {
 		saveGamePanel.add(newGame);
 		
 		JButton loadGame = new JButton("Load Game");
-		newGame.addActionListener(new ActionListener() {
+		loadGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO load game logic
+				Game g = Game.LoadGame();
+				if (g != null)
+				{
+					System.out.println("Load game!");
+					game = g;
+					Login.getContentPane().removeAll();
+					Login = game.getFrame();
+					difficulty = game.getDifficulty();
+					mapType = game.getMapType();
+					numPlayers = game.getPlayers().size();
+					Login.setVisible(false);
+					game.loadOldGame();
+					//game.loginComplete(Login,mapType,difficulty);
+				    return;
+				}
+				else
+				{
+					System.out.println("New game!");
+					cl.next(Login.getContentPane());
+				}
 			}
 		});
 		loadGame.setBounds(226, 79, 100, 20);

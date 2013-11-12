@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /*
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,8 +13,9 @@ import java.awt.event.ActionEvent;
  * @author Team 7
  * Class to represent a turn in the land selection phase of the game
  */
-public class LandSelectionTurn extends Turn {
+public class LandSelectionTurn extends Turn implements Serializable {
 	
+	private static final long serialVersionUID = 17L;
 	private int numTurns;
 	private static final int TIME = 60;
 

@@ -1,15 +1,17 @@
 import javax.swing.*;
 
 import java.awt.event.*;
+import java.io.Serializable;
 
 /**
  * This class takes care of the turn for a player and keeps track of the time passing.
  * @author Team 7
  */
 
-public class Turn implements Comparable<Turn> {
+public class Turn implements Comparable<Turn>, Serializable {
     
-    protected Timer timer;
+	private static final long serialVersionUID = 1L;
+	protected Timer timer;
     protected int secondsLeft;
     protected Round round; 
     protected Player player;
@@ -42,6 +44,7 @@ public class Turn implements Comparable<Turn> {
             	if (secondsLeft < 1) {
                     endTurn();
                 } else {
+                	System.out.println("tick");
                     secondsLeft--;
                     round.panelUpdate();
                     
@@ -105,6 +108,11 @@ public class Turn implements Comparable<Turn> {
      * Starts the time on the turn
      */
     public void start() {
+    	System.out.println("Starting timer now.");
+    	if (timer == null)
+    	{
+    		System.out.println("is null");
+    	}
         timer.start();
     }
     

@@ -1,13 +1,16 @@
+import java.io.Serializable;
+
 import javax.swing.ImageIcon;
 
 /**
  * @author Team 7
  * River class for board
  */
-public class River extends Property {
+public class River extends Property implements Serializable {
     
+	private static final long serialVersionUID = 8L;
+
 	/**
-	 * @author Team 7
 	 * River constructor
 	 */
     public River() {

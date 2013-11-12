@@ -9,9 +9,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 
-public class GamePanel {
+public class GamePanel implements Serializable {
 	
+	private static final long serialVersionUID = 19L;
 	private Tile[][] map;
 	private JFrame frame;
 	private Game game;
@@ -41,6 +43,11 @@ public class GamePanel {
 		mules = new ArrayList<Mule>();
 	}
 	
+	public void turnLandSelectionOn()
+	{
+		state = LAND_SELECTION;
+	}
+	
 	public void turnMuleEmplacementOn(Mule mule)
 	{
 		this.mule = mule;
@@ -51,7 +58,6 @@ public class GamePanel {
 	{
 		this.mule = null;
 	}
-	
 	
 	public ArrayList<Mule> getMulesOnMap(){
 		return mules;
@@ -85,7 +91,6 @@ public class GamePanel {
 		    mainPanel.add(board);
 		    mainPanel.add(notification, BorderLayout.SOUTH);
 		    this.frame.add(mainPanel);
-		    this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		    this.frame.setLocationRelativeTo(null);
 		    return true;
 		} catch (Exception E) {

@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -5,8 +7,10 @@ import javax.swing.JOptionPane;
  * @author Team 7
  *
  */
-public abstract class Property extends Tile {
-    private Player owner;
+public abstract class Property extends Tile implements Serializable{
+	
+	private static final long serialVersionUID = 10L;
+	private Player owner;
     private boolean isOwned;
     private Mule mule;
     protected int food;

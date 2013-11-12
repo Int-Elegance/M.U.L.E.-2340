@@ -1,22 +1,32 @@
 import java.awt.EventQueue;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
 import javax.swing.JFrame;
-import javax.swing.Timer;
 
 /**
  * @author Team 7
  * Essentially represents the runner for the MULE game
  */
-public class Game {
+public class Game implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1234L;
 	public static final List<String> COLORS = Arrays.asList("Red", "Orange", "Blue", "Yellow");
 	public static final Race[] RACES = Race.values();
-	private List<Round> rounds; 
+	private static Exception Throwable;
 	private GamePanel gamePanel;
+	boolean playing = false;
 	private NotificationPanel notificationPanel;
 	private List<Player> players;
 	private Round currentRound;
@@ -41,6 +51,11 @@ public class Game {
 	//	gamePanel = new GamePanel(mapParser(STANDARD_MAP), this);
 	}
 	
+	public JFrame getFrame()
+	{
+		return frame;
+	}
+	
 	//TODO figure out a better way to have components visible everywhere to repaint
 	/**
 	 * This method sets the notification panel for the game.
@@ -58,6 +73,16 @@ public class Game {
 		return notificationPanel;
 	}
 	
+	public String getDifficulty()
+	{
+		return difficulty;
+	}
+	
+	public String getMapType()
+	{
+		return mapType;
+	}
+	
 	/**
 	 * Calls the login class and initialized the login sequence
 	 */
@@ -73,14 +98,30 @@ public class Game {
 		}); 
 	}
 
+	public void loadOldGame()
+	{
+		frame.pack();
+		frame.setVisible(true);
+		gamePanel.beginDisplay(frame);
+		getCurrentTurn().start();
+		if (currentRound instanceof LandSelectionRound)
+		{
+			gamePanel.turnLandSelectionOn();
+		}
+		else
+		{
+			town.displayTownSquare();
+		}
+	}
 	
 	/**
 	 *  Called by Login class when the Login has finished
 	 * @param frame Represents the frame on which to display the visuals
 	 */
 	public void loginComplete(JFrame frame,String mapType,String difficulty){
-		difficulty = window.getDifficulty();
-		mapType = window.getMapType();
+		System.out.println("Login Completed...");
+		this.difficulty = window.getDifficulty();
+		this.mapType = window.getMapType();
 		players = window.getPlayers();
 		this.frame=frame;
 		this.mapType=mapType;
@@ -96,16 +137,16 @@ public class Game {
 		
 		if(difficulty=="Standard"||difficulty=="Tournament"){
 			Store store = new Store(false);
-			for(Player p:players){
+			for(Player p:players)
+			{
 				p.setFood(food);
 				p.setEnergy(energy);
 			}			
 		}
-		else{
+		else
+		{
 			Store store = new Store(true);
 		}
-		
-		
 		
 		play();
 	}
@@ -117,7 +158,6 @@ public class Game {
 		getCurrentTurn().start();
 	}	
 	
-	//TODO: Implement
 	/**
 	 * Initializes the land selection round and shows the gamepanel, notification panel
 	 */
@@ -163,35 +203,79 @@ public class Game {
 		return currentRound.getCurrentTurn();
 	}
 	
-	//TODO implement
 	/**
 	 * Returns the round that should be next in the game sequence
 	 * @return the next round
 	 */
-	public Round nextRound() {
-		
-		
+	public Round nextRound() 
+	{
 		currentRound = new Round(roundNumber, players, foodRequirements[roundNumber], 0, this);
-		
 		roundNumber++;
-		
 		return currentRound;
 	}
 	
-	public ArrayList<Mule> getMulesOnProperty(){
+	public ArrayList<Mule> getMulesOnProperty()
+	{
 		return gamePanel.getMulesOnMap();
 	}
+	
 	
 	/**
 	 * Main method for the Game class that creates an Game
 	 * object and initializes the login sequence.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		Game game = new Game();
 		game.loginBegin();
 	}
 	
-	public char[][] randomMap(){
+	public static Game LoadGame()
+	{
+		Game g = null;
+		try
+		{
+			System.out.println("Attempt to load game...");
+			FileInputStream str = new FileInputStream("game.ser");
+			ObjectInputStream reader = new ObjectInputStream(str);
+			g = (Game) reader.readObject();
+			reader.close();	
+			System.out.println("Current player: " + g.getCurrentTurn().getPlayer().toString());
+			
+			return g;
+		}
+		catch (Exception e)
+		{
+			System.out.println("No old game found. New game created.");
+			return null;
+		}
+	}
+	
+	public static void SaveGame(Game game) throws Exception
+	{
+		try
+		{
+			System.out.println("Attempt to save game");
+			
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("game.ser"));
+			out.writeObject(game);
+			out.close();
+			
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			out = new ObjectOutputStream(bos);
+			out.writeObject(game);
+			out.close();
+			
+			//byte[] buf = bos.toByteArray();
+		}
+		catch (Exception e)
+		{
+			throw new Exception();
+		}
+	}
+	
+	public char[][] randomMap()
+	{
 		Random r = new Random();
 		char[][] map=new char[5][9];
 		for(int i=0;i<map.length;i++){
@@ -208,8 +292,7 @@ public class Game {
 		int riverIndex=r.nextInt(map[0].length);
 		for(int i=0;i<map.length;i++){
 			map[i][riverIndex]='R';
-		}
-		
+		} 
 		map[2][4]='T';
 		return map;
 	}

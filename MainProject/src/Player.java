@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Color;
+import java.io.Serializable;
+
 import javax.swing.ImageIcon;
 
 /**
@@ -9,8 +11,9 @@ import javax.swing.ImageIcon;
  * Represent a player in the MULE game
  *
  */
-public class Player extends Actor implements Comparable<Player> {
+public class Player extends Actor implements Comparable<Player>, Serializable {
 	
+	private static final long serialVersionUID = 11L;
 	private Race race;
 	private String color;
 	private String name;
@@ -36,6 +39,10 @@ public class Player extends Actor implements Comparable<Player> {
 		this.mule = null;
 	}
 	
+	public String toString()
+	{
+		return name;
+	}
 	/**
 	 * Returns the current mule in player's inventory
 	 * @return player's mule

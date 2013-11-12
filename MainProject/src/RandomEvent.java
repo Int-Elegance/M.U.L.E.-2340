@@ -1,11 +1,13 @@
+import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class RandomEvent {
+public class RandomEvent implements Serializable{
 
+	private static final long serialVersionUID = 9L;
 	public static final int EVENT_CHANCE = 27;
 	public static final int MAX_EVENT_CHANCE = 100;
 	private static Random rand;

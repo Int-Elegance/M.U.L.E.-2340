@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -5,8 +6,10 @@ import java.util.*;
  * and determines turn order for each round. 
  * @author Team 7
  */
-public class Round {
-    private int foodRequirement;
+public class Round implements Serializable{
+	
+	private static final long serialVersionUID = 7L;
+	private int foodRequirement;
     private int nextFoodRequirement;
     private int roundNumber;
     protected int currentTurn;

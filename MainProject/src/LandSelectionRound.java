@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -6,8 +7,9 @@ import java.util.List;
  * @author Team 7
  * A round during the land selection phase of the game
  */
-public class LandSelectionRound extends Round{
+public class LandSelectionRound extends Round implements Serializable{
 
+	private static final long serialVersionUID = 18L;
 	private int passCount;
 	
 	/**

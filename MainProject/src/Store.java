@@ -1,5 +1,9 @@
+import java.io.Serializable;
 
-public class Store {
+
+public class Store implements Serializable{
+	
+	private static final long serialVersionUID = 6L;
 	private static int foodQuantity;
 	private static int energyQuantity;
 	private static int muleQuantity;

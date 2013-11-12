@@ -1,10 +1,13 @@
+import java.io.Serializable;
+
 /**
  * @author Team 7
  * Mule class
  */
 
-public class Mule {
-    private boolean emplaced;
+public class Mule implements Serializable{
+	private static final long serialVersionUID = 14L;
+	private boolean emplaced;
     private boolean outfitted;
     private Player owner;
     private Property location;
