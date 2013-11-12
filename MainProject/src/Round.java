@@ -35,6 +35,10 @@ public class Round implements Serializable{
         setUp();
     }
     
+    public int getTurnNumber()
+    {
+    	return currentTurn;
+    }
     /**
      * Sets up by creating a turn for each player
      */
@@ -57,11 +61,28 @@ public class Round implements Serializable{
         
         Collections.sort(turns);
         currentTurn = 0;
-        
-        
-        
     }
     
+    @SuppressWarnings("unchecked")
+   	public void resetUp() {
+       	ArrayList<Mule> mules = game.getMulesOnProperty();
+           for(Mule mule:mules){
+           	Player player=mule.getOwner();
+           	if(player.getEnergy()>0){
+           		player.setEnergy(player.getEnergy()-1);
+           		mule.getLocation().updatePlayerResources(mule);
+           		
+           	}
+           }
+       	turns = new ArrayList<Turn>();
+           for (Player p : players) {
+               Turn turn = new Turn(this, p);
+               turns.add(turn);
+           }
+           
+           Collections.sort(turns);
+       }
+       
     /**
      * sets the notification panel of the round
      * 
@@ -106,6 +127,11 @@ public class Round implements Serializable{
      */
     public Turn getCurrentTurn() {
     	return turns.get(currentTurn);
+    }
+    
+    public void setCurrentTurn(Turn t)
+    {
+    	turns.set(currentTurn, t);
     }
     
     /**

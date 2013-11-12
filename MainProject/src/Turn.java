@@ -109,13 +109,29 @@ public class Turn implements Comparable<Turn>, Serializable {
      */
     public void start() {
     	System.out.println("Starting timer now.");
-    	if (timer == null)
-    	{
-    		System.out.println("is null");
-    	}
         timer.start();
     }
-    
+   
+    public void restart()
+    {
+    	timer = new Timer(1000, new ActionListener() {
+    	
+    	/**
+         * Each time the timer fires an event, this method decrements the seconds left.  
+         * When the number of seconds reaches 0, the timer is stopped and the round moves to the next turn.
+         */
+        public void actionPerformed(ActionEvent e) {
+        	if (secondsLeft < 1) {
+                endTurn();
+            } else {
+            	System.out.println("tick");
+                secondsLeft--;
+                round.panelUpdate();
+                
+            }
+        }
+    });
+    }
     /**
      * Stops the time on the turn
      */

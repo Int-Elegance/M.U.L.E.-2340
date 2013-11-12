@@ -130,12 +130,11 @@ public class Login implements Serializable {
 				{
 					System.out.println("Load game!");
 					game = g;
-					Login.getContentPane().removeAll();
 					Login = game.getFrame();
+					Login.getContentPane().removeAll();
 					difficulty = game.getDifficulty();
 					mapType = game.getMapType();
 					numPlayers = game.getPlayers().size();
-					Login.setVisible(false);
 					game.loadOldGame();
 					//game.loginComplete(Login,mapType,difficulty);
 				    return;

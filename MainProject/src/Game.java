@@ -103,15 +103,40 @@ public class Game implements Serializable{
 		frame.pack();
 		frame.setVisible(true);
 		gamePanel.beginDisplay(frame);
-		getCurrentTurn().start();
-		if (currentRound instanceof LandSelectionRound)
+		
+		if (getCurrentTurn() instanceof LandSelectionTurn)
 		{
-			gamePanel.turnLandSelectionOn();
+			System.out.println("land selection round");
+			LandSelectionTurn currentTurn = ((LandSelectionTurn)getCurrentTurn());
+			currentTurn.pass();
+			currentTurn = ((LandSelectionTurn)getCurrentTurn());
+			currentTurn.pass();
+			nextRound();
+			town = new TownView(getCurrentTurn());
+			town.displayTownSquare();
+			getCurrentTurn().start();
 		}
+		else
+		{
+			currentRound.setNotificationPanel(notificationPanel);
+			town.displayTownSquare();
+			getCurrentTurn().endTurn();
+			getCurrentTurn().getRound().resetUp();
+			getCurrentTurn().start();
+			/*
+			Turn t = new Turn(getCurrentTurn().getRound(), getCurrentTurn().getPlayer());
+			getCurrentTurn().getRound().setCurrentTurn(t);
+			getCurrentTurn().start();
+			*/
+		}
+		
+		/*
 		else
 		{
 			town.displayTownSquare();
 		}
+		
+		*/
 	}
 	
 	/**
@@ -385,4 +410,5 @@ public class Game implements Serializable{
 		
 		return town.getTownNotificationPanel();
 	}
+
 }
