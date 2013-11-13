@@ -72,13 +72,16 @@ public abstract class Property extends Tile implements Serializable{
     
     
     public void updatePlayerResources(Mule mule){
-    	if(mule!=null){
-	    	Player player=mule.getOwner();
-	    	System.out.println("food before "+player.getFood());
-	    	player.setFood(player.getFood()+food);
-	    	System.out.println("food after "+player.getFood());
-	    	player.setEnergy(player.getEnergy()+energy);
-	    	player.setSmithore(player.getSmithore()+ore);
+    	if (mule != null) {
+    	    int type = mule.getType();
+	    	Player player = mule.getOwner();
+    	    if (type == Mule.FOOD) {
+	    	    player.setFood(player.getFood() + food);
+	        } else if (type == Mule.ENERGY) {
+	            player.setEnergy(player.getEnergy() + energy);
+            } else {
+	    	    player.setSmithore(player.getSmithore() + ore);
+	        }
     	}
     }
     
