@@ -57,6 +57,7 @@ public class GamePanel implements Serializable {
 	public void turnMuleEmplacementOff()
 	{
 		this.mule = null;
+		state = LAND_SELECTION;
 	}
 	
 	public ArrayList<Mule> getMulesOnMap(){
@@ -103,9 +104,10 @@ public class GamePanel implements Serializable {
 	 * @author Team 7
 	 * Listener class gives the Tile buttons functionality
 	 */
-	private class TileListener implements ActionListener {
+	private class TileListener implements ActionListener, Serializable {
 	    private int i;
 	    private int j;
+	    private static final long serialVersionUID = 1123123123L;
 	    
 	    /**
 		 * Constructor for the TileListener class
