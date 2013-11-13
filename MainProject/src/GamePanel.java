@@ -134,7 +134,7 @@ public class GamePanel implements Serializable {
 	    	if (state == LAND_SELECTION)
 	    	{
 	    	    
-	    		if (game.getCurrentTurn() instanceof LandSelectionTurn && !((Property)current).isOwned()) 
+	    		if (game.getCurrentTurn() instanceof LandSelectionTurn && current instanceof Property &&!((Property)current).isOwned()) 
 	    		{
 	    			((LandSelectionTurn) game.getCurrentTurn()).addProperty((Property)current);
 	    			Player p = game.getCurrentRound().getCurrentTurn().getPlayer();
@@ -186,8 +186,6 @@ public class GamePanel implements Serializable {
 	   			        	buttons[i][j].setIcon(current.getDisplay());
 	   			        	buttons[i][j].revalidate();
 	   			        	buttons[i][j].repaint();
-	   			        	board.revalidate();
-	   			        	board.repaint();
 	   			        	frame.revalidate();
 	   			        	frame.repaint();
 	   			    	}

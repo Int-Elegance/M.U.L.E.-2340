@@ -119,8 +119,12 @@ public class Game implements Serializable{
 		}
 		else
 		{
+			
 			currentRound.setNotificationPanel(notificationPanel);
 			getCurrentTurn().endTurn();
+			if(town!=null){
+				town.removeSquare();
+			}
 			Turn t = new Turn(getCurrentTurn().getRound(), getCurrentTurn().getPlayer());
 			getCurrentTurn().getRound().setCurrentTurn(t);
 			town = new TownView(getCurrentTurn());
