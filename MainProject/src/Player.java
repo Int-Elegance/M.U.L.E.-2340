@@ -259,4 +259,10 @@ public class Player extends Actor implements Comparable<Player>, Serializable {
 	    return this.getMoney() - o.getMoney();
 	}
 	
+	/**
+	 * @return the list of property that the player owns
+	 */
+	public List<Property> getProperty() {
+		return properties;
+	}
 }
