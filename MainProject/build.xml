@@ -30,7 +30,12 @@
     </javac>
     <javac destdir="${build.dir}">
       <src path="${test.dir}"/>
-      <classpath refid="classpath"/>
+      <classpath>
+	<pathelement path="${build.dir}"/>
+	<fileset dir="${library.dir}">
+	  <include name="*.jar"/>
+	</fileset>
+      </classpath>
     </javac>
   </target>
  
@@ -60,15 +65,13 @@
     </jar>
   </target>
   
-  <path id="classpath">
-    <fileset dir="lib" includes="*.jar"/>
-  </path>
-
   <target name="junit" depends="init,prepare,compile">
     <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
       <classpath>
-	<path refid="classpath"/>
 	<path location="${build.dir}"/>
+	<fileset dir="${library.dir}">
+	  <include name="*.jar"/>
+	</fileset>
       </classpath>
       
       <formatter type="plain"/>
