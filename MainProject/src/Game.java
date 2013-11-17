@@ -1,5 +1,4 @@
 import java.awt.EventQueue;
-import java.awt.event.WindowEvent;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -130,7 +129,7 @@ public class Game implements Serializable{
 		currentRound.setNotificationPanel(notificationPanel);
 		if (getCurrentTurn() instanceof LandSelectionTurn)
 		{
-			System.out.println("land selection round");
+
 			LandSelectionTurn currentTurn = ((LandSelectionTurn)getCurrentTurn());
 			currentTurn.pass();
 			currentTurn = ((LandSelectionTurn)getCurrentTurn());
@@ -176,7 +175,6 @@ public class Game implements Serializable{
 	 * @param frame Represents the frame on which to display the visuals
 	 */
 	public void loginComplete(JFrame frame,String mapType,String difficulty){
-		System.out.println("Login Completed...");
 		this.difficulty = window.getDifficulty();
 		this.mapType = window.getMapType();
 		players = window.getPlayers();
@@ -302,18 +300,15 @@ public class Game implements Serializable{
 		Game g = null;
 		try
 		{
-			System.out.println("Attempt to load game...");
 			FileInputStream str = new FileInputStream("game.ser");
 			ObjectInputStream reader = new ObjectInputStream(str);
 			g = (Game) reader.readObject();
 			reader.close();	
-			System.out.println("Current player: " + g.getCurrentTurn().getPlayer().toString());
 			
 			return g;
 		}
 		catch (Exception e)
 		{
-			System.out.println("No old game found. New game created.");
 			return null;
 		}
 	}
@@ -328,7 +323,6 @@ public class Game implements Serializable{
 	{
 		try
 		{
-			System.out.println("Attempt to save game");
 			
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("game.ser"));
 			out.writeObject(game);
@@ -410,14 +404,14 @@ public class Game implements Serializable{
 	public void setMule(Mule mule)
 	{
 		gamePanel.turnMuleEmplacementOn(mule);
-		town.getFrame().setVisible(false);
+		town.getStoreFrame().setVisible(false);
 	}
 	
 	/**
      * Causes player to return to the townsquare after placing a mule
      */
 	public void endMuleEmplacement() {
-		town.returnToTown(town.getFrame());
+		town.returnToTown(town.getStoreFrame());
 	}
     
     /**

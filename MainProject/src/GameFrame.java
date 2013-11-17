@@ -16,7 +16,6 @@ public class GameFrame extends JFrame implements Serializable
 		super();
 		this.game = game;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		System.out.println("Creating game frame...");
 	}
 	
 	public void close()
@@ -25,7 +24,6 @@ public class GameFrame extends JFrame implements Serializable
 	}
 	public void dispose()
 	{
-		System.out.println("dispose game...");
 		try
 		{
 			System.out.println(game.getCurrentTurn().getPlayer().toString());

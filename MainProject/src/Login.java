@@ -98,7 +98,6 @@ public class Login implements Serializable {
 	 * 
 	 */
 	private void initialize() {
-		System.out.println("initializing game...");
 		Login = new GameFrame(game);
 		Login.setTitle("M.U.L.E.\r\n");
 		final CardLayout cl = new CardLayout();
@@ -115,7 +114,6 @@ public class Login implements Serializable {
 		JButton newGame = new JButton("New Game");
 		newGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("New game!");
 				cl.next(Login.getContentPane());
 			}
 		});
@@ -128,7 +126,6 @@ public class Login implements Serializable {
 				Game g = Game.LoadGame();
 				if (g != null)
 				{
-					System.out.println("Load game!");
 					game = g;
 					Login.getContentPane().removeAll();
 					difficulty = game.getDifficulty();
@@ -140,7 +137,6 @@ public class Login implements Serializable {
 				}
 				else
 				{
-					System.out.println("New game!");
 					cl.next(Login.getContentPane());
 				}
 			}

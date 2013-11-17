@@ -135,7 +135,6 @@ public class Round implements Serializable{
      * Updates the panel
      */
     public void panelUpdate(){
-    	System.out.println("updating panel");
     	if(notificationPanel!=null){
     		notificationPanel.update();
     	}

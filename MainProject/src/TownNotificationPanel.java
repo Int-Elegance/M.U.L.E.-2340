@@ -1,10 +1,7 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.Serializable;
 
 import javax.swing.*;
-import java.util.List;
 
 /**
  * @author Team 7
@@ -55,7 +52,6 @@ public class TownNotificationPanel extends JPanel implements Serializable{
 	 * repaints the NotificationPanel
 	 */
 	public void update(){
-		System.out.println("updating town notification panel");
 		this.repaint();
 		this.validate();
 	}

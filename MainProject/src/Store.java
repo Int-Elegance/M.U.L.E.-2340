@@ -26,23 +26,19 @@ public class Store implements Serializable{
 	 * @param beginner true if the difficulty is beginner
 	 */
 	public Store(boolean beginner){
-		System.out.println("store");
 		if(beginner&&firstTime){
-			System.out.println("first");
 			foodQuantity = 16;
 			energyQuantity = 16;
 			muleQuantity = 25;
 			smithoreQuantity = 0;
 		}
 		else if(!beginner&&firstTime){
-			System.out.println("first");
 			foodQuantity = 8;
 			energyQuantity = 8;
 			muleQuantity = 14;
 			smithoreQuantity = 8;
 		}
 		else{
-			System.out.println("not first");
 		}
 		firstTime=false;
 	}

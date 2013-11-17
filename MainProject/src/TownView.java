@@ -298,7 +298,6 @@ public class TownView implements Serializable{
                 progress = (float) elapsed / animationTime;
 
                 if(!updatePlayer()){
-                    System.out.println("Stopping general timer");
                 	timer.stop();
                 }
                 if (elapsed >= animationTime) {
@@ -332,7 +331,6 @@ public class TownView implements Serializable{
                 final long elapsed = now - start;
                 progress = (float) elapsed / animationTime;
                 if(!updatePlayerPub()){
-                    System.out.println("Stopping pub timer");
                 	timer.stop();
                 }
             }
@@ -403,7 +401,6 @@ public class TownView implements Serializable{
 			timeBonus = 150;
 		if (timeRemaining > 37) // if time is between 37 and 50, timeBonus = 200
 			timeBonus = 200;
-		System.out.println("Time Bonus:" + timeBonus);
 		// calculates the round bonus
 		int roundBonus = 50; // if it is round 1,2, or 3, roundBonus = 50
 		if (currentRound > 3) // if it is round 3,4,5,6, or 7, roundBonus = 100
@@ -416,7 +413,6 @@ public class TownView implements Serializable{
 		
 		// calculates the money bonus; Money Bonus = Round Bonus * random b/t 0 and Time Bonus
 		int moneyBonus = (int) (roundBonus * (Math.random() * timeBonus));
-		System.out.println("Money Bonus before limit:" + moneyBonus);
 		if (moneyBonus > 250) // you cannot earn more than 250 from gambling
 			moneyBonus = 250;
 		
@@ -488,7 +484,6 @@ public class TownView implements Serializable{
                 final long elapsed = now - start;
                 progress = (float) elapsed / animationTime;
                 if(!updatePlayerStore()){
-                    System.out.println("Stopping store timer");
                 	timer.stop();
                 }
             }
@@ -928,13 +923,6 @@ public class TownView implements Serializable{
 		townNotifyPanel = new TownNotificationPanel(currentTurn);
 	}
 	
-	/**
-     * Gets the storeframe from the townview
-     * 
-     * @return JFrame the storeframe
-     */
-	public JFrame getFrame()
-	{
-		return storeframe;
-	}
+
+	
 }

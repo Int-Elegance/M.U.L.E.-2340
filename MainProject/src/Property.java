@@ -1,6 +1,5 @@
 import java.io.Serializable;
 
-import javax.swing.JOptionPane;
 
 /**
  * Property is a Tile that can be owned by a Player

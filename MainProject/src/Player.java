@@ -228,7 +228,7 @@ public class Player extends Actor implements Comparable<Player>, Serializable {
 	    if (color.equals("Red"))
 	        return Color.RED;
 	    else if (color.equals("Orange"))
-	    	return Color.ORANGE;
+	    	return new Color(255,69,0);//Color.ORANGE;
 	    else if (color.equals("Blue"))
 	        return Color.BLUE;
 	    else

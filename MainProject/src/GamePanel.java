@@ -3,7 +3,6 @@
  * Contains the visual information for the MULE game
  */
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 
 import java.awt.*;
@@ -163,7 +162,6 @@ public class GamePanel implements Serializable {
 	        if (state == MULE_EMPLACEMENT)
 	    	{
 	    	    if (current instanceof Town) {
-	    	        System.out.println("Displaying town square!");
 	    	        game.getTownView().displayTownSquare();
 	    	    } else {
 	    	        if (mule == null) {
@@ -185,15 +183,12 @@ public class GamePanel implements Serializable {
 	   			    		// changes the image of the tile to show a mule has been placed there
 	   			    		if (current instanceof Plain) {
 	   			    			((Plain)current).addMule();
-	   			    			System.out.println("Image changed.");
 	   			    		}
 	   			    		if (current instanceof Mountain) {
 	   			    			((Mountain)current).addMule();
-	   			    			System.out.println("Image changed.");
 	   			    		}
 	   			    		if (current instanceof River) {
 	   			    			((River)current).addMule();
-	   			    			System.out.println("Image changed.");
 	   			    			
 	   			    		}
 	   			    		mule.getOwner().setMule(null);
