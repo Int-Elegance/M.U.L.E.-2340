@@ -8,11 +8,15 @@
     <property name="build.dir" value="bin"/>
     <property name="javadoc.dir" value="javadoc"/>
     <property name="library.dir" value="lib"/>
+    <property name="test.dir" location="test" />
+    <property name="report.dir" location="${build.dir}/junitreport" />
   </target>
 
+
   <target name="prepare" depends="init">
-    <mkdir dir="${build.dir}"/>
-    <mkdir dir="${javadoc.dir}"/>
+    <mkdir dir="${build.dir}" />
+    <mkdir dir="${javadoc.dir}" />
+    <mkdir dir="${report.dir}" />
   </target>
   
   
@@ -23,6 +27,10 @@
 	<pathelement path="${build.dir}"/>
 	<pathelement path="${library.dir}/*"/>
       </classpath>
+    </javac>
+    <javac destdir="${build.dir}">
+      <src path="${test.dir}"/>
+      <classpath refid="classpath"/>
     </javac>
   </target>
  
@@ -50,6 +58,25 @@
 	<attribute name="Class-Path" value="${library.dir}/*"/>
       </manifest>
     </jar>
+  </target>
+  
+  <path id="classpath">
+    <fileset dir="lib" includes="*.jar"/>
+  </path>
+
+  <target name="junit" depends="init,prepare,compile">
+    <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+      <classpath>
+	<path refid="classpath"/>
+	<path location="${build.dir}"/>
+      </classpath>
+      
+      <formatter type="plain"/>
+      
+      <batchtest fork="yes" todir="${report.dir}">
+	<fileset dir="${test.dir}"/>
+      </batchtest>
+    </junit>
   </target>
   
   <target name="run">
