@@ -5,6 +5,10 @@ import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+/**
+ * @author Team 7
+ * Manages the random events for the game
+ */
 public class RandomEvent implements Serializable{
 
 	private static final long serialVersionUID = 9L;
@@ -34,15 +38,33 @@ public class RandomEvent implements Serializable{
 			"YELLOW JACKETS HAVE WON A FOOTBALL GAME EVERY PLAYER RECEIVES 2 ORE!" };
 	private static boolean[] roundGoodEvents = { true, false, true };
 
+	/**
+	 * Constructor for the random event class
+	 * 
+	 * @param players the players for the game
+	 */
 	private RandomEvent(List<Player> players) {
 		rand = new Random();
 		addPlayerList(players);
 	}
 
+	/**
+	 * adds the player list to a random event instance
+	 * 
+	 * @param players the players for the game
+	 */
 	private static void addPlayerList(List<Player> players) {
 		re.players = players;
 	}
 
+	/**
+	 * called when a random round event occurs
+	 * 
+	 * applies the effect of the event on the players
+	 * 
+	 * @param players the players for the game
+	 * @param frame the frame for the game
+	 */
 	public static void roundEventOccur(JFrame frame, List<Player> players) {
 
 		if (re == null) {
@@ -80,6 +102,15 @@ public class RandomEvent implements Serializable{
 		}
 	}
 
+	/**
+	 * called when a random turn event occurs
+	 * 
+	 * applies the effect of the event on the player
+	 * 
+	 * @param players the players for the game
+	 * @param frame the frame for the game
+	 * @param player the specific player for the turn
+	 */
 	public static void turnEventOccur(JFrame frame, List<Player> players,
 			Player player) {
 

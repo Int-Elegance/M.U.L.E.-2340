@@ -38,6 +38,12 @@ public abstract class Property extends Tile implements Serializable{
     	return isOwned;
     }
     
+    /**
+	 * Puts a mule on this property
+	 * 
+	 * @param mule to put on the property
+	 * @return false if there is a mule in place on this property, true otherwise
+	 */
     public boolean setMule(Mule mule) {
     	boolean toReturn;
     	// if there is not a mule in place here
@@ -59,18 +65,30 @@ public abstract class Property extends Tile implements Serializable{
     	isOwned = b;
     }
     
+    /**
+     * sets the owner of this property
+     * 
+	 * @param p player to be the owner
+	 */
     public void setOwner(Player p)
     {
     	this.owner = p;
     }
     
 
+    /**
+	 * @return the owner of the mule
+	 */
     public Player getOwner()
     {
     	return owner;
     }
     
-    
+    /**
+     * updates the resources of a player given the resources and mules on the property
+     * 
+	 * @param mule that will determine the players resources
+	 */
     public void updatePlayerResources(Mule mule){
     	if (mule != null) {
     	    int type = mule.getType();

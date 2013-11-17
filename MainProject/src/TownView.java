@@ -95,11 +95,17 @@ public class TownView implements Serializable{
 		return townNotifyPanel;
 	}
 	
+	/**
+	 * @return the pub frame for the game
+	 */
 	public JFrame getPubFrame()
 	{
 		return pubframe;
 	}
 	
+	/**
+	 * @return the store frame for the game
+	 */
 	public JFrame getStoreFrame()
 	{
 		return storeframe;
@@ -147,6 +153,8 @@ public class TownView implements Serializable{
 	
 	/**
 	 * updates player's location
+	 * 
+	 * @ return if the frame can be updated
 	 */
 	public boolean updatePlayer(){
 	
@@ -301,6 +309,9 @@ public class TownView implements Serializable{
         timer.start();
     }
 	
+	/**
+	 * handles the movement for the player while inside the pub
+	 */
 	private void pubAnimate() {
 		//sets a KeyListener to listen for directions
 		KeyStroke stork = new KeyStroke();
@@ -329,6 +340,11 @@ public class TownView implements Serializable{
         timer.start();
     }
 	
+	/**
+	 * Displays the frame for the pub
+	 * 
+	 * @return if the pub can be displayed
+	 */
 	private boolean pubview(){
 		
 		frame.setVisible(false);
@@ -413,6 +429,11 @@ public class TownView implements Serializable{
 		currentTurn.endTurn();
 	}
 	
+	/**
+	 * Checks how the player can move around inside the pub
+	 * 
+	 * @return true if the player is outside the boundaries
+	 */
 	private boolean updatePlayerPub(){
 		boolean touchingOuter =checkOuterBoundaries();
         if (!pubframe.isVisible()) {
@@ -444,7 +465,9 @@ public class TownView implements Serializable{
 	
 	
 	
-	
+	/**
+	 * Animates the player while inside the store
+	 */
 	private void storeAnimate() {
 		//sets a KeyListener to listen for directions
 		KeyStroke stork = new KeyStroke();
@@ -474,6 +497,11 @@ public class TownView implements Serializable{
         timer.start();
     }
 	
+	/**
+	 * Displays the store view for the game
+	 * 
+	 * @return true if the store can be displayed
+	 */
 	private boolean storeview(){
 		
 		frame.setVisible(false);
@@ -518,7 +546,11 @@ public class TownView implements Serializable{
 		return true;
 	}
 	
-	
+	/**
+	 * updates the player movement within the store
+	 * 
+	 * @return true if the player can continue moving
+	 */
 	private boolean updatePlayerStore(){
 	
 		boolean touchingOuter = checkOuterBoundaries();
@@ -551,7 +583,9 @@ public class TownView implements Serializable{
 	}
 	
 	
-	
+	/**
+	 * removes the frame left over from the places in town
+	 */
 	public void removeSquare(){
 		if(loframe!=null){
 			loframe.setVisible(false);
@@ -568,7 +602,9 @@ public class TownView implements Serializable{
 	}
 	
 	
-	
+	/**
+	 * Handles all of the logic for buying things inside of the store and updating the player
+	 */
 	private void buy() {
 		Store store = new Store(true);
 		
@@ -815,7 +851,12 @@ public class TownView implements Serializable{
 		}
 	}
 
-	
+	/**
+	 * returns the game screen to the town
+	 * 
+	 * @param locFrame the frame that is currently displayed
+	 * @return true
+	 */
 	public boolean returnToTown(JFrame locFrame){
 		locFrame.setVisible(false);
 		tempPlayerX=250;

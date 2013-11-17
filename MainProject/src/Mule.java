@@ -70,6 +70,9 @@ public class Mule implements Serializable{
         this.location = location;
     }
     
+    /**
+	 * @return the player that owns the mule
+	 */
     public Player getOwner()
     {
     	return owner;

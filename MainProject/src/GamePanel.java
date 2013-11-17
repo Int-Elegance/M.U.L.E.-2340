@@ -43,23 +43,39 @@ public class GamePanel implements Serializable {
 		mules = new ArrayList<Mule>();
 	}
 	
+	/**
+	 * Changes the state of the game to land selection
+	 */
 	public void turnLandSelectionOn()
 	{
 		state = LAND_SELECTION;
 	}
 	
+	/**
+	 * Changes the state of the game to mule emplacement
+	 * 
+	 * @param mule the current mule to be emplaced
+	 */
 	public void turnMuleEmplacementOn(Mule mule)
 	{
 		this.mule = mule;
 		state = MULE_EMPLACEMENT;
 	}
 	
+	/**
+	 * Changes the state of the game back to landselection and gets rid of the current mule
+	 */
 	public void turnMuleEmplacementOff()
 	{
 		this.mule = null;
 		state = LAND_SELECTION;
 	}
 	
+	/**
+	 * Gets a list of all the mules on the map
+	 * 
+	 * @return list of all the mules on the map
+	 */
 	public ArrayList<Mule> getMulesOnMap(){
 		return mules;
 	}

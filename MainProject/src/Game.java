@@ -52,6 +52,11 @@ public class Game implements Serializable{
 	//	gamePanel = new GamePanel(mapParser(STANDARD_MAP), this);
 	}
 	
+	/**
+	 * Gets the frame for the game
+	 * 
+	 * @returns the current frame for the game
+	 */
 	public JFrame getFrame()
 	{
 		return frame;
@@ -60,6 +65,7 @@ public class Game implements Serializable{
 	//TODO figure out a better way to have components visible everywhere to repaint
 	/**
 	 * This method sets the notification panel for the game.
+	 * 
 	 * @param notification panel to set
 	 */
 	public void setNotificationPanel(NotificationPanel p) {
@@ -74,11 +80,21 @@ public class Game implements Serializable{
 		return notificationPanel;
 	}
 	
+	/**
+	 * returns the difficulty for the game
+	 * 
+	 * @return the string difficulty
+	 */
 	public String getDifficulty()
 	{
 		return difficulty;
 	}
 	
+	/**
+	 * returns the map type for the game
+	 * 
+	 * @return the string map type
+	 */
 	public String getMapType()
 	{
 		return mapType;
@@ -99,6 +115,13 @@ public class Game implements Serializable{
 		}); 
 	}
 
+	/**
+	 * Loads the game by retrieving serialized data
+	 * 
+	 * Takes in the login screen to see if it will be from a load game
+	 * 
+	 * @param the login frame for the game
+	 */
 	public void loadOldGame(JFrame login)
 	{
 		login.setVisible(false);
@@ -248,6 +271,11 @@ public class Game implements Serializable{
 		return currentRound;
 	}
 	
+	/**
+	 * returns the mules on the map
+	 * 
+	 * @return an arraylist of the mules on the map
+	 */
 	public ArrayList<Mule> getMulesOnProperty()
 	{
 		return gamePanel.getMulesOnMap();
@@ -264,6 +292,11 @@ public class Game implements Serializable{
 		game.loginBegin();
 	}
 	
+	/**
+	 * returns the game given by loading serialized data
+	 * 
+	 * @return the game resulting from the loaded data
+	 */
 	public static Game LoadGame()
 	{
 		Game g = null;
@@ -285,6 +318,12 @@ public class Game implements Serializable{
 		}
 	}
 	
+	/**
+	 * Saves the game by writing the info to a serialized object
+	 * 
+	 * @throws Excecption 
+	 * @param the game that is to be saved
+	 */
 	public static void SaveGame(Game game) throws Exception
 	{
 		try
@@ -308,6 +347,11 @@ public class Game implements Serializable{
 		}
 	}
 	
+	/**
+	 * Generates a random 2d array of characters that represent tiles to be at that location
+	 * 
+	 * @return char[][] the 2d array of characters that represent tiles
+	 */
 	public char[][] randomMap()
 	{
 		Random r = new Random();
@@ -403,6 +447,9 @@ public class Game implements Serializable{
 		town.displayTownSquare();
 	}
 	
+	/**
+	 * @return the current town view
+	 */
 	public TownView getTownView() {
 	    return town;
 	}
