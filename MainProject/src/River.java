@@ -22,6 +22,16 @@ public class River extends Property implements Serializable {
     }
     
     /**
+	 * River constructor when no picture is available
+	 */
+    public River(boolean flag) {
+    	super(4, 2, 0);
+        food=4;
+        energy=2;
+        ore=0;
+    }
+    
+    /**
      * Changes the ImageIcon to one displaying a mule
      */
     public void addMule() {
