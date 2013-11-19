@@ -8,8 +8,6 @@ import javax.swing.ImageIcon;
  */
 public class Plain extends Property implements Serializable {
     
-	
-	
 	private static final long serialVersionUID = 12L;
 
 	/**
