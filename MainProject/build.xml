@@ -30,7 +30,10 @@
     </javac>
     <javac destdir="${build.dir}">
       <src path="${test.dir}"/>
-      <classpath>
+      <classpath>      <fileset dir="${src.dir}">
+	<include name="resources/*.png"/>
+	<include name="resources/*.jpg"/>
+      </fileset>
 	<pathelement path="${build.dir}"/>
 	<fileset dir="${library.dir}">
 	  <include name="*.jar"/>
@@ -65,17 +68,18 @@
     </jar>
   </target>
   
-  <target name="junit" depends="init,prepare,compile">
-    <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+  <target name="junit" depends="init,prepare,jar">
+    <junit printsummary="yes" haltonfailure="no" showoutput="yes">
       <classpath>
 	<path location="${build.dir}"/>
 	<fileset dir="${library.dir}">
 	  <include name="*.jar"/>
 	</fileset>
+	<fileset dir=".">
+	  <include name="mule.jar"/>
+	</fileset>
       </classpath>
-      
       <formatter type="plain"/>
-      
       <batchtest fork="yes" todir="${report.dir}">
 	<fileset dir="${test.dir}"/>
       </batchtest>
