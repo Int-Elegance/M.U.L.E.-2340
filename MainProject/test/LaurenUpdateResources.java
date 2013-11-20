@@ -145,5 +145,29 @@ public class LaurenUpdateResources {
 		p.updatePlayerResources(m);
 		assertEquals("Equals", 2, p1.getSmithore());
 	}
+	
+	/**
+	 * Test update resources with a type2 mountain with a smithore mule
+	 */
+	@Test
+	public void updateProperty15(){
+		Property p = new Mountain(Mountain.TYPE_2);
+		Mule m = new Mule(p1, Mule.SMITHORE);
+		p1.setSmithore(0);
+		p.updatePlayerResources(m);
+		assertEquals("Equals", 3, p1.getSmithore());
+	}
+	
+	/**
+	 * Test update resources with a type3 mountain with a smithore mule
+	 */
+	@Test
+	public void updateProperty16(){
+		Property p = new Mountain(Mountain.TYPE_3);
+		Mule m = new Mule(p1, Mule.SMITHORE);
+		p1.setSmithore(0);
+		p.updatePlayerResources(m);
+		assertEquals("Equals", 4, p1.getSmithore());
+	}
 }
 	 
