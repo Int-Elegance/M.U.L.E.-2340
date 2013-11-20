@@ -47,7 +47,7 @@ public class LaurenUpdateResources {
 		p1.setFood(0);
 		Mule m = new Mule(p1, Mule.FOOD);
 		p.updatePlayerResources(m);
-		assertEquals("Equal", 12, p1.getFood());
+		assertEquals("Equal", 4, p1.getFood());
 	}
 	
 	/**
