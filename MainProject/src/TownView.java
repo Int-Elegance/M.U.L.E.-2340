@@ -70,21 +70,23 @@ public class TownView implements Serializable{
 	 * @param player player to enter the town
 	 */
 	public TownView(Turn currentTurn){
-		this.currentTurn = currentTurn;
-		this.player = currentTurn.getPlayer();
-		//Sets the widths and heights for the player and the town. If the player is set to the correct width odd things happen. 
-		//If the player is set to 28x42 it works normally except near the edges.
-		ImageIcon playerIcon = player.getImage();
-		playerImage = new JLabel(playerIcon);
+
 		playerWidth=28;//playerIcon.getIconWidth();
 		playerHeight=42;//playerIcon.getIconHeight();
-		
-		townNotifyPanel = new TownNotificationPanel(currentTurn);
-		ImageIcon townIcon = new ImageIcon(getClass().getClassLoader().getResource("resources/townview.jpg"));
-		townImage = new JLabel(townIcon);
-		townWidth=townIcon.getIconWidth();
-		townHeight=townIcon.getIconHeight();
-		
+		if(currentTurn!=null&&currentTurn.getPlayer()!=null&&currentTurn.getPlayer().getImage()!=null){
+			this.currentTurn = currentTurn;
+			this.player = currentTurn.getPlayer();
+			//Sets the widths and heights for the player and the town. If the player is set to the correct width odd things happen. 
+			//If the player is set to 28x42 it works normally except near the edges.
+			ImageIcon playerIcon = player.getImage();
+			playerImage = new JLabel(playerIcon);
+			
+			townNotifyPanel = new TownNotificationPanel(currentTurn);
+			ImageIcon townIcon = new ImageIcon(getClass().getClassLoader().getResource("resources/townview.jpg"));
+			townImage = new JLabel(townIcon);
+			townWidth=townIcon.getIconWidth();
+			townHeight=townIcon.getIconHeight();
+		}
 	}
 	
 	/**
@@ -226,11 +228,10 @@ public class TownView implements Serializable{
 	 * @param locWidth
 	 * @param locHeight
 	 */
-	private boolean checkForSpecificLocation(int locX,int locY,int locWidth, int locHeight){
+	public boolean checkForSpecificLocation(int locX,int locY,int locWidth, int locHeight){
 		//This is a very painful read through, basically it checks if the corner of the player overlaps with the corner of the location
 		//or if the player is hitting one of the sides of the location
 		//I believe this code to be correct
-		
 		boolean touching=false;
 		/*checking if corners are overlapping */
 		if(tempPlayerX+playerWidth>locX&&tempPlayerX<locX){
@@ -274,6 +275,33 @@ public class TownView implements Serializable{
 		return touching;
 	
 	}	
+	
+	
+	/**
+	 * moves the player the location
+	 * @param playerX
+	 * @param playerY
+	 */
+	public void movePlayer(int playerX,int playerY){
+		this.playerX=playerX;
+		this.playerY=playerY;
+		this.tempPlayerX=playerX;
+		this.tempPlayerY=playerY;
+	
+	}
+	/**
+	 * @return the player's width
+	 */	
+	public int getPlayerWidth(){
+		return playerWidth;
+	}
+	/**
+	 * @return the player's height
+	 */
+	public int getPlayerHeight(){
+		return playerHeight;
+	}
+	
 	/**
 	 * moves player around the screen
 	 */
@@ -409,7 +437,6 @@ public class TownView implements Serializable{
 			roundBonus = 150;
 		if (currentRound > 11) // if it is round 12, roundBonus = 200
 			roundBonus = 200;
-		System.out.println("Round Bonus:" + roundBonus);
 		
 		// calculates the money bonus; Money Bonus = Round Bonus * random b/t 0 and Time Bonus
 		int moneyBonus = (int) (roundBonus * (Math.random() * timeBonus));
@@ -631,7 +658,6 @@ public class TownView implements Serializable{
 			                    possibilitiesBuy,
 			                    "");
 			if(buy==null){
-				System.out.println("buy is null");
 			}
 			else if (buy.equals(mule)) {
 				String foodMule =  "Food Mule                                  100+25=125";
@@ -649,10 +675,8 @@ public class TownView implements Serializable{
 				                    possibilitiesMule,
 				                    "");
 				if(s==null){
-					System.out.println("s is null");
 				}
 				else if (s.equals(foodMule)) {
-                    System.out.println("Buying food mule.");
 					if (player.canPurchase(store.getFOOD_MULE_COST()) && store.getMuleQuantity() > 0 && !player.hasMule()) {
 				        player.changeMoney(-store.getFOOD_MULE_COST());
 				        Mule m = new Mule(player, Mule.FOOD);
@@ -670,7 +694,6 @@ public class TownView implements Serializable{
 				        }
 				    }
 				} else if (s.equals(energyMule)) {
-					System.out.println("Buying Energy Mule!!");
 					if (player.canPurchase(store.getENERGY_MULE_COST()) && store.getMuleQuantity() > 0 && !player.hasMule()) {
 				        player.changeMoney(-store.getENERGY_MULE_COST());
 				        Mule m = new Mule(player, Mule.ENERGY);
@@ -688,7 +711,6 @@ public class TownView implements Serializable{
 				        }
 				    }
 				} else if (s.equals(oreMule)) {
-					System.out.println("Buying Ore Mule!!");
 					if (player.canPurchase(store.getSMITHORE_MULE_COST()) && store.getMuleQuantity() > 0 && !player.hasMule()) {
 				        player.changeMoney(-store.getSMITHORE_MULE_COST());
 				        Mule m = new Mule(player, Mule.SMITHORE);
@@ -707,7 +729,6 @@ public class TownView implements Serializable{
 				    }
 				}
 			} else if (buy.equals(food)) {
-			    System.out.println("Buying food!!");
 				if (player.canPurchase(store.getFOOD_COST()) && store.getFoodQuantity() > 0) {
 				    player.changeMoney(-store.getFOOD_COST());
 				    player.setFood(player.getFood() + 1);
@@ -720,7 +741,6 @@ public class TownView implements Serializable{
 				    }
 				}
 			} else if (buy.equals(energy)) {
-				System.out.println("Buying energy!!");
 				if (player.canPurchase(store.getENERGY_COST()) && store.getEnergyQuantity() > 0) {
 				    player.changeMoney(-store.getENERGY_COST());
 				    player.setEnergy(player.getEnergy() + 1);
@@ -733,7 +753,6 @@ public class TownView implements Serializable{
 				    }
 				}
 			} else if (buy.equals(ore)) {
-				System.out.println("Buying ore!!");
 				if (player.canPurchase(store.getSMITHORE_COST()) && store.getSmithoreQuantity() > 0) {
 				    player.changeMoney(-store.getSMITHORE_COST());
 				    player.setSmithore(player.getSmithore() + 1);
@@ -812,7 +831,6 @@ public class TownView implements Serializable{
 					}
 				}
 			} */else if(sell.equals(food)) {
-				System.out.println("Selling food!!");
 				if (player.getFood() > 0) {
 				    player.changeMoney(store.getFOOD_COST());
 				    player.setFood(player.getFood() - 1);
@@ -821,7 +839,6 @@ public class TownView implements Serializable{
 				    JOptionPane.showMessageDialog(storeframe, "You don't have any food!");
 				}
 			} else if(sell.equals(energy)) {
-				System.out.println("Selling energy!!");
 				if (player.getEnergy() > 0) {
 				    player.changeMoney(store.getENERGY_COST());
 				    player.setEnergy(player.getEnergy() - 1);
@@ -830,7 +847,6 @@ public class TownView implements Serializable{
 				    JOptionPane.showMessageDialog(storeframe, "You don't have any energy!");
 				}
 			} else if(sell.equals(ore)) {
-				System.out.println("Selling ore!!");
 				if (player.getSmithore() > 0) {
 				    player.changeMoney(store.getSMITHORE_COST());
 				    player.setSmithore(player.getSmithore() - 1);
