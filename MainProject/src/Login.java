@@ -255,6 +255,7 @@ public class Login implements Serializable {
 				p.setName(nameField.getText());
 				p.setColor((String) colorBox.getSelectedItem());
 				p.setImage();
+				p.setImages();
 				if (num == numPlayers - 1) {
 					Login.getContentPane().removeAll();
 					game.loginComplete(Login,mapType,difficulty);

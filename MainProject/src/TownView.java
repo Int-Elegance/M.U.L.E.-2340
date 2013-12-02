@@ -19,6 +19,13 @@ import javax.swing.ImageIcon;
 public class TownView implements Serializable{
 	
 	private static final long serialVersionUID = 2L;
+	private static final int NORTH = 0;
+	private static final int EAST = 1;
+	private static final int SOUTH = 2;
+	private static final int WEST = 3;
+	private static final int FRAME_DELAY = 3;
+	private static final int NUM_FRAMES = 4; // number of frames per animation cycle
+	
 	private float progress = 0.0f;
 	private Player player;
 	private Turn currentTurn;
@@ -49,7 +56,10 @@ public class TownView implements Serializable{
 	int width=166;
 	int heightT=78;//108;
 	int heightB=110;//140;
-	static final int SPEED = 4;
+	static final int SPEED = 2;
+	private ImageIcon currentFrame;
+	private int currentDirection;
+	private int frameNum;
 	
 	/* store values */
 //	private static int foodQuantity = 16;
@@ -70,7 +80,6 @@ public class TownView implements Serializable{
 	 * @param player player to enter the town
 	 */
 	public TownView(Turn currentTurn){
-
 		playerWidth=28;//playerIcon.getIconWidth();
 		playerHeight=42;//playerIcon.getIconHeight();
 		if(currentTurn!=null&&currentTurn.getPlayer()!=null&&currentTurn.getPlayer().getImage()!=null){
@@ -78,8 +87,11 @@ public class TownView implements Serializable{
 			this.player = currentTurn.getPlayer();
 			//Sets the widths and heights for the player and the town. If the player is set to the correct width odd things happen. 
 			//If the player is set to 28x42 it works normally except near the edges.
-			ImageIcon playerIcon = player.getImage();
-			playerImage = new JLabel(playerIcon);
+			//ImageIcon currentFrame = player.getImage();
+			currentDirection = SOUTH;
+			frameNum = 0;
+			ImageIcon currentFrame = player.getSFrames()[frameNum];
+			playerImage = new JLabel(currentFrame);
 			
 			townNotifyPanel = new TownNotificationPanel(currentTurn);
 			ImageIcon townIcon = new ImageIcon(getClass().getClassLoader().getResource("resources/townview.jpg"));
@@ -307,10 +319,10 @@ public class TownView implements Serializable{
 	 */
 	private void animate() {
 		//sets a KeyListener to listen for directions
-		KeyStroke stork = new KeyStroke();
+		KeyStroke stroke = new KeyStroke();
 		if(frame==null)
 			return;
-		frame.addKeyListener(stork);
+		frame.addKeyListener(stroke);
 		
 		//animates the player moving across the screen at a certain fps
 		//also has an unused timer feature that could be used later on in the project.
@@ -320,6 +332,8 @@ public class TownView implements Serializable{
         final long start = System.currentTimeMillis();
         final Timer timer = new Timer(delay, null);
         timer.addActionListener(new ActionListener() {
+        	
+        	
             public void actionPerformed(ActionEvent e) {
                 final long now = System.currentTimeMillis();
                 final long elapsed = now - start;
@@ -331,7 +345,11 @@ public class TownView implements Serializable{
                 if (elapsed >= animationTime) {
                  //   timer.stop();
                 }
+                
+                
             }
+            
+            
         });
         timer.start();
     }
@@ -341,10 +359,10 @@ public class TownView implements Serializable{
 	 */
 	private void pubAnimate() {
 		//sets a KeyListener to listen for directions
-		KeyStroke stork = new KeyStroke();
+		KeyStroke stroke = new KeyStroke();
 		if(pubframe==null)
 			return;
-		pubframe.addKeyListener(stork);
+		pubframe.addKeyListener(stroke);
 		
 		//animates the player moving across the screen at a certain fps
 		//also has an unused timer feature that could be used later on in the project.
@@ -493,10 +511,10 @@ public class TownView implements Serializable{
 	 */
 	private void storeAnimate() {
 		//sets a KeyListener to listen for directions
-		KeyStroke stork = new KeyStroke();
+		KeyStroke stroke = new KeyStroke();
 		if(storeframe==null)
 			return;
-		storeframe.addKeyListener(stork);
+		storeframe.addKeyListener(stroke);
 		
 		//animates the player moving across the screen at a certain fps
 		//also has an unused timer feature that could be used later on in the project.
@@ -875,6 +893,23 @@ public class TownView implements Serializable{
 		displayTownSquare();
 		return true;
 	}
+	
+	/**
+	 * Sets frameNum equal to the next frame and updates current animation frame
+	 */
+	private void nextFrame() {
+		frameNum++;
+		frameNum = frameNum % (FRAME_DELAY*NUM_FRAMES);
+		int n = frameNum/FRAME_DELAY; // get the number corresponding to the index of the animation frame
+		// get next frame based on direction the player is facing
+		if (currentDirection == NORTH) currentFrame = player.getNFrames()[n];
+		else if (currentDirection == EAST) currentFrame = player.getEFrames()[n];
+		else if (currentDirection == SOUTH) currentFrame = player.getSFrames()[n];
+		else currentFrame = player.getWFrames()[n];
+		
+		playerImage.setIcon(currentFrame);
+	}
+	
 	/**
 	 * @author Team 7
 	 * KeyStroke class to move the player
@@ -886,33 +921,101 @@ public class TownView implements Serializable{
 		 */
 		public void keyTyped(KeyEvent e){}
 		/**
-		 * listens for key strokes
+		 * Listens for key strokes.
+		 * Updates the player location and current animation frame.
+		 * Monitors which direction the player is going in, currently this is being used to decide information about 
+		 * the movement of the player around the corners of locations in the checkForSpecificLocation() method.
+		 * Given time a better method of moving around corners should be devised.
 		 * 
 		 * @param e KeyEvent
 		 */
 		public void keyPressed(KeyEvent e){
-			//Listens for key storkes.
-			//Updates the player location.
-			//Monitors which direction the player is going in, currently this is being used to decide information about 
-			//the movement of the player around the corners of locations in the checkForSpecificLocation() method.
-			//Given time a better method of moving around corners should be devised.
+			
 			 if(KeyEvent.VK_UP==e.getKeyCode()||KeyEvent.VK_W==e.getKeyCode()){
 				 tempPlayerY-=SPEED;
+				 // if we changed directions, set to default 
+				 if (currentDirection != NORTH) {
+					 currentDirection = NORTH;
+					 frameNum = 0;
+					 currentFrame = player.getNFrames()[0];
+				 }
+				 // if we did not change directions, go to next frame
+				 else {
+					 nextFrame();
+				 }
 			 }
+			 
 			 else if(KeyEvent.VK_DOWN==e.getKeyCode()||KeyEvent.VK_S==e.getKeyCode()){
 				 tempPlayerY+=SPEED;
+				 
+				// if we changed directions, set to default 
+				 if (currentDirection != SOUTH) {
+					 currentDirection = SOUTH;
+					 frameNum = 0;
+					 currentFrame = player.getSFrames()[0];
+				 }
+				 // if we did not change directions, go to next frame
+				 else {
+					 nextFrame();
+				 }
 			 }
+			 
 			 else if(KeyEvent.VK_RIGHT==e.getKeyCode()||KeyEvent.VK_D==e.getKeyCode()){
 				 tempPlayerX+=SPEED;
+				// if we changed directions, set to default 
+				 if (currentDirection != EAST) {
+					 currentDirection = EAST;
+					 frameNum = 0;
+					 currentFrame = player.getEFrames()[0];
+				 }
+				 // if we did not change directions, go to next frame
+				 else {
+					 nextFrame();
+				 }
 			 }
+			 
 			 else if(KeyEvent.VK_LEFT==e.getKeyCode()||KeyEvent.VK_A==e.getKeyCode()){
 				 tempPlayerX-=SPEED;
+				// if we changed directions, set to default 
+				 if (currentDirection != WEST) {
+					 currentDirection = WEST;
+					 frameNum = 0;
+					 currentFrame = player.getWFrames()[0];
+				 }
+				 // if we did not change directions, go to next frame
+				 else {
+					 nextFrame();
+				 }
 			 }
 		 }
+		
 		/**
+		 * When key is released, change animation frame to stationary frame
 		 * @param e KeyEvent
 		 */
-		 public void keyReleased(KeyEvent e){}
+		 public void keyReleased(KeyEvent e){
+			 // reset to standing position facing north
+			 if (currentDirection == NORTH) {
+				 frameNum = 0;
+				 currentFrame = player.getNFrames()[0];
+			 }
+			 // reset to standing position facing east
+			 if (currentDirection == EAST) {
+				 frameNum = 0;
+				 currentFrame = player.getEFrames()[0];
+			 }
+			 // reset to standing position facing south
+			 if (currentDirection == SOUTH) {
+				 frameNum = 0;
+				 currentFrame = player.getSFrames()[0];
+			 }
+			 // reset to standing position facing west
+			 if (currentDirection == WEST) {
+				 frameNum = 0;
+				 currentFrame = player.getWFrames()[0];
+			 }
+			 
+		 }
 	}
 	
 	/**

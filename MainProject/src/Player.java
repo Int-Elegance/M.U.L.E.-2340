@@ -14,6 +14,10 @@ import javax.swing.ImageIcon;
 public class Player extends Actor implements Comparable<Player>, Serializable {
 	
 	private static final long serialVersionUID = 11L;
+	public static final int NORTH_OFFSET = 0; // offset to access north-facing frames in images array
+	public static final int EAST_OFFSET = 4; // offset to access east-facing frames in images array
+	public static final int SOUTH_OFFSET = 8; // offset to access south-facing frames in images array
+	public static final int WEST_OFFSET = 12; // offset to access west-facing frames in images array
 	private Race race;
 	private String color;
 	private String name;
@@ -24,6 +28,7 @@ public class Player extends Actor implements Comparable<Player>, Serializable {
 	private List<Property> properties;
 	private int food;
 	private ImageIcon image; // later, make this an array to hold all animation frames
+	private ImageIcon[] images;
 	private Mule mule;
 
 	/**
@@ -210,8 +215,39 @@ public class Player extends Actor implements Comparable<Player>, Serializable {
 	 * sets the player's image icon based on race and color
 	 */
 	public void setImage() {
-		ImageIcon playerIcon = new ImageIcon(getClass().getResource("resources/" + race.toString().toLowerCase() + color + ".png"));			
+		ImageIcon playerIcon = new ImageIcon(getClass().getResource("resources/" + race.toString().toLowerCase() + color + ".png"));
 		this.image = playerIcon;
+	}
+	
+	/**
+	 * Sets player's animation frames accordingly
+	 */
+	public void setImages() {
+		ImageIcon[] playerIcons = new ImageIcon[16];
+		
+		// set north-facing frames
+		for (int i=0; i<4; i++)
+		{
+			playerIcons[i+NORTH_OFFSET] = new ImageIcon(getClass().getResource("resources/" + race.toString().toLowerCase() + color.toString() + "_n" + i + ".png"));			
+		}
+		// set east-facing frames
+		for (int i=0; i<4; i++)
+		{
+			playerIcons[i+EAST_OFFSET] = new ImageIcon(getClass().getResource("resources/" + race.toString().toLowerCase() + color.toString() + "_e" + i + ".png"));			
+		}
+		// set south-facing frames
+		for (int i=0; i<4; i++)
+		{
+			playerIcons[i+SOUTH_OFFSET] = new ImageIcon(getClass().getResource("resources/" + race.toString().toLowerCase() + color.toString() + "_s" + i + ".png"));			
+		}
+		// set west-facing frames
+		for (int i=0; i<4; i++)
+		{
+			playerIcons[i+WEST_OFFSET] = new ImageIcon(getClass().getResource("resources/" + race.toString().toLowerCase() + color.toString() + "_w" + i + ".png"));			
+		}
+		
+		
+		this.images = playerIcons;
 	}
 	
 	/**
@@ -240,6 +276,66 @@ public class Player extends Actor implements Comparable<Player>, Serializable {
 	 */
 	public ImageIcon getImage() {
 		return image;
+	}
+	
+	/**
+	 * @return an array containing all of the player's animation frames
+	 */
+	public ImageIcon[] getImages()
+	{
+		return images;
+	}
+	
+	/**
+	 * @return an array containing only the north-facing frames
+	 */
+	public ImageIcon[] getNFrames()
+	{
+		ImageIcon[] frames = new ImageIcon[4];
+		for (int i=0; i<4; i++)
+		{
+			frames[i] = images[NORTH_OFFSET+i];
+		}
+		return frames;
+	}
+	
+	/**
+	 * @return an array containing only the east-facing frames
+	 */
+	public ImageIcon[] getEFrames()
+	{
+		ImageIcon[] frames = new ImageIcon[4];
+		for (int i=0; i<4; i++)
+		{
+			frames[i] = images[EAST_OFFSET+i];
+		}
+		return frames;
+	}
+	
+	/**
+	 * @return an array containing only the south-facing frames
+	 */
+	public ImageIcon[] getSFrames()
+	{
+		ImageIcon[] frames = new ImageIcon[4];
+		for (int i=0; i<4; i++)
+		{
+			frames[i] = images[SOUTH_OFFSET+i];
+		}
+		return frames;
+	}
+	
+	/**
+	 * @return an array containing only the west-facing frames
+	 */
+	public ImageIcon[] getWFrames()
+	{
+		ImageIcon[] frames = new ImageIcon[4];
+		for (int i=0; i<4; i++)
+		{
+			frames[i] = images[WEST_OFFSET+i];
+		}
+		return frames;
 	}
 	
 	/**
